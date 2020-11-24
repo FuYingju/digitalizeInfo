@@ -40,15 +40,26 @@
               </el-col>
             </el-row>
           </div>
+          <el-input
+            type="textarea"
+            placeholder="请输入留言内容"
+            v-model="content"
+            maxlength="100"
+            show-word-limit
+          >
+          </el-input>
+          <el-button type="text" @click="submitMessage">提交留言</el-button>
+          <!-- <template>
+            <el-button type="text" @click="open">我要留言</el-button>
+          </template> -->
         </el-col>
         <el-col :span="4">
           <div class="box">
             <div class="title"><h4>留言区</h4></div>
-            <div class="message">
-              <h5>任务</h5>
-              <div>请做一下大众品牌PR69.1和PR68.1的变化分析</div>
+            <div class="message" v-for="item in contentList" :key="item.id">
+              <div>{{item.content}}</div>
               <div style="text-align: right;">
-                -潘占福
+                -{{item.userName}}
               </div>
             </div>
           </div>
@@ -62,6 +73,7 @@
 
   import Buttongroup from '@/components/buttonGroup.vue';
   import {getHeziMarketRanking} from '@/api/common/ranking.js';
+  import {addComments,getHeziComments} from '@/api/common/comments.js';
 
   export default {
     data(){
@@ -83,16 +95,20 @@
         monthSelect: new Date().getMonth()+1,
         requestParams: {},
         picturePath: '',
-        marketRankingList: []
+        messageRequestParams: {}, // 留言请求参数
+        content: '', // 留言内容
+        contentList: [] //留言内容列表
       }
    },
    created() {
      this.initHeziMarketRanking()
+     this.getMessage()
    },
    methods:{
      change(){
        this.initHeziMarketRanking()
      },
+     // 初始化厂商排名
      initHeziMarketRanking(){
        this.picturePath = ''
        this.requestParams.year = this.yearSelect
@@ -107,11 +123,34 @@
          console.log(error)
          reject(error)
        })
+     },
+     // 获取页面留言
+     getMessage(){
+       this.messageRequestParams.belongModule = '厂商排行'
+       this.messageRequestParams = getHeziComments(this.messageRequestParams).then(res => {
+         this.contentList = res.data
+       }).catch(error => {
+         console.log(error)
+         reject(error)
+       })
+     },
+     // 留言
+     submitMessage(){
+       this.messageRequestParams.content = this.content
+       this.messageRequestParams.belongModule = '厂商排行'
+       addComments(this.messageRequestParams).then(res => {
+         alert('留言成功')
+         this.content = ''
+         this.getMessage()
+       }).catch(error => {
+         console.log(error)
+         reject(error)
+       })
      }
    },
    components:{
-       'Buttongroup': Buttongroup
-     },
+     'Buttongroup': Buttongroup
+   },
  }
 </script>
 

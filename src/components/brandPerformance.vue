@@ -188,17 +188,27 @@
               </el-table>
             </el-col>
           </el-row>
+          <el-row>
+            <el-input
+              type="textarea"
+              placeholder="请输入留言内容"
+              v-model="content"
+              maxlength="100"
+              show-word-limit
+            >
+            </el-input>
+            <el-button type="text" @click="submitMessage">提交留言</el-button>
+          </el-row>
         </el-col>
         <el-col :span="4">
           <div class="box">
             <div class="title">
               <h4>留言区</h4>
             </div>
-            <div class="message">
-              <h5>任务</h5>
-              <div>请做一下大众品牌PR69.1和PR68.1的变化分析</div>
+            <div class="message" v-for="item in contentList" :key="item.id">
+              <div>{{item.content}}</div>
               <div style="text-align: right;">
-                -潘占福
+                -{{item.userName}}
               </div>
             </div>
           </div>
@@ -214,6 +224,7 @@
   import {getHeziBrandPerformance} from '@/api/common/brandPerformance.js';
   import {getHeziMarketRanking} from '@/api/common/brand.js';
   import {getHeziBrandDiscount} from '@/api/common/brandDiscount.js';
+  import {addComments,getHeziComments} from '@/api/common/comments.js';
 
   export default {
     data() {
@@ -241,19 +252,23 @@
         yearSelect: new Date().getFullYear(),
         monthSelect: new Date().getMonth()+1,
         businessSelect: '量产',
-        requestParams: {}, //请求参数
-        heziMarketRankingList: [], //品牌表现_市场排名对象
-        heziBrandPerformanceList: [] ,//品牌表现-市场销量数据
+        requestParams: {}, // 请求参数
+        heziMarketRankingList: [], // 品牌表现_市场排名对象
+        heziBrandPerformanceList: [] ,// 品牌表现-市场销量数据
         lastYearSalesArr: [], // 上一年销量数组
         nextYearSalesArr: [], // 下一年销量数组
         brandDiscountList: [] , // 品牌表现_折扣数据
-        brandDiscountArr: [] //重新组合后的品牌折扣数据
+        brandDiscountArr: [] , // 重新组合后的品牌折扣数据
+        messageRequestParams: {}, // 留言请求参数
+        content: '', // 留言内容
+        contentList: [] //留言内容列表
       }
     },
     created() {
       this.initHeziBrandPerformance()
       this.initHeziMarketRanking()
       this.initHeziBrandDiscount()
+      this.getMessage()
     },
     components: {
       'Buttongroup': Buttongroup
@@ -409,6 +424,29 @@
         };
         var myChart = echarts.init(document.getElementById('chart1'));
         myChart.setOption(echartsOption1)
+      },
+      // 获取页面留言
+      getMessage(){
+        this.messageRequestParams.belongModule = '品牌表现'
+        this.messageRequestParams = getHeziComments(this.messageRequestParams).then(res => {
+          this.contentList = res.data
+        }).catch(error => {
+          console.log(error)
+          reject(error)
+        })
+      },
+      // 留言
+      submitMessage(){
+        this.messageRequestParams.content = this.content
+        this.messageRequestParams.belongModule = '品牌表现'
+        addComments(this.messageRequestParams).then(res => {
+          alert('留言成功')
+          this.content = ''
+          this.getMessage()
+        }).catch(error => {
+          console.log(error)
+          reject(error)
+        })
       }
     }
   }
