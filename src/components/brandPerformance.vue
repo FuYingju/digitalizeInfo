@@ -36,8 +36,10 @@
         <el-col :span="16">
           <el-row>
             <el-col :span="24">
+              <div>{{this.businessSelect}}车市场销量</div>
               <el-table
                     :data="heziBrandPerformanceList"
+                    border
                     style="width: 100%">
                     <el-table-column
                       prop="month"
@@ -47,17 +49,17 @@
                     <el-table-column
                       prop="lastYearSales"
                       :label="String(parseInt(yearSelect)-1)"
-                      width="100">
+                      width="120">
                     </el-table-column>
                     <el-table-column
                       prop="nextYearSales"
                       :label="String(yearSelect)"
-                      width="100">
+                      width="120">
                     </el-table-column>
                     <el-table-column
                       prop="growthRate"
                       label="同比增速"
-                      width="77">
+                      width="120">
                     </el-table-column>
                   </el-table>
             </el-col>
@@ -69,7 +71,7 @@
           </el-row>
           <el-row>
             <el-col :span="24">
-              <div>{{this.businessSelect}}车主要品牌表现（AaK）</div>
+              <div>{{this.businessSelect}}车市场行业表现（AaK）</div>
               <el-table
                 :data="heziMarketRankingList"
                 row-key="id"
@@ -142,6 +144,7 @@
               <div>大众品牌与主要竞品折扣情况</div>
               <el-table
                 :data="brandDiscountArr"
+                border
                 row-key="id"
                 style="width: 100%">
                 <el-table-column
