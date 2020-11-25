@@ -9,21 +9,25 @@
             </div>
             <div class="selectBox">
               <span>年度</span>
-              <el-select v-model="yearSelect" placeholder="请选择" size="mini" class="select" @change="changeSel">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+              <el-select v-model="yearSelect" placeholder="请选择" size="mini" class="select" @change="yearChange">
+                <el-option
+                  v-for="item in nfOptions"
+                  :key="item.dictValue"
+                  :label="item.dictLabel"
+                  :value="item.dictValue">
                 </el-option>
               </el-select>
             </div>
             <div class="selectBox">
               <span>月度</span>
-              <el-select v-model="monthSelect" placeholder="请选择" size="mini" class="select" @change="changeSel">
+              <el-select v-model="monthSelect" placeholder="请选择" size="mini" class="select" @change="monthChange">
                 <el-option v-for="item in 12" :key="item.index" :label="item" :value="item">
                 </el-option>
               </el-select>
             </div>
             <div class="selectBox">
               <span>企业</span>
-              <el-select v-model="businessSelect" placeholder="请选择" size="mini" class="select" @change="changeSel">
+              <el-select v-model="businessSelect" placeholder="请选择" size="mini" class="select" @change="businessChange">
                 <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
                 </el-option>
               </el-select>
@@ -232,19 +236,7 @@
   export default {
     data() {
       return {
-        options: [{
-          value: '2020',
-          label: '2020'
-        }, {
-          value: '2019',
-          label: '2019'
-        }, {
-          value: '2018',
-          label: '2018'
-        }, {
-          value: '2017',
-          label: '2017'
-        }],
+        nfOptions: [],
         options2: [{
           value: '量产',
           label: '量产'
@@ -268,15 +260,45 @@
       }
     },
     created() {
+      this.getNf()
+      this.getMessage()
       this.initHeziBrandPerformance()
       this.initHeziMarketRanking()
       this.initHeziBrandDiscount()
-      this.getMessage()
     },
     components: {
       'Buttongroup': Buttongroup
     },
     methods: {
+      // 获取本年及前后一年的数组
+      getNf(){
+       var nfOptionsArray = new Array();
+       var years= new Date().getFullYear();
+       for(var i=years-1; i<= years+1; i++){
+         var anOption = {};
+         anOption.dictValue=i;
+         anOption.dictLabel=i;
+         nfOptionsArray.push(anOption);
+       }
+         this.nfOptions = nfOptionsArray;
+       },
+      // 选择年份
+      yearChange(e){
+        this.yearSelect = e
+        this.initHeziBrandPerformance()
+        this.initHeziMarketRanking()
+      },
+      // 选择月份
+      monthChange(e){
+        this.monthSelect = e
+        this.initHeziMarketRanking()
+      },
+      // 选择企业
+      businessChange(e){
+        this.businessSelect = e
+        this.initHeziBrandPerformance()
+        this.initHeziMarketRanking()
+      },
       //加载市场销量数据
       initHeziBrandPerformance(){
         this.heziBrandPerformanceList = []
@@ -284,6 +306,7 @@
         this.nextYearSalesArr = []
         this.requestParams = {}
         this.requestParams.nextYear = this.yearSelect+'年'
+        this.requestParams.month = this.monthSelect
         this.requestParams.tag = this.businessSelect+'车'
         if(this.businessSelect === '量产'){
           this.requestParams.tag = '乘用车'
@@ -307,7 +330,7 @@
           reject(error)
         })
       },
-      //加载主要品牌表现数据
+      //加载市场行业表现
       initHeziMarketRanking(){
         this.heziMarketRankingList = []
         this.requestParams = {}
@@ -370,10 +393,6 @@
           console.log(error)
           reject(error)
         })
-      },
-      changeSel(value){
-        this.initHeziBrandPerformance()
-        this.initHeziMarketRanking()
       },
       draw() {
         // 市场销量折线图

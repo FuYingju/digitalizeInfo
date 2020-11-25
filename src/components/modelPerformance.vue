@@ -7,18 +7,18 @@
             <div class="title"><h4>信息列表</h4></div>
             <div class="selectBox">
               <span>年度</span>
-              <el-select v-model="yearSelect" placeholder="请选择" size="mini" class="select" @change='change'>
+              <el-select v-model="yearSelect" placeholder="请选择" size="mini" class="select" @change='yearChange'>
                 <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
+                  v-for="item in nfOptions"
+                  :key="item.dictValue"
+                  :label="item.dictLabel"
+                  :value="item.dictValue">
                 </el-option>
               </el-select>
             </div>
             <div class="selectBox">
               <span>月度</span>
-              <el-select v-model="monthSelect" placeholder="请选择" size="mini" class="select" @change='change'>
+              <el-select v-model="monthSelect" placeholder="请选择" size="mini" class="select" @change='monthChange'>
                 <el-option
                   v-for="item in 12"
                   :key="item.index"
@@ -29,7 +29,7 @@
             </div>
             <div class="selectBox">
               <span>品牌</span>
-              <el-select v-model="businessSelect" placeholder="请选择" size="mini" class="select" @change='change'>
+              <el-select v-model="businessSelect" placeholder="请选择" size="mini" class="select" @change='businessChange'>
                 <el-option
                   v-for="item in businessNameArr"
                   :key="item.brandId"
@@ -47,6 +47,7 @@
           <div class="container">
             <el-row class="img-box">
               <el-col :span="24">
+                <div>{{this.brandName}}分车型销售情况</div>
                 <el-table
                   :data="heziSalesPlanRespListSTD"
                   row-key="id"
@@ -56,11 +57,16 @@
                     label="STD"
                     width="90">
                   </el-table-column>
+                  <el-table-column
+                    prop="vehicleMode"
+                    label="年度计划"
+                    width="90">
+                  </el-table-column>
                   <el-table-column :label="String(monthSelect)+'月'">
                     <el-table-column
                       prop="monthSalesNo"
                       label="销量"
-                      width="100">
+                      width="60">
                     </el-table-column>
                     <el-table-column
                       prop="monthYoychange"
@@ -72,12 +78,19 @@
                     <el-table-column
                       prop="salesNoSubtotal"
                       label="销量"
-                      width="100">
+                      width="60">
                     </el-table-column>
                     <el-table-column
                       prop="yearCompletionRate"
                       label="年计完成率"
                       width="100">
+                    </el-table-column>
+                  </el-table-column>
+                  <el-table-column :label="String(monthSelect+1)+'月'">
+                    <el-table-column
+                      prop="stockJv"
+                      label="计划"
+                      width="80">
                     </el-table-column>
                   </el-table-column>
                   <el-table-column :label="String(monthSelect)+'月末'">
@@ -93,6 +106,11 @@
                       label="库存深度"
                       width="80">
                     </el-table-column>
+                    <el-table-column
+                      prop="stockJvDepth"
+                      label="深度"
+                      width="80">
+                    </el-table-column>
                   </el-table-column>
                 </el-table>
               </el-col>
@@ -106,6 +124,11 @@
                   <el-table-column
                     prop="vehicleMode"
                     label="AaK"
+                    width="90">
+                  </el-table-column>
+                  <el-table-column
+                    prop="vehicleMode"
+                    label="年度计划"
                     width="90">
                   </el-table-column>
                   <el-table-column :label="String(monthSelect)+'月'">
@@ -187,21 +210,10 @@
   export default {
     data(){
       return{
-        options: [{
-                  value: '2020',
-                  label: '2020'
-                }, {
-                  value: '2019',
-                  label: '2019'
-                }, {
-                  value: '2018',
-                  label: '2018'
-                }, {
-                  value: '2017',
-                  label: '2017'
-                }],
-        businessSelect: '',
-        businessNameArr: [],
+        nfOptions: [],
+        businessSelect: '', //选中品牌的id
+        businessNameArr: [], //品牌列表
+        brandName: '', //当前选择的品牌名称
         yearSelect: new Date().getFullYear(),
         monthSelect: new Date().getMonth()+1,
         heziSalesPlanRespList: [], //品牌表现_市场排名对象
@@ -215,6 +227,7 @@
 
    },
    created() {
+     this.getNf()
      this.initBussinessSel()
      this.getMessage()
    },
@@ -222,12 +235,44 @@
        'Buttongroup': Buttongroup
      },
     methods:{
+      // 获取本年及前后一年的数组
+      getNf(){
+       var nfOptionsArray = new Array();
+       var years= new Date().getFullYear();
+       for(var i=years-1; i<= years+1; i++){
+         var anOption = {};
+         anOption.dictValue=i;
+         anOption.dictLabel=i;
+         nfOptionsArray.push(anOption);
+       }
+         this.nfOptions = nfOptionsArray;
+       },
+      // 选择年份
+      yearChange(e){
+        this.yearSelect = e
+        this.initHeziSalesPlan()
+      },
+      // 选择月份
+      monthChange(e){
+        this.monthSelect = e
+        this.initHeziSalesPlan()
+      },
+      businessChange(e){
+        let obj = {}
+        obj = this.businessNameArr.find((item) => {
+         return item.brandId === e;
+        });
+        //获取当前选择的品牌名称
+        this.brandName = obj.brandName
+        this.initHeziSalesPlan()
+      },
       //初始化品牌下拉
       initBussinessSel(){
         getHeziSalesPlanParams().then(res => {
           this.businessNameArr = res.data
           if(this.businessNameArr != null){
             this.businessSelect = this.businessNameArr[0].brandId // 预选中第一项
+            this.brandName = this.businessNameArr[0].brandName
             this.initHeziSalesPlan()
           }
         }).catch(error => {
@@ -255,6 +300,12 @@
         })
       },
       change(e){
+        let obj = {}
+        obj = this.businessNameArr.find((item) => {
+         return item.brandId === e;
+        });
+        //获取当前选择的品牌名称
+        this.brandName = obj.brandName
         this.initHeziSalesPlan()
       },
       // 获取页面留言

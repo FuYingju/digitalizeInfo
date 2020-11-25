@@ -7,18 +7,18 @@
             <div class="title"><h4>信息列表</h4></div>
             <div class="selectBox">
               <span>年度</span>
-              <el-select v-model="yearSelect" placeholder="请选择" size="mini" class="select" @change="change">
+              <el-select v-model="yearSelect" placeholder="请选择" size="mini" class="select" @change="yearChange">
                 <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
+                  v-for="item in nfOptions"
+                  :key="item.dictValue"
+                  :label="item.dictLabel"
+                  :value="item.dictValue">
                 </el-option>
               </el-select>
             </div>
             <div class="selectBox">
               <span>月度</span>
-              <el-select v-model="monthSelect" placeholder="请选择" size="mini" class="select" @change="change">
+              <el-select v-model="monthSelect" placeholder="请选择" size="mini" class="select" @change="monthChange">
                 <el-option
                   v-for="item in 12"
                   :key="item.index"
@@ -49,9 +49,6 @@
           >
           </el-input>
           <el-button type="text" @click="submitMessage">提交留言</el-button>
-          <!-- <template>
-            <el-button type="text" @click="open">我要留言</el-button>
-          </template> -->
         </el-col>
         <el-col :span="4">
           <div class="box">
@@ -78,19 +75,7 @@
   export default {
     data(){
       return{
-        options: [{
-                  value: '2020',
-                  label: '2020'
-                }, {
-                  value: '2019',
-                  label: '2019'
-                }, {
-                  value: '2018',
-                  label: '2018'
-                }, {
-                  value: '2017',
-                  label: '2017'
-                }],
+        nfOptions: [],
         yearSelect: new Date().getFullYear(),
         monthSelect: new Date().getMonth()+1,
         requestParams: {},
@@ -101,11 +86,31 @@
       }
    },
    created() {
+     this.getNf()
      this.initHeziMarketRanking()
      this.getMessage()
    },
    methods:{
-     change(){
+     // 获取本年及前后一年的数组
+     getNf(){
+      var nfOptionsArray = new Array();
+      var years= new Date().getFullYear();
+      for(var i=years-1; i<= years+1; i++){
+        var anOption = {};
+        anOption.dictValue=i;
+        anOption.dictLabel=i;
+        nfOptionsArray.push(anOption);
+      }
+        this.nfOptions = nfOptionsArray;
+      },
+     // 选择年份
+     yearChange(e){
+       this.yearSelect = e
+       this.initHeziMarketRanking()
+     },
+     // 选择月份
+     monthChange(e){
+       this.monthSelect = e
        this.initHeziMarketRanking()
      },
      // 初始化厂商排名
