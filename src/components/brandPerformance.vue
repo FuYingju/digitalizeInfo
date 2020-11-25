@@ -63,6 +63,7 @@
                     <el-table-column
                       prop="growthRate"
                       label="同比增速"
+                      :formatter="percentFormatter"
                       width="120">
                     </el-table-column>
                   </el-table>
@@ -99,21 +100,25 @@
                   <el-table-column
                     prop="monthYoychangeCompare"
                     label="同比变化"
+                    :formatter="percentFormatter"
                     width="50">
                   </el-table-column>
                   <el-table-column
                     prop="monthMarketShare"
                     label="市场份额"
+                    :formatter="percentFormatter"
                     width="50">
                   </el-table-column>
                   <el-table-column
                     prop="monthShareMonthOnMonth"
                     label="份额环比"
+                    :formatter="percentFormatter"
                     width="50">
                   </el-table-column>
                   <el-table-column
                     prop="monthYearOnYearShare"
                     label="份额同比"
+                    :formatter="percentFormatter"
                     width="50">
                   </el-table-column>
                 </el-table-column>
@@ -131,16 +136,19 @@
                   <el-table-column
                     prop="monthlyChange"
                     label="同比变化"
+                    :formatter="percentFormatter"
                     width="50">
                   </el-table-column>
                   <el-table-column
                     prop="marketShare"
                     label="累计份额"
+                    :formatter="percentFormatter"
                     width="50">
                   </el-table-column>
                   <el-table-column
                     prop="yearOnYearShare"
                     label="份额同比"
+                    :formatter="percentFormatter"
                     width="50">
                   </el-table-column>
                 </el-table-column>
@@ -159,36 +167,43 @@
                 <el-table-column
                   prop="Jan"
                   label="1月"
+                  :formatter="percentFormatter"
                   width="80">
                 </el-table-column>
                 <el-table-column
                   prop="Feb"
                   label="2月"
+                  :formatter="percentFormatter"
                   width="80">
                 </el-table-column>
                 <el-table-column
                   prop="Mar"
                   label="3月"
+                  :formatter="percentFormatter"
                   width="80">
                 </el-table-column>
                 <el-table-column
                   prop="Apr"
                   label="4月"
+                  :formatter="percentFormatter"
                   width="80">
                 </el-table-column>
                 <el-table-column
                   prop="May"
                   label="5月"
+                  :formatter="percentFormatter"
                   width="80">
                 </el-table-column>
                 <el-table-column
                   prop="Jun"
                   label="6月"
+                  :formatter="percentFormatter"
                   width="80">
                 </el-table-column>
                 <el-table-column
                   prop="Jul"
                   label="7月"
+                  :formatter="percentFormatter"
                   width="80">
                 </el-table-column>
                 </el-table-column>
@@ -393,6 +408,14 @@
           console.log(error)
           reject(error)
         })
+      },
+      // 数字格式化成百分比
+      percentFormatter(row, column, cellValue, index) {
+        if (cellValue==0 || cellValue==-0 || isNaN(cellValue) ) {
+            return 0
+        }
+        var str = ( cellValue * 100 ).toFixed(2) + "%";
+        return str
       },
       draw() {
         // 市场销量折线图
