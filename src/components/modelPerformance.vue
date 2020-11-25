@@ -29,9 +29,9 @@
             </div>
             <div class="selectBox">
               <span>品牌</span>
-              <el-select v-model="businessPreSelect" placeholder="请选择" size="mini" class="select" @change='change'>
+              <el-select v-model="businessSelect" placeholder="请选择" size="mini" class="select" @change='change'>
                 <el-option
-                  v-for="item in businessSelect"
+                  v-for="item in businessNameArr"
                   :key="item.brandId"
                   :label="item.brandName"
                   :value="item.brandId">
@@ -200,8 +200,8 @@
                   value: '2017',
                   label: '2017'
                 }],
-        businessPreSelect: '',
-        businessSelect: [],
+        businessSelect: '',
+        businessNameArr: [],
         yearSelect: new Date().getFullYear(),
         monthSelect: new Date().getMonth()+1,
         heziSalesPlanRespList: [], //品牌表现_市场排名对象
@@ -225,11 +225,11 @@
       //初始化品牌下拉
       initBussinessSel(){
         getHeziSalesPlanParams().then(res => {
-          this.businessSelect = res.data
-          if(this.businessSelect != null){
-            this.businessPreSelect = this.businessSelect[0].brandId // 预选中第一项
+          this.businessNameArr = res.data
+          if(this.businessNameArr != null){
+            this.businessSelect = this.businessNameArr[0].brandId // 预选中第一项
+            this.initHeziSalesPlan()
           }
-          this.initHeziSalesPlan()
         }).catch(error => {
           console.log(error)
           reject(error)
@@ -239,7 +239,7 @@
       initHeziSalesPlan(){
         this.requestParams.year = this.yearSelect
         this.requestParams.month = this.monthSelect
-        this.requestParams.brandId = this.businessPreSelect
+        this.requestParams.brandId = this.businessSelect
         getHeziSalesPlan(this.requestParams).then(res => {
           this.heziSalesPlanRespList = res.data
           if(this.heziSalesPlanRespList !=  null){

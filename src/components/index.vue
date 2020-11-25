@@ -6,10 +6,12 @@
       </div>
       <template>
         <el-carousel :interval="5000" indicator-position='outside'>
-          <el-carousel-item v-for="item in infoList" :key="index">
-            <div class="title">{{item.name}}</div>
-            <div v-for="(item2,index) in item.content" :key="item2.index" class="linkItem">
+          <el-carousel-item v-for="item in partnerNewsGroup" :key="item.id">
+            <div class="title">{{item.brandName}}</div>
+            <div v-for="(item2,index) in item.data" :key="item2.id" class="linkItem">
+              <router-link :to="{path:'/partnerNews', query:{id:item2.id}}">
                 <el-link>{{index+1}} 、 {{item2.title}}</el-link>
+              </router-link>
             </div>
           </el-carousel-item>
         </el-carousel>
@@ -571,93 +573,20 @@
           </el-carousel-item>
         </el-carousel>
       </template>
-
     </el-card>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+  import {selectAllHeziPartnerNews} from '@/api/common/partner.js';
+
   var echarts = require('echarts');
   export default {
     data(){
       return{
-        infoList:[
-          {
-           name:'大众',
-           content:[
-              {
-                title:"大众停止土耳其新工厂计划大众停止土耳其新工厂计划大众停止土耳其新工厂计划",
-                link:'#'
-               },
-              {
-                title:"大众停止土耳其新工厂计划大众停止土耳其新工厂计划大众停止土耳其新工厂计划",
-                link:'#'
-              },
-              {
-                title:"大众停止土耳其新工厂计划大众停止土耳其新工厂计划大众停止土耳其新工厂计划",
-                link:'#'
-              },
-              {
-                title:"大众停止土耳其新工厂计划大众停止土耳其新工厂计划大众停止土耳其新工厂计划",
-                link:'#'
-              },
-              {
-                title:"大众停止土耳其新工厂计划大众停止土耳其新工厂计划大众停止土耳其新工厂计划",
-                link:'#'
-              }
-            ]
-          },
-          {
-           name:'红旗',
-           content:[
-              {
-                title:"大众停止土耳其新工厂计划大众停止土耳其新工厂计划大众停止土耳其新工厂计划",
-                link:'#'
-               },
-              {
-                title:"大众停止土耳其新工厂计划大众停止土耳其新工厂计划大众停止土耳其新工厂计划",
-                link:'#'
-              },
-              {
-                title:"大众停止土耳其新工厂计划大众停止土耳其新工厂计划大众停止土耳其新工厂计划",
-                link:'#'
-              },
-              {
-                title:"大众停止土耳其新工厂计划大众停止土耳其新工厂计划大众停止土耳其新工厂计划",
-                link:'#'
-              },
-              {
-                title:"大众停止土耳其新工厂计划大众停止土耳其新工厂计划大众停止土耳其新工厂计划",
-                link:'#'
-              }
-            ]
-          },
-          {
-           name:'奥迪',
-           content:[
-              {
-                title:"大众停止土耳其新工厂计划大众停止土耳其新工厂计划大众停止土耳其新工厂计划",
-                link:'#'
-               },
-              {
-                title:"大众停止土耳其新工厂计划大众停止土耳其新工厂计划大众停止土耳其新工厂计划",
-                link:'#'
-              },
-              {
-                title:"大众停止土耳其新工厂计划大众停止土耳其新工厂计划大众停止土耳其新工厂计划",
-                link:'#'
-              },
-              {
-                title:"大众停止土耳其新工厂计划大众停止土耳其新工厂计划大众停止土耳其新工厂计划",
-                link:'#'
-              },
-              {
-                title:"大众停止土耳其新工厂计划大众停止土耳其新工厂计划大众停止土耳其新工厂计划",
-                link:'#'
-              }
-            ]
-          }
-        ],
+        partnerNewsArr: [], //合作伙伴动态
+        partnerNewsGroup: [], //重新组合后的合作伙伴动态
         echartsOption1:{
           title: {
                   text: '一汽大众企业搜索指数'
@@ -773,7 +702,43 @@
 
       }
     },
+    created() {
+      this.initPartnerNews()
+    },
     methods:{
+      initPartnerNews(){
+        selectAllHeziPartnerNews().then(res => {
+          this.partnerNewsArr = res.data
+          this.group()
+        }).catch(error => {
+          console.log(error)
+          reject(error)
+        })
+      },
+      group(){
+        var map = {}
+        var dest = []
+        for(var i = 0; i < this.partnerNewsArr.length; i++){
+            var ai = this.partnerNewsArr[i]
+            if(!map[ai.brandName]){
+                dest.push({
+                    id:ai.id,
+                    brandName: ai.brandName,
+                    data: [ai]
+                });
+                map[ai.brandName] = ai
+            }else{
+                for(var j = 0; j < dest.length; j++){
+                    var dj = dest[j];
+                    if(dj.brandName == ai.brandName){
+                        dj.data.push(ai)
+                        break
+                    }
+                }
+            }
+        }
+        this.partnerNewsGroup = dest
+      },
       draw(){
         var myChart = echarts.init(document.getElementById('chart1'));
         myChart.setOption(this.echartsOption1)
@@ -850,4 +815,10 @@
         .img-box{text-align: center;}
         img{width: 100%;height: 260px;}
         .el-carousel__button{background-color: #2C3E50;}
+        a {
+          text-decoration: none;
+        }
+        .router-link-active {
+          text-decoration: none;
+        }
 </style>
