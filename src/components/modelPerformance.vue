@@ -273,6 +273,7 @@
         this.monthSelect = e
         this.initHeziSalesPlan()
       },
+      //选择品牌
       businessChange(e){
         let obj = {}
         obj = this.businessNameArr.find((item) => {
@@ -314,15 +315,6 @@
           console.log(error)
           reject(error)
         })
-      },
-      change(e){
-        let obj = {}
-        obj = this.businessNameArr.find((item) => {
-         return item.brandId === e;
-        });
-        //获取当前选择的品牌名称
-        this.brandName = obj.brandName
-        this.initHeziSalesPlan()
       },
       // 获取页面留言
       getMessage(){
