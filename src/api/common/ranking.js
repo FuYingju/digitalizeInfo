@@ -1,4 +1,5 @@
 import { request } from '@/utils/request'
+
 /**
  * 厂商排名查询
  */

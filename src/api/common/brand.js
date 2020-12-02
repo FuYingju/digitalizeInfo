@@ -1,6 +1,6 @@
 import { request } from '@/utils/request'
 /**
- * 用户登录
+ * 查询品牌下拉
  */
 export function getBrand() {
   return request({

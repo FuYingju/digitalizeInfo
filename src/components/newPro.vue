@@ -7,23 +7,23 @@
             <div class="title"><h4>信息列表</h4></div>
             <div class="selectBox">
               <span>年度</span>
-              <el-select v-model="value" placeholder="请选择" size="mini" class="select">
+              <el-select v-model="yearSelect" placeholder="请选择" size="mini" class="select" @change="yearChange">
                 <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
+                  v-for="item in nfOptions"
+                  :key="item.dictValue"
+                  :label="item.dictLabel"
+                  :value="item.dictValue">
                 </el-option>
               </el-select>
             </div>
             <div class="selectBox">
               <span>月度</span>
-              <el-select v-model="value2" placeholder="请选择" size="mini" class="select">
+              <el-select v-model="monthSelect" placeholder="请选择" size="mini" class="select" @change="monthChange">
                 <el-option
-                  v-for="item in 12"
+                  v-for="item in monthOptions"
                   :key="item.index"
-                  :label="item"
-                  :value="item">
+                  :label="item.label"
+                  :value="item.value">
                 </el-option>
               </el-select>
             </div>
@@ -40,6 +40,42 @@
               </el-col>
             </el-row>
             <el-row class="img-box">
+              <el-col :span="24">
+                <el-table
+                  :data="newProList"
+                  row-key="id"
+                  style="width: 100%">
+                  <el-table-column
+                    prop="vehicleMode"
+                    label=""
+                    width="100">
+                  </el-table-column>
+                  <el-table-column
+                    prop="share"
+                    label="市场份额"
+                    width="100">
+                  </el-table-column>
+                  <el-table-column
+                    prop="yoychange"
+                    label="同比"
+                    width="100">
+                  </el-table-column>
+                  <el-table-column :label="String(yearSelect)+'年'">
+                    <el-table-column
+                      prop="brandName"
+                      label="一汽大众"
+                      width="100">
+                    </el-table-column>
+                    <el-table-column
+                      prop="brandName"
+                      label="上汽大众"
+                      width="100">
+                    </el-table-column>
+                  </el-table-column>
+                  </el-table>
+              </el-col>
+            </el-row>
+            <el-row class="img-box">
               <el-col :span="6">
                 <img src="../assets/01.jpg">
               </el-col>
@@ -53,7 +89,7 @@
                 <img src="../assets/01.jpg">
               </el-col>
             </el-row>
-            
+
             <el-row>
               <el-col :span="24">
                 <h5>合资品牌燃油车细分市场覆盖度</h5>
@@ -73,16 +109,24 @@
                 <img src="../assets/01.jpg">
               </el-col>
             </el-row>
+            <el-input
+              type="textarea"
+              placeholder="请输入留言内容"
+              v-model="content"
+              maxlength="100"
+              show-word-limit
+            >
+            </el-input>
+            <el-button type="text" @click="submitMessage">提交留言</el-button>
           </div>
         </el-col>
         <el-col :span="4">
           <div class="box">
             <div class="title"><h4>留言区</h4></div>
-            <div class="message">
-              <h5>任务</h5>
-              <div>请做一下大众品牌PR69.1和PR68.1的变化分析</div>
+            <div class="message" v-for="item in contentList" :key="item.id">
+              <div>{{item.content}}</div>
               <div style="text-align: right;">
-                -潘占福
+                -{{item.userName}}
               </div>
             </div>
           </div>
@@ -95,25 +139,29 @@
 <script>
 
   import Buttongroup from '@/components/buttonGroup.vue';
+  import {addComments,getHeziComments} from '@/api/common/comments.js';
+  import {getHeziNewPro} from '@/api/common/newPro.js';
+
   export default {
     data(){
       return{
-        options: [{
-                  value: '2020',
-                  label: '2020'
-                }, {
-                  value: '2019',
-                  label: '2019'
-                }, {
-                  value: '2018',
-                  label: '2018'
-                }, {
-                  value: '2017',
-                  label: '2017'
-                }],
-        value: '',
-        value2:'',
-        value3:'',
+        nfOptions: [],
+        monthOptions:[{
+            label:'1~6月',
+            value:'0'
+          },
+          {
+            label:'6~12月',
+            value:'1'
+          }
+        ],
+        yearSelect: new Date().getFullYear(),
+        monthSelect: '0',
+        requestParams: {},
+        messageRequestParams: {}, // 留言请求参数
+        newProList:[],
+        content: '', // 留言内容
+        contentList: [], //留言内容列表
         hotNews:[{
           name:'热门新闻1',
           link:'#'
@@ -133,6 +181,69 @@
         ]
       }
 
+   },
+   created(){
+     this.getNf()
+     this.getMessage()
+     this.initNewPro()
+   },
+   methods:{
+     // 初始化新产品规划
+     initNewPro(){
+       this.requestParams.year = this.yearSelect
+       this.requestParams.month = this.monthSelect
+       getHeziNewPro(this.requestParams).then(res => {
+         this.newProList = res.data
+       }).catch(error => {
+         console.log(error)
+         reject(error)
+       })
+     },
+     // 获取本年及前后一年的数组
+     getNf(){
+      var nfOptionsArray = new Array();
+      var years= new Date().getFullYear();
+      for(var i=years-1; i<= years+1; i++){
+        var anOption = {};
+        anOption.dictValue=i;
+        anOption.dictLabel=i;
+        nfOptionsArray.push(anOption);
+      }
+        this.nfOptions = nfOptionsArray;
+      },
+     // 选择年份
+     yearChange(e){
+       this.yearSelect = e
+       this.initHeziMarketRanking()
+     },
+     // // 选择月份
+     monthChange(e){
+       this.monthSelect = e
+       this.initHeziMarketRanking()
+     },
+     // 获取页面留言
+     getMessage(){
+       this.messageRequestParams.belongModule = '新产品规划'
+       this.messageRequestParams = getHeziComments(this.messageRequestParams).then(res => {
+         this.contentList = res.data
+       }).catch(error => {
+         console.log(error)
+         reject(error)
+       })
+     },
+     // 留言
+     submitMessage(){
+       this.messageRequestParams.content = this.content
+       this.messageRequestParams.belongModule = '新产品规划'
+       addComments(this.messageRequestParams).then(res => {
+         alert('留言成功')
+         this.content = ''
+         this.getMessage()
+       }).catch(error => {
+         console.log(error)
+         reject(error)
+       })
+     }
    },
    components:{
        'Buttongroup': Buttongroup
