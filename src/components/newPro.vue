@@ -27,6 +27,17 @@
                 </el-option>
               </el-select>
             </div>
+            <div class="selectBox">
+              <span>厂家</span>
+              <el-select v-model="companySelect" placeholder="请选择" size="mini" class="select" @change="companyChange">
+                <el-option
+                  v-for="item in companyOptions"
+                  :key="item.index"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
             <div class="buttonGroup">
               <Buttongroup />
             </div>
@@ -34,20 +45,20 @@
         </el-col>
         <el-col :span="16">
           <div class="container">
-            <el-row>
-              <el-col :span="24">
-                <h5>合资品牌燃油车细分市场覆盖度</h5>
-              </el-col>
-            </el-row>
-            <el-row class="img-box">
+            <!-- <el-row class="img-box">
               <el-col :span="24">
                 <el-table
                   :data="newProList"
                   row-key="id"
-                  style="width: 100%">
+                  border
+                  show-summary
+                  :summary-method="getSummaries"
+                  sum-text="细分市场覆盖率"
+                  height="200"
+                  style="width: 100%; margin-top: 20px">
                   <el-table-column
                     prop="vehicleMode"
-                    label=""
+                    label="品牌"
                     width="100">
                   </el-table-column>
                   <el-table-column
@@ -74,39 +85,20 @@
                   </el-table-column>
                   </el-table>
               </el-col>
-            </el-row>
-            <el-row class="img-box">
-              <el-col :span="6">
-                <img src="../assets/01.jpg">
-              </el-col>
-              <el-col :span="6">
-                <img src="../assets/01.jpg">
-              </el-col>
-              <el-col :span="6">
-                <img src="../assets/01.jpg">
-              </el-col>
-              <el-col :span="6">
-                <img src="../assets/01.jpg">
-              </el-col>
-            </el-row>
-
+            </el-row> -->
             <el-row>
               <el-col :span="24">
-                <h5>合资品牌燃油车细分市场覆盖度</h5>
+                <div id="chart1" class="chartBox"></div>
               </el-col>
             </el-row>
-            <el-row class="img-box">
-              <el-col :span="6">
-                <img src="../assets/01.jpg">
+            <el-row>
+              <el-col :span="24">
+                <div id="chart2" class="chartBox"></div>
               </el-col>
-              <el-col :span="6">
-                <img src="../assets/01.jpg">
-              </el-col>
-              <el-col :span="6">
-                <img src="../assets/01.jpg">
-              </el-col>
-              <el-col :span="6">
-                <img src="../assets/01.jpg">
+            </el-row>
+            <el-row>
+              <el-col :span="24">
+                <div id="chart3" class="chartBox"></div>
               </el-col>
             </el-row>
             <el-input
@@ -138,6 +130,7 @@
 
 <script>
 
+  var echarts = require('echarts');
   import Buttongroup from '@/components/buttonGroup.vue';
   import {addComments,getHeziComments} from '@/api/common/comments.js';
   import {getHeziNewPro} from '@/api/common/newPro.js';
@@ -155,30 +148,30 @@
             value:'1'
           }
         ],
+        companyOptions:[{
+            label:'一汽大众',
+            value:'0'
+          },
+          {
+            label:'上汽大众',
+            value:'1'
+          }
+        ],
+        companySelect: '0',
         yearSelect: new Date().getFullYear(),
         monthSelect: '0',
+        monthFormat: '1~6月', //当前选择的品牌名称
         requestParams: {},
         messageRequestParams: {}, // 留言请求参数
         newProList:[],
+        coverList:[], //细分市场覆盖度列表
+        fuelCoverList:[], //燃油车细分市场覆盖度列表
+        electCoverList:[], //电动车细分市场覆盖度列表
+        shareList:[], //细分市场份额列表
+        fuelShareList:[], //燃油车市场份额列表
+        electShareList:[], //电动车市场份额列表
         content: '', // 留言内容
-        contentList: [], //留言内容列表
-        hotNews:[{
-          name:'热门新闻1',
-          link:'#'
-          },
-          {
-            name:'热门新闻1',
-            link:'#'
-          },
-          {
-            name:'热门新闻1',
-            link:'#'
-          },
-          {
-            name:'热门新闻1',
-            link:'#'
-          }
-        ]
+        contentList: [] //留言内容列表
       }
 
    },
@@ -192,8 +185,29 @@
      initNewPro(){
        this.requestParams.year = this.yearSelect
        this.requestParams.month = this.monthSelect
+       this.requestParams.company = this.companySelect
        getHeziNewPro(this.requestParams).then(res => {
          this.newProList = res.data
+         if(this.newProList != null){
+           this.newProList.forEach(item =>{
+             var obj = {}
+             obj.value = item.share
+             obj.name = item.marketSegment
+             if(item.tag == '1'){
+               this.fuelShareList.push(obj)
+               this.fuelCoverList.push(item.cover)
+             }else{
+               this.electShareList.push(obj)
+               this.electCoverList.push(item.cover)
+             }
+           })
+         }else{
+           this.fuelShareList = []
+           this.fuelCoverList = []
+           this.electShareList = []
+           this.electCoverList = []
+         }
+         this.draw()
        }).catch(error => {
          console.log(error)
          reject(error)
@@ -203,7 +217,7 @@
      getNf(){
       var nfOptionsArray = new Array();
       var years= new Date().getFullYear();
-      for(var i=years-1; i<= years+1; i++){
+      for(var i=years-1; i<= years+3; i++){
         var anOption = {};
         anOption.dictValue=i;
         anOption.dictLabel=i;
@@ -213,13 +227,20 @@
       },
      // 选择年份
      yearChange(e){
-       this.yearSelect = e
-       this.initHeziMarketRanking()
+       this.initNewPro()
      },
-     // // 选择月份
+     // 选择月份
      monthChange(e){
-       this.monthSelect = e
-       this.initHeziMarketRanking()
+       let obj = {}
+       obj = this.monthOptions.find((item) => {
+        return item.value === e;
+       });
+       this.monthFormat = obj.label
+       this.initNewPro()
+     },
+     // 选择厂家
+     companyChange(e){
+       this.initNewPro()
      },
      // 获取页面留言
      getMessage(){
@@ -243,6 +264,122 @@
          console.log(error)
          reject(error)
        })
+     },
+     draw() {
+       // 饼图
+       var echartsOption1 = {
+         title: {
+                 text: this.yearSelect+'年'+this.monthFormat+'燃油车市场结构',
+                 left: 'center'
+             },
+             tooltip: {
+                 trigger: 'item',
+                 formatter: '{a} <br/>{b} : {c} ({d}%)'
+             },
+             series: [
+                 {
+                     name: this.yearSelect+'年'+this.monthFormat+'燃油车市场结构',
+                     type: 'pie',
+                     radius: '55%',
+                     center: ['50%', '60%'],
+                     data: this.fuelShareList,
+                     emphasis: {
+                         itemStyle: {
+                             shadowBlur: 10,
+                             shadowOffsetX: 0,
+                             shadowColor: 'rgba(0, 0, 0, 0.5)'
+                         }
+                     }
+                 }
+             ]
+         }
+       var myChart = echarts.init(document.getElementById('chart1'))
+       myChart.setOption(echartsOption1)
+       var echartsOption2 = {
+         title: {
+                 text: this.yearSelect+'年'+this.monthFormat+'电动车市场结构',
+                 left: 'center'
+             },
+             tooltip: {
+                 trigger: 'item',
+                 formatter: '{a} <br/>{b} : {c} ({d}%)'
+             },
+             series: [
+                 {
+                     name: this.yearSelect+'年'+this.monthFormat+'电动车市场结构',
+                     type: 'pie',
+                     radius: '55%',
+                     center: ['50%', '60%'],
+                     data: this.electShareList,
+                     emphasis: {
+                         itemStyle: {
+                             shadowBlur: 10,
+                             shadowOffsetX: 0,
+                             shadowColor: 'rgba(0, 0, 0, 0.5)'
+                         }
+                     }
+                 }
+             ]
+         }
+       var myChart2 = echarts.init(document.getElementById('chart2'))
+       myChart2.setOption(echartsOption2)
+       // 细分市场覆盖度折线图
+       var echartsOption3 = {
+         title: {
+           text: '',
+           textStyle: {
+             fontSize: 15
+           }
+         },
+         legend: {
+             data: ['燃油车','电动车']
+         },
+         xAxis: [
+             {
+                 type: 'category',
+                 data: this.nfOptions.map((item)=>{return item.dictLabel}),
+                 axisPointer: {
+                     type: 'shadow'
+                 }
+             }
+         ],
+         yAxis: [
+           {
+               type: 'value',
+               min: 0,
+               max: 100,
+               interval: 5,
+               axisLabel: {
+                   formatter: '{value} %'
+               }
+           }
+         ],
+         series: [{
+             name: '燃油车',
+             type: 'line',
+             data: this.fuelCoverList,
+             itemStyle: {
+               color: '#82d1ec'
+             },
+             label: {
+               show: true
+             }
+           },
+           {
+             name: '电动车',
+             type: 'line',
+             data: this.electCoverList,
+             itemStyle: {
+               color: '#ffaa00'
+             },
+             label: {
+               show: true
+             }
+           },
+         ]
+       };
+       var myChart3 = echarts.init(document.getElementById('chart3'));
+       myChart3.setOption(echartsOption3)
      }
    },
    components:{
@@ -266,4 +403,7 @@
   img{width: 100%;}
   .hotNewsbox{border: #c6effd 1px solid;padding: 5px;height: 150px; background-color: #dcf5fe;}
   .linkItem2{line-height: 10px;margin: 10px;}
+  .chartBox {
+    height: 200px;
+  }
 </style>

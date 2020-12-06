@@ -6,24 +6,13 @@
           <div class="box">
             <div class="title"><h4>信息列表</h4></div>
             <div class="selectBox">
-              <span>年度</span>
-              <el-select v-model="value" placeholder="请选择" size="mini" class="select">
+              <span>品牌</span>
+              <el-select v-model="businessSelect" placeholder="请选择" size="mini" class="select" @change='businessChange'>
                 <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </div>
-            <div class="selectBox">
-              <span>月度</span>
-              <el-select v-model="value2" placeholder="请选择" size="mini" class="select">
-                <el-option
-                  v-for="item in 12"
-                  :key="item.index"
-                  :label="item"
-                  :value="item">
+                  v-for="item in businessNameArr"
+                  :key="item.brandId"
+                  :label="item.brandName"
+                  :value="item.brandId">
                 </el-option>
               </el-select>
             </div>
@@ -36,36 +25,41 @@
           <div class="container">
             <el-row>
               <el-col :span="24">
-                <h5>合资品牌新导入产品（可研）销量和利润率</h5>
+                <div id="chart1" class="chartBox" v-show="this.brandName == '一汽大众'"></div>
               </el-col>
             </el-row>
-            <el-row class="img-box">
-              <el-col :span="12">
-                <img src="../assets/04.jpg">
-              </el-col>
-              <el-col :span="12">
-                <img src="../assets/04.jpg">
+            <el-row>
+              <el-col :span="24">
+                <div id="chart2" class="chartBox" v-show="this.brandName != '一汽大众'"></div>
               </el-col>
             </el-row>
-            <el-row class="img-box">
-              <el-col :span="12">
-                <img src="../assets/04.jpg">
-              </el-col>
-              <el-col :span="12">
-                <img src="../assets/04.jpg">
+            <el-row>
+              <el-col :span="24">
+                <div id="chart3" class="chartBox" v-show="this.brandName != '一汽大众'"></div>
               </el-col>
             </el-row>
-
+            <el-row>
+              <el-col>
+                <el-input
+                  type="textarea"
+                  placeholder="请输入留言内容"
+                  v-model="content"
+                  maxlength="100"
+                  show-word-limit
+                >
+                </el-input>
+                <el-button type="text" @click="submitMessage">提交留言</el-button>
+              </el-col>
+            </el-row>
           </div>
         </el-col>
         <el-col :span="4">
           <div class="box">
             <div class="title"><h4>留言区</h4></div>
-            <div class="message">
-              <h5>任务</h5>
-              <div>请做一下大众品牌PR69.1和PR68.1的变化分析</div>
+            <div class="message" v-for="item in contentList" :key="item.id">
+              <div>{{item.content}}</div>
               <div style="text-align: right;">
-                -潘占福
+                -{{item.userName}}
               </div>
             </div>
           </div>
@@ -76,29 +70,338 @@
 </template>
 
 <script>
-
+  var echarts = require('echarts');
   import Buttongroup from '@/components/buttonGroup.vue';
+  import {addComments,getHeziComments} from '@/api/common/comments.js';
+  import {getBrand,getHeziProReview} from '@/api/common/proReview.js';
+
   export default {
     data(){
       return{
-        options: [{
-                  value: '2020',
-                  label: '2020'
-                }, {
-                  value: '2019',
-                  label: '2019'
-                }, {
-                  value: '2018',
-                  label: '2018'
-                }, {
-                  value: '2017',
-                  label: '2017'
-                }],
-        value: '',
-        value2:'',
-        value3:''
+        messageRequestParams: {}, // 留言请求参数
+        content: '', // 留言内容
+        contentList: [] ,//留言内容列表
+        requestParams: {},
+        businessSelect: '', //选中品牌的id
+        businessNameArr: [], //品牌列表
+        brandName: '', //当前选择的品牌名称
+        fzgArr:[], //销量规划(Fzg)
+        kpeArr:[], //KPE(%)
+        mileStoneArr:[] , //里程碑
+        licenseFeeOnceArr:[] , //一次性许可费（Mio€)
+        licensePercentArr:[] , //总许可费占比
+        feasibleSalesArr:[] , //可研销量
+        feasibleRateArr:[] , //可研利润率
+        actualSalesArr:[] , //实际销量
+        actualRateArr:[]  ,//实际利润率
+        proNameArr:[]  //产品
       }
-
+   },
+   created() {
+     this.initBussinessSel()
+     this.getMessage()
+   },
+   methods:{
+     //初始化项目开发进度
+     initHeziProReview(){
+       this.requestParams.brandId = this.businessSelect
+       getHeziProReview(this.requestParams).then(res => {
+         this.heziProReviewList = res.data
+         if(this.heziProReviewList != null){
+           // KPE
+           this.kpeArr = this.heziProReviewList.map(function (item) {
+             return item.kpe
+           })
+           // 销量规划
+           this.fzgArr = this.heziProReviewList.map(function (item) {
+             return item.fzg
+           })
+           // 里程碑
+           this.mileStoneArr = this.heziProReviewList.map(function (item) {
+             return item.mileStone
+           })
+           // 一次性许可费
+           this.licenseFeeOnceArr = this.heziProReviewList.map(function (item) {
+             return item.licenseFeeOnce
+           })
+           // 总许可费占比
+           this.licensePercentArr = this.heziProReviewList.map(function (item) {
+             return item.licensePercent
+           })
+           // 可研销量
+           this.feasibleSalesArr = this.heziProReviewList.map(function (item) {
+             return item.feasibleSales
+           })
+           // 可研利润率
+           this.feasibleRateArr = this.heziProReviewList.map(function (item) {
+             return item.feasibleRate
+           })
+           // 实际销量
+           this.actualSalesArr = this.heziProReviewList.map(function (item) {
+             return item.actualSales
+           })
+           // 实际利润率
+           this.actualRateArr = this.heziProReviewList.map(function (item) {
+             return item.actualRate
+           })
+           // 产品
+           this.proNameArr = this.heziProReviewList.map(function (item) {
+             return item.proName
+           })
+           this.draw()
+         }
+       }).catch(error => {
+         console.log(error)
+         reject(error)
+       })
+     },
+     //初始化品牌下拉
+     initBussinessSel(){
+       getBrand().then(res => {
+         this.businessNameArr = res.data
+         if(this.businessNameArr != null){
+           this.businessSelect = this.businessNameArr[0].brandId // 预选中第一项
+           this.brandName = this.businessNameArr[0].brandName
+           this.initHeziProReview()
+         }
+       }).catch(error => {
+         console.log(error)
+         reject(error)
+       })
+     },
+     //选择品牌
+     businessChange(e){
+       let obj = {}
+       obj = this.businessNameArr.find((item) => {
+        return item.brandId === e;
+       });
+       //获取当前选择的品牌名称
+       this.brandName = obj.brandName
+       this.initHeziProReview()
+     },
+     // 获取页面留言
+     getMessage(){
+       this.messageRequestParams.belongModule = '项目开发进度'
+       this.messageRequestParams = getHeziComments(this.messageRequestParams).then(res => {
+         this.contentList = res.data
+       }).catch(error => {
+         console.log(error)
+         reject(error)
+       })
+     },
+     // 留言
+     submitMessage(){
+       this.messageRequestParams.content = this.content
+       this.messageRequestParams.belongModule = '项目开发进度'
+       addComments(this.messageRequestParams).then(res => {
+         alert('留言成功')
+         this.content = ''
+         this.getMessage()
+       }).catch(error => {
+         console.log(error)
+         reject(error)
+       })
+     },
+     // 折线图
+     draw() {
+       var echartsOption1 = {
+             title: {
+                     text: '',
+                     textStyle: {
+                       fontSize: 15
+                     }
+                 },
+             legend: {
+                 data: ['可研销量','实际销量','可研利润率','实际利润率']
+             },
+             xAxis: [
+                 {
+                     type: 'category',
+                     data: this.proNameArr,
+                     axisPointer: {
+                         type: 'shadow'
+                     }
+                 }
+             ],
+             yAxis: [
+               {
+                   type: 'value',
+                   interval: 200000,
+                   axisLabel: {
+                       formatter: '{value}'
+                   }
+               },
+               {
+                   type: 'value',
+                   min: 0,
+                   max: 100,
+                   interval: 5,
+                   axisLabel: {
+                       formatter: '{value} %'
+                   }
+               }
+             ],
+             series: [
+                 {
+                     name: '可研销量',
+                     type: 'bar',
+                     data: this.feasibleSalesArr,
+                     itemStyle: {
+                       color: '#ff5500'
+                     },
+                 },
+                 {
+                     name: '实际销量',
+                     type: 'bar',
+                     data: this.actualSalesArr,
+                     itemStyle: {
+                       color: '#82d1ec'
+                     },
+                 },
+                 {
+                     name: '可研利润率',
+                     type: 'line',
+                     data: this.feasibleRateArr,
+                     itemStyle: {
+                       color: '#ffaa7f'
+                     },
+                 },
+                 {
+                     name: '实际利润率',
+                     type: 'line',
+                     data: this.actualRateArr,
+                     itemStyle: {
+                       color: '#aaaa7f'
+                     },
+                 }
+             ]
+           }
+       var echartsOption2 = {
+             title: {
+                     text: '销量及KPE',
+                     textStyle: {
+                       fontSize: 15
+                     }
+                 },
+             legend: {
+                 data: ['销量规划(Fzg)', 'KPE(%)']
+             },
+             xAxis: [
+                 {
+                     type: 'category',
+                     axisTick: {show: false},
+                     data: this.mileStoneArr,
+                     axisPointer: {
+                         type: 'shadow'
+                     }
+                 }
+             ],
+             yAxis: [
+                 {
+                     type: 'value',
+                     interval: 200000,
+                     axisLabel: {
+                         formatter: '{value}'
+                     }
+                 },
+                 {
+                     type: 'value',
+                     min: 0,
+                     max: 100,
+                     interval: 5,
+                     axisLabel: {
+                         formatter: '{value} %'
+                     }
+                 }
+             ],
+             series: [
+                 {
+                     name: '销量规划(Fzg)',
+                     type: 'bar',
+                     data: this.fzgArr,
+                     itemStyle: {
+                       color: '#82d1ec'
+                     },
+                 },
+                 {
+                     name: 'KPE(%)',
+                     type: 'line',
+                     data: this.kpeArr,
+                     itemStyle: {
+                       color: '#ffaa7f'
+                     },
+                 }
+             ]
+           }
+       var echartsOption3 = {
+             title: {
+                     text: '一次性许可费及总许可费占比',
+                     textStyle: {
+                       fontSize: 15
+                     }
+                 },
+             legend: {
+                 data: ['一次性许可费（Mio€)', '总许可费占比（%）']
+             },
+             xAxis: [
+                 {
+                     type: 'category',
+                     data: this.mileStoneArr,
+                     axisPointer: {
+                         type: 'shadow'
+                     }
+                 }
+             ],
+             yAxis: [
+                 {
+                     type: 'value',
+                     interval: 200000,
+                     axisLabel: {
+                         formatter: '{value}'
+                     }
+                 },
+                 {
+                     type: 'value',
+                     min: 0,
+                     max: 100,
+                     interval: 5,
+                     axisLabel: {
+                         formatter: '{value} %'
+                     }
+                 }
+             ],
+             series: [
+                 {
+                     name: '一次性许可费（Mio€)',
+                     type: 'bar',
+                     data: this.licenseFeeOnceArr,
+                     itemStyle: {
+                       color: '#82d1ec'
+                     },
+                 },
+                 {
+                     name: '总许可费占比（%）',
+                     type: 'line',
+                     data: this.licensePercentArr,
+                     itemStyle: {
+                       color: '#ffaa7f'
+                     },
+                 }
+             ]
+           }
+       if(this.brandName == '一汽大众'){
+         var myChart1 = echarts.init(document.getElementById('chart1'))
+         myChart1.setOption(echartsOption1)
+         echarts.dispose(document.getElementById('chart2'))
+         echarts.dispose(document.getElementById('chart3'))
+       }else{
+         var myChart2 = echarts.init(document.getElementById('chart2'))
+         myChart2.setOption(echartsOption2)
+         var myChart3 = echarts.init(document.getElementById('chart3'))
+         myChart3.setOption(echartsOption3)
+         echarts.dispose(document.getElementById('chart1'))
+       }
+     }
    },
    components:{
        'Buttongroup': Buttongroup
@@ -119,4 +422,10 @@
   h5{margin: 0;font-size: 14px;}
   .message{margin: 10px;font-size: 12px;}
   img{width: 100%;}
+  .chartBox {
+    height: 200px;
+  }
+  .hiden {
+    display: none;
+  }
 </style>

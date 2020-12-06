@@ -52,7 +52,60 @@
             </el-row>
             <el-row class="img-box">
               <el-col :span="12" v-for="item in this.heziProjectScheduleList" :key="item.id">
-                <img :src="basePath+item.picturePath">
+                <img :src="basePath+item.picturePath" @click="vShow">
+              </el-col>
+            </el-row>
+            <el-row v-show="showBtn == true">
+              <el-col>
+                <el-table
+                  :data="heziProjectScheduleList"
+                  row-key="id"
+                  border
+                  style="width: 100%">
+                  <el-table-column
+                    prop="projectName"
+                    label="项目"
+                    width="100">
+                  </el-table-column>
+                  <el-table-column
+                    prop="point"
+                    label="重点项"
+                    width="100">
+                  </el-table-column>
+                  <el-table-column
+                    prop="step"
+                    label="措施"
+                    width="100">
+                  </el-table-column>
+                  <el-table-column
+                    prop="principal"
+                    label="负责人"
+                    width="100">
+                  </el-table-column>
+                  <el-table-column
+                    prop="plan"
+                    label="进度"
+                    width="100">
+                  </el-table-column>
+                  <el-table-column
+                    prop="state"
+                    label="状态"
+                    width="100">
+                  </el-table-column>
+                </el-table>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col>
+                <el-input
+                  type="textarea"
+                  placeholder="请输入留言内容"
+                  v-model="content"
+                  maxlength="100"
+                  show-word-limit
+                >
+                </el-input>
+                <el-button type="text" @click="submitMessage">提交留言</el-button>
               </el-col>
             </el-row>
           </div>
@@ -93,7 +146,8 @@
         basePath: window.document.location.href.substring(0,16),
         messageRequestParams: {}, // 留言请求参数
         content: '', // 留言内容
-        contentList: [] //留言内容列表
+        contentList: [] ,//留言内容列表
+        showBtn:false
       }
    },
    created() {
@@ -159,6 +213,13 @@
        //获取当前选择的品牌名称
        this.brandName = obj.brandName
        this.initHeziProjectSchedule()
+     },
+     vShow(){
+       if(this.showBtn == false){
+         this.showBtn = true
+       }else{
+         this.showBtn = false
+       }
      },
      // 获取页面留言
      getMessage(){

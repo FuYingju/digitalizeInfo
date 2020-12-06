@@ -105,7 +105,7 @@
         fzgArr:[], //销量规划(Fzg)
         kpeArr:[], //KPE(%)
         vehicleModeArr:[] ,//车型
-        licenseFeeOnceArr:[] ,//一次性许可费
+        licenseFeeOnceArr:[] ,//一次性许可费（Mio€)
         licensePercentArr:[] //总许可费占比
       }
    },
@@ -123,18 +123,23 @@
        getHeziNewProlead(this.requestParams).then(res => {
          this.newProleadList = res.data
          if(this.newProleadList != null){
+           // KPE
            this.kpeArr = this.newProleadList.map(function (item) {
              return item.kpe
            })
+           // 销量规划
            this.fzgArr = this.newProleadList.map(function (item) {
              return item.fzg
            })
+           // 里程碑
            this.vehicleModeArr = this.newProleadList.map(function (item) {
              return item.vehicleMode
            })
+           // 一次性许可费
            this.licenseFeeOnceArr = this.newProleadList.map(function (item) {
              return item.licenseFeeOnce
            })
+           // 总许可费占比
            this.licensePercentArr = this.newProleadList.map(function (item) {
              return item.licensePercent
            })
@@ -307,7 +312,7 @@
                      }
                  },
              legend: {
-                 data: ['一次性许可费', '总许可费占比']
+                 data: ['一次性许可费（Mio€)', '总许可费占比（%）']
              },
              xAxis: [
                  {
@@ -342,7 +347,7 @@
              ],
              series: [
                  {
-                     name: '一次性许可费',
+                     name: '一次性许可费（Mio€)',
                      type: 'bar',
                      data: this.licenseFeeOnceArr,
                      itemStyle: {
@@ -350,7 +355,7 @@
                      },
                  },
                  {
-                     name: '总许可费占比',
+                     name: '总许可费占比（%）',
                      type: 'line',
                      data: this.licensePercentArr,
                      itemStyle: {
