@@ -38,9 +38,6 @@
                 </el-option>
               </el-select>
             </div>
-            <div class="buttonGroup">
-              <Buttongroup />
-            </div>
           </div>
         </el-col>
         <el-col :span="16">
@@ -55,24 +52,30 @@
                 <div id="chart2" class="chartBox"></div>
               </el-col>
             </el-row>
-            <el-input
-              type="textarea"
-              placeholder="请输入留言内容"
-              v-model="content"
-              maxlength="100"
-              show-word-limit
-            >
-            </el-input>
-            <el-button type="text" @click="submitMessage">提交留言</el-button>
+            <el-row>
+              <el-col :span="24">
+                <el-input
+                  type="textarea"
+                  placeholder="请输入留言内容"
+                  v-model="content"
+                  maxlength="100"
+                  show-word-limit
+                >
+                </el-input>
+                <el-button type="text" @click="submitMessage">提交留言</el-button>
+              </el-col>
+            </el-row>
           </div>
         </el-col>
         <el-col :span="4">
           <div class="box">
             <div class="title"><h4>留言区</h4></div>
-            <div class="message" v-for="item in contentList" :key="item.id">
-              <div>{{item.content}}</div>
-              <div style="text-align: right;">
-                -{{item.userName}}
+            <div class="contentmsg">
+              <div class="message" v-for="item in contentList" :key="item.id">
+                <div>{{item.content}}</div>
+                <div style="text-align: right;">
+                  -{{item.userName}}
+                </div>
               </div>
             </div>
           </div>
@@ -85,7 +88,6 @@
 <script>
 
   var echarts = require('echarts');
-  import Buttongroup from '@/components/buttonGroup.vue';
   import {addComments,getHeziComments} from '@/api/common/comments.js';
   import {getHeziNewProlead, getHeziNewProleadParams} from '@/api/common/newProlead.js';
 
@@ -218,30 +220,17 @@
              title: {
                      text: '销量及KPE',
                      textStyle: {
-                       fontSize: 15
+                       fontSize: 14
                      }
                  },
-             // tooltip: {
-             //         trigger: 'axis',
-             //         axisPointer: {
-             //             type: 'cross',
-             //             crossStyle: {
-             //                 color: '#999'
-             //             }
-             //         }
-             //     },
-             //   toolbox: {
-             //       feature: {
-             //           dataView: {show: true, readOnly: false},
-             //           magicType: {show: true, type: ['line', 'bar']},
-             //           restore: {show: true},
-             //           saveAsImage: {show: true}
-             //       }
-             //   },
-             // grid: {
-             //   height: '80%',
-             //   width: '80%' //左右边距，设置为100，显示不全12月
-             // },
+             grid: {
+               height:'90%',
+               width:'70%',
+               x:'20%',    //左上角x轴距盒子边框的距离
+               y:60,        //左上角Y轴距盒子边框的距离
+               x2:'5%',    //右下角x轴距盒子边框的距离
+               y2:30     //右下角Y轴距盒子边框的距离
+             },
              legend: {
                  data: ['销量规划(Fzg)', 'KPE(%)']
              },
@@ -249,13 +238,6 @@
                  {
                      type: 'category',
                      data: this.vehicleModeArr,
-                     // data: (function (){
-                     //     var res = [];
-                     //     res = this.newProleadList.map(function (item) {
-                     //       return item.vehicleMode
-                     //     })
-                     //     return res;
-                     // }),
                      axisPointer: {
                          type: 'shadow'
                      }
@@ -264,9 +246,6 @@
              yAxis: [
                  {
                      type: 'value',
-                     // name: '水量',
-                     // min: 200000,
-                     // max: 2000000,
                      interval: 200000,
                      axisLabel: {
                          formatter: '{value}'
@@ -274,7 +253,6 @@
                  },
                  {
                      type: 'value',
-                     // name: '温度',
                      min: 0,
                      max: 100,
                      interval: 5,
@@ -308,7 +286,7 @@
              title: {
                      text: '一次性许可费及总许可费占比',
                      textStyle: {
-                       fontSize: 15
+                       fontSize: 14
                      }
                  },
              legend: {
@@ -326,9 +304,6 @@
              yAxis: [
                  {
                      type: 'value',
-                     // name: '水量',
-                     // min: 200000,
-                     // max: 2000000,
                      interval: 200000,
                      axisLabel: {
                          formatter: '{value}'
@@ -336,10 +311,9 @@
                  },
                  {
                      type: 'value',
-                     // name: '温度',
                      min: 0,
-                     max: 100,
-                     interval: 5,
+                     max: 2,
+                     interval: 0.2,
                      axisLabel: {
                          formatter: '{value} %'
                      }
@@ -367,28 +341,25 @@
        var myChart2 = echarts.init(document.getElementById('chart2'))
        myChart2.setOption(echartsOption2)
      }
-   },
-   components:{
-       'Buttongroup': Buttongroup
-     },
+   }
  }
 </script>
 
 <style scoped>
-  .box{width: 100%;margin: 0 auto;border: 1px solid #eee;height: 500px;position: relative;}
+  .box{width: 100%;margin: 0 auto;border: 1px solid #eee;height: 500px;position: relative;overflow: hidden;}
   .box .title{border-bottom: 1px solid #EEEEEE;background-color: #FFFFFF;width: 100%;text-align: center;padding: 10px 0;}
+  .contentmsg {height: 450px;overflow: hidden;width: calc(100% - 17px);}
+  .contentmsg:hover {overflow: auto;width: 100%;}
   h4{padding: 0;margin: 0;}
   .selectBox{margin: 10px; display: flex;}
   .selectBox span{font-size: 14px;width: 30%;line-height: 28px;}
   .selectBox .select{width: 70%;}
-  .buttonGroup{position: absolute;left: 50%;bottom: 50px;margin-left: -50px;}
   .container{margin: 0 15px;}
+  .chartBox {height: 200px;}
+  .img-box{text-align: center;}
   .linkItem{line-height: 35px;margin: 10px;}
   h5{margin: 0;font-size: 14px;}
   .message{margin: 10px;font-size: 12px;}
   img{width: 100%;}
   .linkItem2{line-height: 10px;margin: 10px;}
-  .chartBox {
-    height: 200px;
-  }
 </style>

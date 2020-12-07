@@ -32,9 +32,9 @@
                 </el-option>
               </el-select>
             </div>
-            <div class="buttonGroup">
+            <!-- <div class="buttonGroup">
               <Buttongroup />
-            </div>
+            </div> -->
           </div>
         </el-col>
         <el-col :span="16">
@@ -224,13 +224,13 @@
         </el-col>
         <el-col :span="4">
           <div class="box">
-            <div class="title">
-              <h4>留言区</h4>
-            </div>
-            <div class="message" v-for="item in contentList" :key="item.id">
-              <div>{{item.content}}</div>
-              <div style="text-align: right;">
-                -{{item.userName}}
+            <div class="title"><h4>留言区</h4></div>
+            <div class="contentmsg">
+              <div class="message" v-for="item in contentList" :key="item.id">
+                <div>{{item.content}}</div>
+                <div style="text-align: right;">
+                  -{{item.userName}}
+                </div>
               </div>
             </div>
           </div>
@@ -242,7 +242,7 @@
 
 <script>
   var echarts = require('echarts');
-  import Buttongroup from '@/components/buttonGroup.vue';
+  // import Buttongroup from '@/components/buttonGroup.vue';
   import {getHeziBrandPerformance} from '@/api/common/brandPerformance.js';
   import {getHeziMarketRanking} from '@/api/common/brand.js';
   import {getHeziBrandDiscount} from '@/api/common/brandDiscount.js';
@@ -281,9 +281,9 @@
       this.initHeziMarketRanking()
       this.initHeziBrandDiscount()
     },
-    components: {
-      'Buttongroup': Buttongroup
-    },
+    // components: {
+    //   'Buttongroup': Buttongroup
+    // },
     methods: {
       // 获取本年及前后一年的数组
       getNf(){
@@ -498,21 +498,10 @@
 </script>
 
 <style scoped>
-  .box {
-    width: 100%;
-    margin: 0 auto;
-    border: 1px solid #eee;
-    height: 500px;
-    position: relative;
-  }
-
-  .box .title {
-    border-bottom: 1px solid #EEEEEE;
-    background-color: #FFFFFF;
-    width: 100%;
-    text-align: center;
-    padding: 10px 0;
-  }
+  .box{width: 100%;margin: 0 auto;border: 1px solid #eee;height: 500px;position: relative;overflow: hidden;}
+  .box .title{border-bottom: 1px solid #EEEEEE;background-color: #FFFFFF;width: 100%;text-align: center;padding: 10px 0;}
+  .contentmsg {height: 450px;overflow: hidden;width: calc(100% - 17px);}
+  .contentmsg:hover {overflow: auto;width: 100%;}
 
   h4 {
     padding: 0;

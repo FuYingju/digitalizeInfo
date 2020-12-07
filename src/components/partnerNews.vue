@@ -13,7 +13,6 @@
 
 <script>
 
-  import Buttongroup from '@/components/buttonGroup.vue';
   import {listById} from '@/api/common/partner.js';
 
   export default {
@@ -31,10 +30,7 @@
        console.log(error)
        reject(error)
      })
-   },
-   components:{
-       'Buttongroup': Buttongroup
-     },
+   }
  }
 </script>
 
@@ -45,7 +41,6 @@
   .selectBox{margin: 10px; display: flex;}
   .selectBox span{font-size: 14px;width: 30%;line-height: 28px;}
   .selectBox .select{width: 70%;}
-  .buttonGroup{position: absolute;left: 50%;bottom: 50px;margin-left: -50px;}
   .container{margin: 0 15px;}
   .linkItem{line-height: 35px;margin: 10px;}
   h5{margin: 0;font-size: 14px;}

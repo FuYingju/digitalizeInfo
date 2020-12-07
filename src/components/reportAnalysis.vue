@@ -131,8 +131,10 @@
 </script>
 
 <style scoped>
-  .box{width: 100%;margin: 0 auto;border: 1px solid #eee;height: 500px;position: relative;}
+  .box{width: 100%;margin: 0 auto;border: 1px solid #eee;height: 500px;position: relative;overflow: hidden;}
   .box .title{border-bottom: 1px solid #EEEEEE;background-color: #FFFFFF;width: 100%;text-align: center;padding: 10px 0;}
+  .contentmsg {height: 450px;overflow: hidden;width: calc(100% - 17px);}
+  .contentmsg:hover {overflow: auto;width: 100%;}
   h4{padding: 0;margin: 0;}
   .selectBox{margin: 10px; display: flex;}
   .selectBox span{font-size: 14px;width: 30%;line-height: 28px;}

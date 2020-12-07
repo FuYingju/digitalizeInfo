@@ -38,54 +38,10 @@
                 </el-option>
               </el-select>
             </div>
-            <div class="buttonGroup">
-              <Buttongroup />
-            </div>
           </div>
         </el-col>
         <el-col :span="16">
           <div class="container">
-            <!-- <el-row class="img-box">
-              <el-col :span="24">
-                <el-table
-                  :data="newProList"
-                  row-key="id"
-                  border
-                  show-summary
-                  :summary-method="getSummaries"
-                  sum-text="细分市场覆盖率"
-                  height="200"
-                  style="width: 100%; margin-top: 20px">
-                  <el-table-column
-                    prop="vehicleMode"
-                    label="品牌"
-                    width="100">
-                  </el-table-column>
-                  <el-table-column
-                    prop="share"
-                    label="市场份额"
-                    width="100">
-                  </el-table-column>
-                  <el-table-column
-                    prop="yoychange"
-                    label="同比"
-                    width="100">
-                  </el-table-column>
-                  <el-table-column :label="String(yearSelect)+'年'">
-                    <el-table-column
-                      prop="brandName"
-                      label="一汽大众"
-                      width="100">
-                    </el-table-column>
-                    <el-table-column
-                      prop="brandName"
-                      label="上汽大众"
-                      width="100">
-                    </el-table-column>
-                  </el-table-column>
-                  </el-table>
-              </el-col>
-            </el-row> -->
             <el-row>
               <el-col :span="24">
                 <div id="chart1" class="chartBox"></div>
@@ -115,10 +71,12 @@
         <el-col :span="4">
           <div class="box">
             <div class="title"><h4>留言区</h4></div>
-            <div class="message" v-for="item in contentList" :key="item.id">
-              <div>{{item.content}}</div>
-              <div style="text-align: right;">
-                -{{item.userName}}
+            <div class="contentmsg">
+              <div class="message" v-for="item in contentList" :key="item.id">
+                <div>{{item.content}}</div>
+                <div style="text-align: right;">
+                  -{{item.userName}}
+                </div>
               </div>
             </div>
           </div>
@@ -131,7 +89,6 @@
 <script>
 
   var echarts = require('echarts');
-  import Buttongroup from '@/components/buttonGroup.vue';
   import {addComments,getHeziComments} from '@/api/common/comments.js';
   import {getHeziNewPro} from '@/api/common/newPro.js';
 
@@ -334,6 +291,10 @@
          legend: {
              data: ['燃油车','电动车']
          },
+         grid: {
+           height: '80%',
+           width: '80%'
+         },
          xAxis: [
              {
                  type: 'category',
@@ -348,7 +309,7 @@
                type: 'value',
                min: 0,
                max: 100,
-               interval: 5,
+               interval: 10,
                axisLabel: {
                    formatter: '{value} %'
                }
@@ -381,21 +342,19 @@
        var myChart3 = echarts.init(document.getElementById('chart3'));
        myChart3.setOption(echartsOption3)
      }
-   },
-   components:{
-       'Buttongroup': Buttongroup
-     },
+   }
  }
 </script>
 
 <style scoped>
-  .box{width: 100%;margin: 0 auto;border: 1px solid #eee;height: 500px;position: relative;}
+  .box{width: 100%;margin: 0 auto;border: 1px solid #eee;height: 500px;position: relative;overflow: hidden;}
   .box .title{border-bottom: 1px solid #EEEEEE;background-color: #FFFFFF;width: 100%;text-align: center;padding: 10px 0;}
+  .contentmsg {height: 450px;overflow: hidden;width: calc(100% - 17px);}
+  .contentmsg:hover {overflow: auto;width: 100%;}
   h4{padding: 0;margin: 0;}
   .selectBox{margin: 10px; display: flex;}
   .selectBox span{font-size: 14px;width: 30%;line-height: 28px;}
   .selectBox .select{width: 70%;}
-  .buttonGroup{position: absolute;left: 50%;bottom: 50px;margin-left: -50px;}
   .container{margin: 0 15px;}
   .linkItem{line-height: 35px;margin: 10px;}
   h5{margin: 0;font-size: 14px;}
