@@ -42,9 +42,9 @@
         </el-col>
         <el-col :span="16">
           <div class="container">
-            <el-row class="img-box">
+            <el-row style="margin-bottom: 35px;">
               <el-col :span="24">
-                <div>{{this.brandName}}分车型销售情况</div>
+                <p><h5>{{this.brandName}}分车型销售情况</h5></p>
                 <el-table
                   :data="heziSalesPlanRespListSTD"
                   row-key="id"
@@ -114,7 +114,7 @@
                 </el-table>
               </el-col>
             </el-row>
-            <el-row class="img-box">
+            <el-row style="margin-bottom: 35px;">
               <el-col :span="24">
                 <el-table
                   :data="heziSalesPlanRespListAaK"

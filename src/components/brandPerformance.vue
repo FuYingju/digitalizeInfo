@@ -38,47 +38,49 @@
           </div>
         </el-col>
         <el-col :span="16">
-          <el-row>
-            <el-col :span="24">
-              <div>{{this.businessSelect}}车市场销量</div>
+          <el-row style="margin-bottom: 35px;">
+            <el-col :span="17" :push="4">
+              <p><h5>{{this.businessSelect}}车市场销量</h5></p>
               <el-table
                     :data="heziBrandPerformanceList"
                     border
-                    style="width: 100%">
+                    row-key="id"
+                    style="width: 100%;">
                     <el-table-column
                       prop="month"
                       label=""
-                      width="100">
+                      width="110">
                     </el-table-column>
                     <el-table-column
                       prop="lastYearSales"
                       :label="String(parseInt(yearSelect)-1)"
-                      width="120">
+                      width="130">
                     </el-table-column>
                     <el-table-column
                       prop="nextYearSales"
                       :label="String(yearSelect)"
-                      width="120">
+                      width="130">
                     </el-table-column>
                     <el-table-column
                       prop="growthRate"
                       label="同比增速"
                       :formatter="percentFormatter"
-                      width="120">
+                      width="130">
                     </el-table-column>
                   </el-table>
             </el-col>
           </el-row>
-          <el-row>
+          <el-row style="margin-bottom: 35px;">
             <el-col :span="24">
               <div id="chart1" class="chartBox"></div>
             </el-col>
           </el-row>
-          <el-row>
+          <el-row style="margin-bottom: 35px;">
             <el-col :span="24">
-              <div>{{this.businessSelect}}车市场行业表现（AaK）</div>
+              <p><h5>{{this.businessSelect}}车市场行业表现（AaK）</h5></p>
               <el-table
                 :data="heziMarketRankingList"
+                border
                 row-key="id"
                 style="width: 100%">
                 <el-table-column
@@ -95,31 +97,31 @@
                   <el-table-column
                     prop="monthlySales"
                     label="销量"
-                    width="50">
+                    width="70">
                   </el-table-column>
                   <el-table-column
                     prop="monthYoychangeCompare"
                     label="同比变化"
                     :formatter="percentFormatter"
-                    width="50">
+                    width="70">
                   </el-table-column>
                   <el-table-column
                     prop="monthMarketShare"
                     label="市场份额"
                     :formatter="percentFormatter"
-                    width="50">
+                    width="70">
                   </el-table-column>
                   <el-table-column
                     prop="monthShareMonthOnMonth"
                     label="份额环比"
                     :formatter="percentFormatter"
-                    width="50">
+                    width="70">
                   </el-table-column>
                   <el-table-column
                     prop="monthYearOnYearShare"
                     label="份额同比"
                     :formatter="percentFormatter"
-                    width="50">
+                    width="70">
                   </el-table-column>
                 </el-table-column>
                 <el-table-column :label="'1-'+String(monthSelect)+'月'">
@@ -131,29 +133,33 @@
                   <el-table-column
                     prop="salesMonthAgo"
                     label="销量"
-                    width="50">
+                    width="70">
                   </el-table-column>
                   <el-table-column
                     prop="monthlyChange"
                     label="同比变化"
                     :formatter="percentFormatter"
-                    width="50">
+                    width="70">
                   </el-table-column>
                   <el-table-column
                     prop="marketShare"
                     label="累计份额"
                     :formatter="percentFormatter"
-                    width="50">
+                    width="70">
                   </el-table-column>
                   <el-table-column
                     prop="yearOnYearShare"
                     label="份额同比"
                     :formatter="percentFormatter"
-                    width="50">
+                    width="70">
                   </el-table-column>
                 </el-table-column>
               </el-table>
-              <div>大众品牌与主要竞品折扣情况</div>
+            </el-col>
+          </el-row>
+          <el-row style="margin-bottom: 35px;">
+            <el-col :span="24">
+              <p><h5>大众品牌与主要竞品折扣情况</h5></p>
               <el-table
                 :data="brandDiscountArr"
                 border
@@ -162,7 +168,7 @@
                 <el-table-column
                   prop="brandName"
                   label=""
-                  width="100">
+                  width="110">
                 </el-table-column>
                 <el-table-column
                   prop="Jan"
@@ -423,7 +429,7 @@
           title: {
             text: this.businessSelect + '车市场销量',
             textStyle: {
-              fontSize: 15
+              fontSize: 13
             }
           },
           grid: {

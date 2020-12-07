@@ -206,7 +206,7 @@
              title: {
                      text: '',
                      textStyle: {
-                       fontSize: 15
+                       fontSize: 13
                      }
                  },
              legend: {
@@ -233,7 +233,7 @@
                    type: 'value',
                    min: 0,
                    max: 100,
-                   interval: 5,
+                   minInterval: 5,
                    axisLabel: {
                        formatter: '{value} %'
                    }
@@ -278,7 +278,7 @@
              title: {
                      text: '销量及KPE',
                      textStyle: {
-                       fontSize: 15
+                       fontSize: 13
                      }
                  },
              legend: {
@@ -306,7 +306,7 @@
                      type: 'value',
                      min: 0,
                      max: 100,
-                     interval: 5,
+                     minInterval: 5,
                      axisLabel: {
                          formatter: '{value} %'
                      }
@@ -335,7 +335,7 @@
              title: {
                      text: '一次性许可费及总许可费占比',
                      textStyle: {
-                       fontSize: 15
+                       fontSize: 13
                      }
                  },
              legend: {
@@ -362,7 +362,7 @@
                      type: 'value',
                      min: 0,
                      max: 100,
-                     interval: 5,
+                     minInterval: 5,
                      axisLabel: {
                          formatter: '{value} %'
                      }

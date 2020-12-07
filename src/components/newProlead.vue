@@ -42,17 +42,17 @@
         </el-col>
         <el-col :span="16">
           <div class="container">
-            <el-row>
+            <el-row style="margin-top: 35px;margin-bottom: 35px;">
               <el-col :span="24">
                 <div id="chart1" class="chartBox"></div>
               </el-col>
             </el-row>
-            <el-row>
+            <el-row style="margin-bottom: 35px;">
               <el-col :span="24">
                 <div id="chart2" class="chartBox"></div>
               </el-col>
             </el-row>
-            <el-row>
+            <el-row style="margin-bottom: 35px;">
               <el-col :span="24">
                 <el-input
                   type="textarea"
@@ -220,16 +220,12 @@
              title: {
                      text: '销量及KPE',
                      textStyle: {
-                       fontSize: 14
+                       fontSize: 13
                      }
                  },
              grid: {
-               height:'90%',
-               width:'70%',
-               x:'20%',    //左上角x轴距盒子边框的距离
-               y:60,        //左上角Y轴距盒子边框的距离
-               x2:'5%',    //右下角x轴距盒子边框的距离
-               y2:30     //右下角Y轴距盒子边框的距离
+               height:'50%',
+               width:'70%'
              },
              legend: {
                  data: ['销量规划(Fzg)', 'KPE(%)']
@@ -246,7 +242,7 @@
              yAxis: [
                  {
                      type: 'value',
-                     interval: 200000,
+                     minInterval: 200000,
                      axisLabel: {
                          formatter: '{value}'
                      }
@@ -255,7 +251,7 @@
                      type: 'value',
                      min: 0,
                      max: 100,
-                     interval: 5,
+                     minInterval: 5,
                      axisLabel: {
                          formatter: '{value} %'
                      }
@@ -286,7 +282,7 @@
              title: {
                      text: '一次性许可费及总许可费占比',
                      textStyle: {
-                       fontSize: 14
+                       fontSize: 13
                      }
                  },
              legend: {
@@ -304,7 +300,7 @@
              yAxis: [
                  {
                      type: 'value',
-                     interval: 200000,
+                     minInterval: 50,
                      axisLabel: {
                          formatter: '{value}'
                      }
@@ -313,7 +309,7 @@
                      type: 'value',
                      min: 0,
                      max: 2,
-                     interval: 0.2,
+                     minInterval: 0.2,
                      axisLabel: {
                          formatter: '{value} %'
                      }

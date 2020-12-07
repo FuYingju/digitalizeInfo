@@ -42,17 +42,15 @@
         </el-col>
         <el-col :span="16">
           <div class="container">
-            <el-row>
-              <el-col :span="24">
+            <el-row style="margin-bottom: 35px;">
+              <el-col :span="12">
                 <div id="chart1" class="chartBox"></div>
               </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="24">
+              <el-col :span="12">
                 <div id="chart2" class="chartBox"></div>
               </el-col>
             </el-row>
-            <el-row>
+            <el-row style="margin-bottom: 35px;">
               <el-col :span="24">
                 <div id="chart3" class="chartBox"></div>
               </el-col>
@@ -285,15 +283,15 @@
          title: {
            text: '',
            textStyle: {
-             fontSize: 15
+             fontSize: 13
            }
          },
          legend: {
              data: ['燃油车','电动车']
          },
          grid: {
-           height: '80%',
-           width: '80%'
+           height: '50%',
+           width: '70%'
          },
          xAxis: [
              {
@@ -309,7 +307,7 @@
                type: 'value',
                min: 0,
                max: 100,
-               interval: 10,
+               minInterval: 10,
                axisLabel: {
                    formatter: '{value} %'
                }
