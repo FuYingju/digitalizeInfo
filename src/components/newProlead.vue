@@ -5,7 +5,7 @@
         <el-col :span="4">
           <div class="box">
             <div class="title"><h4>信息列表</h4></div>
-            <div class="selectBox">
+            <!-- <div class="selectBox">
               <span>年度</span>
               <el-select v-model="yearSelect" placeholder="请选择" size="mini" class="select" @change="yearChange">
                 <el-option
@@ -15,8 +15,8 @@
                   :value="item.dictValue">
                 </el-option>
               </el-select>
-            </div>
-            <div class="selectBox">
+            </div> -->
+            <!-- <div class="selectBox">
               <span>月度</span>
               <el-select v-model="monthSelect" placeholder="请选择" size="mini" class="select" @change="monthChange">
                 <el-option
@@ -26,7 +26,7 @@
                   :value="item">
                 </el-option>
               </el-select>
-            </div>
+            </div> -->
             <div class="selectBox">
               <span>品牌</span>
               <el-select v-model="businessSelect" placeholder="请选择" size="mini" class="select" @change='businessChange'>
@@ -119,8 +119,8 @@
    methods:{
      // 初始化新产品导入数据
      initNewProlead(){
-       this.requestParams.year = this.yearSelect
-       this.requestParams.month = this.monthSelect
+       // this.requestParams.year = this.yearSelect
+       // this.requestParams.month = this.monthSelect
        this.requestParams.brandId = this.businessSelect
        getHeziNewProlead(this.requestParams).then(res => {
          this.newProleadList = res.data
@@ -223,12 +223,8 @@
                        fontSize: 13
                      }
                  },
-             grid: {
-               height:'50%',
-               width:'70%'
-             },
              legend: {
-                 data: ['销量规划(Fzg)', 'KPE(%)']
+                 data: ['销量规划（Fzg）', 'KPE（%）']
              },
              xAxis: [
                  {
@@ -259,7 +255,7 @@
              ],
              series: [
                  {
-                     name: '销量规划(Fzg)',
+                     name: '销量规划（Fzg）',
                      type: 'bar',
                      data: this.fzgArr,
                      itemStyle: {
@@ -267,7 +263,7 @@
                      },
                  },
                  {
-                     name: 'KPE(%)',
+                     name: 'KPE（%）',
                      type: 'line',
                      data: this.kpeArr,
                      itemStyle: {
@@ -286,7 +282,7 @@
                      }
                  },
              legend: {
-                 data: ['一次性许可费（Mio€)', '总许可费占比（%）']
+                 data: ['一次性许可费（Mio€）', '总许可费占比（%）']
              },
              xAxis: [
                  {
@@ -308,7 +304,7 @@
                  {
                      type: 'value',
                      min: 0,
-                     max: 2,
+                     max: 10,
                      minInterval: 0.2,
                      axisLabel: {
                          formatter: '{value} %'
@@ -317,7 +313,7 @@
              ],
              series: [
                  {
-                     name: '一次性许可费（Mio€)',
+                     name: '一次性许可费（Mio€）',
                      type: 'bar',
                      data: this.licenseFeeOnceArr,
                      itemStyle: {
