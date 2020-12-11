@@ -216,120 +216,113 @@
      },
      // 折线图
      draw() {
+
        var echartsOption1 = {
-             title: {
-                     text: '销量及KPE',
-                     textStyle: {
-                       fontSize: 13
-                     }
-                 },
-             legend: {
-                 data: ['销量规划（Fzg）', 'KPE（%）']
-             },
-             xAxis: [
-                 {
-                     type: 'category',
-                     data: this.vehicleModeArr,
-                     axisPointer: {
-                         type: 'shadow'
-                     }
-                 }
-             ],
-             yAxis: [
-                 {
-                     type: 'value',
-                     minInterval: 200000,
-                     axisLabel: {
-                         formatter: '{value}'
-                     }
-                 },
-                 {
-                     type: 'value',
-                     min: 0,
-                     max: 100,
-                     minInterval: 5,
-                     axisLabel: {
-                         formatter: '{value} %'
-                     }
-                 }
-             ],
-             series: [
-                 {
-                     name: '销量规划（Fzg）',
-                     type: 'bar',
-                     data: this.fzgArr,
-                     itemStyle: {
-                       color: '#82d1ec'
-                     },
-                 },
-                 {
-                     name: 'KPE（%）',
-                     type: 'line',
-                     data: this.kpeArr,
-                     itemStyle: {
-                       color: '#ffaa7f'
-                     },
-                 }
-             ]
-           }
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                  type: 'cross',
+                  crossStyle: {
+                      color: '#999'
+                  }
+              }
+          },
+          legend: {
+              data: ['销量规划', 'KPE']
+          },
+          xAxis: [
+              {
+                  type: 'category',
+                  data: this.vehicleModeArr,
+                  axisPointer: {
+                      type: 'shadow'
+                  }
+              }
+          ],
+          yAxis: [
+              {
+                  type: 'value',
+                  minInterval: 0,
+                  axisLabel: {
+                      formatter: '{value}'
+                  }
+              },
+              {
+                  type: 'value',
+                  minInterval: 0,
+                  axisLabel: {
+                      formatter: '{value} %'
+                  }
+              }
+          ],
+          series: [
+              {
+                  name: '销量规划',
+                  type: 'bar',
+                  data: this.fzgArr
+              },
+              {
+                  name: 'KPE',
+                  type: 'line',
+                  yAxisIndex: 1,
+                  data: this.kpeArr
+              }
+          ]
+      }
        var myChart = echarts.init(document.getElementById('chart1'))
        myChart.setOption(echartsOption1)
        var echartsOption2 = {
-             title: {
-                     text: '一次性许可费及总许可费占比',
-                     textStyle: {
-                       fontSize: 13
-                     }
-                 },
-             legend: {
-                 data: ['一次性许可费（Mio€）', '总许可费占比（%）']
-             },
-             xAxis: [
-                 {
-                     type: 'category',
-                     data: this.vehicleModeArr,
-                     axisPointer: {
-                         type: 'shadow'
-                     }
-                 }
-             ],
-             yAxis: [
-                 {
-                     type: 'value',
-                     minInterval: 50,
-                     axisLabel: {
-                         formatter: '{value}'
-                     }
-                 },
-                 {
-                     type: 'value',
-                     min: 0,
-                     max: 10,
-                     minInterval: 0.2,
-                     axisLabel: {
-                         formatter: '{value} %'
-                     }
-                 }
-             ],
-             series: [
-                 {
-                     name: '一次性许可费（Mio€）',
-                     type: 'bar',
-                     data: this.licenseFeeOnceArr,
-                     itemStyle: {
-                       color: '#82d1ec'
-                     },
-                 },
-                 {
-                     name: '总许可费占比（%）',
-                     type: 'line',
-                     data: this.licensePercentArr,
-                     itemStyle: {
-                       color: '#ffaa7f'
-                     },
-                 }
-             ]
-           }
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                  type: 'cross',
+                  crossStyle: {
+                      color: '#999'
+                  }
+              }
+          },
+          legend: {
+              data: ['一次性许可费', '总许可费占比']
+          },
+          xAxis: [
+              {
+                  type: 'category',
+                  data: this.vehicleModeArr,
+                  axisPointer: {
+                      type: 'shadow'
+                  }
+              }
+          ],
+          yAxis: [
+              {
+                  type: 'value',
+                  minInterval: 0,
+                  axisLabel: {
+                      formatter: '{value}'
+                  }
+              },
+              {
+                  type: 'value',
+                  minInterval: 0,
+                  axisLabel: {
+                      formatter: '{value} %'
+                  }
+              }
+          ],
+          series: [
+              {
+                  name: '一次性许可费',
+                  type: 'bar',
+                  data: this.licenseFeeOnceArr
+              },
+              {
+                  name: '总许可费占比',
+                  type: 'line',
+                  yAxisIndex: 1,
+                  data: this.licensePercentArr
+              }
+          ]
+      }
        var myChart2 = echarts.init(document.getElementById('chart2'))
        myChart2.setOption(echartsOption2)
      }

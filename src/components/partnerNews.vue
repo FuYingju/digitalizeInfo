@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card">
       <el-row>
-        <el-col :span="24">
+        <el-col :span="14" push="4">
           <div class="box" v-html="this.news"></div>
         </el-col>
       </el-row>

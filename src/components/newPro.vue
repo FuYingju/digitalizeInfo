@@ -120,11 +120,11 @@
         messageRequestParams: {}, // 留言请求参数
         newProList:[],
         coverList:[], //细分市场覆盖度列表
-        fuelCoverList:[], //燃油车细分市场覆盖度列表
-        electCoverList:[], //电动车细分市场覆盖度列表
+        fuelCoverList:[], //燃油车细分市场覆盖度折线图数据
+        electCoverList:[], //电动车细分市场覆盖度折线图数据
         shareList:[], //细分市场份额列表
-        fuelShareList:[], //燃油车市场份额列表
-        electShareList:[], //电动车市场份额列表
+        fuelShareList:[], //燃油车市场份额饼图数据
+        electShareList:[], //电动车市场份额饼图数据
         content: '', // 留言内容
         contentList: [] //留言内容列表
       }
@@ -225,7 +225,10 @@
        var echartsOption1 = {
          title: {
                  text: this.yearSelect+'年'+this.monthFormat+'燃油车市场结构',
-                 left: 'center'
+                 left: 'center',
+                 textStyle: {
+                   fontSize: 13
+                 }
              },
              tooltip: {
                  trigger: 'item',
@@ -253,7 +256,10 @@
        var echartsOption2 = {
          title: {
                  text: this.yearSelect+'年'+this.monthFormat+'电动车市场结构',
-                 left: 'center'
+                 left: 'center',
+                 textStyle: {
+                   fontSize: 13
+                 }
              },
              tooltip: {
                  trigger: 'item',
@@ -281,10 +287,19 @@
        // 细分市场覆盖度折线图
        var echartsOption3 = {
          title: {
-           text: '',
+           text: '细分市场覆盖度',
            textStyle: {
              fontSize: 13
            }
+         },
+         tooltip: {
+             trigger: 'axis',
+             axisPointer: {
+                 type: 'cross',
+                 crossStyle: {
+                     color: '#999'
+                 }
+             }
          },
          legend: {
              data: ['燃油车','电动车']

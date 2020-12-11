@@ -108,7 +108,7 @@
          if(this.heziProReviewList != null){
            // KPE
            this.kpeArr = this.heziProReviewList.map(function (item) {
-             return item.kpe
+             return item.kpePercent
            })
            // 销量规划
            this.fzgArr = this.heziProReviewList.map(function (item) {
@@ -203,190 +203,184 @@
      // 折线图
      draw() {
        var echartsOption1 = {
-             title: {
-                     text: '',
-                     textStyle: {
-                       fontSize: 13
-                     }
-                 },
-             legend: {
-                 data: ['可研销量','实际销量','可研利润率','实际利润率']
-             },
-             xAxis: [
-                 {
-                     type: 'category',
-                     data: this.proNameArr,
-                     axisPointer: {
-                         type: 'shadow'
-                     }
-                 }
-             ],
-             yAxis: [
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                  type: 'cross',
+                  crossStyle: {
+                      color: '#999'
+                  }
+              }
+          },
+           legend: {
+               data: ['可研销量','实际销量','可研利润率','实际利润率']
+           },
+           xAxis: [
                {
-                   type: 'value',
-                   interval: 200000,
-                   axisLabel: {
-                       formatter: '{value}'
-                   }
-               },
-               {
-                   type: 'value',
-                   min: 0,
-                   max: 100,
-                   minInterval: 5,
-                   axisLabel: {
-                       formatter: '{value} %'
+                   type: 'category',
+                   data: this.proNameArr,
+                   axisPointer: {
+                       type: 'shadow'
                    }
                }
-             ],
-             series: [
-                 {
-                     name: '可研销量',
-                     type: 'bar',
-                     data: this.feasibleSalesArr,
-                     itemStyle: {
-                       color: '#ff5500'
-                     },
-                 },
-                 {
-                     name: '实际销量',
-                     type: 'bar',
-                     data: this.actualSalesArr,
-                     itemStyle: {
-                       color: '#82d1ec'
-                     },
-                 },
-                 {
-                     name: '可研利润率',
-                     type: 'line',
-                     data: this.feasibleRateArr,
-                     itemStyle: {
-                       color: '#ffaa7f'
-                     },
-                 },
-                 {
-                     name: '实际利润率',
-                     type: 'line',
-                     data: this.actualRateArr,
-                     itemStyle: {
-                       color: '#aaaa7f'
-                     },
+           ],
+           yAxis: [
+             {
+                 type: 'value',
+                 interval: 200000,
+                 axisLabel: {
+                     formatter: '{value}'
                  }
-             ]
-           }
+             },
+             {
+                 type: 'value',
+                 min: 0,
+                 max: 100,
+                 minInterval: 5,
+                 axisLabel: {
+                     formatter: '{value} %'
+                 }
+             }
+           ],
+           series: [
+               {
+                   name: '可研销量',
+                   type: 'bar',
+                   data: this.feasibleSalesArr,
+                   itemStyle: {
+                     color: '#ff5500'
+                   },
+               },
+               {
+                   name: '实际销量',
+                   type: 'bar',
+                   data: this.actualSalesArr,
+                   itemStyle: {
+                     color: '#82d1ec'
+                   },
+               },
+               {
+                   name: '可研利润率',
+                   type: 'line',
+                   data: this.feasibleRateArr,
+                   itemStyle: {
+                     color: '#ffaa7f'
+                   },
+               },
+               {
+                   name: '实际利润率',
+                   type: 'line',
+                   data: this.actualRateArr,
+                   itemStyle: {
+                     color: '#aaaa7f'
+                   },
+               }
+           ]
+         }
        var echartsOption2 = {
-             title: {
-                     text: '销量及KPE',
-                     textStyle: {
-                       fontSize: 13
-                     }
-                 },
-             legend: {
-                 data: ['销量规划(Fzg)', 'KPE(%)']
-             },
-             xAxis: [
-                 {
-                     type: 'category',
-                     axisTick: {show: false},
-                     data: this.mileStoneArr,
-                     axisPointer: {
-                         type: 'shadow'
-                     }
-                 }
-             ],
-             yAxis: [
-                 {
-                     type: 'value',
-                     interval: 200000,
-                     axisLabel: {
-                         formatter: '{value}'
-                     }
-                 },
-                 {
-                     type: 'value',
-                     min: 0,
-                     max: 100,
-                     minInterval: 5,
-                     axisLabel: {
-                         formatter: '{value} %'
-                     }
-                 }
-             ],
-             series: [
-                 {
-                     name: '销量规划(Fzg)',
-                     type: 'bar',
-                     data: this.fzgArr,
-                     itemStyle: {
-                       color: '#82d1ec'
-                     },
-                 },
-                 {
-                     name: 'KPE(%)',
-                     type: 'line',
-                     data: this.kpeArr,
-                     itemStyle: {
-                       color: '#ffaa7f'
-                     },
-                 }
-             ]
-           }
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                  type: 'cross',
+                  crossStyle: {
+                      color: '#999'
+                  }
+              }
+          },
+          legend: {
+              data: ['销量规划', 'KPE']
+          },
+          xAxis: [
+              {
+                  type: 'category',
+                  data: this.mileStoneArr,
+                  axisPointer: {
+                      type: 'shadow'
+                  }
+              }
+          ],
+          yAxis: [
+              {
+                  type: 'value',
+                  minInterval: 0,
+                  axisLabel: {
+                      formatter: '{value}'
+                  }
+              },
+              {
+                  type: 'value',
+                  minInterval: 0,
+                  axisLabel: {
+                      formatter: '{value} %'
+                  }
+              }
+          ],
+          series: [
+              {
+                  name: '销量规划',
+                  type: 'bar',
+                  data: this.fzgArr
+              },
+              {
+                  name: 'KPE',
+                  type: 'line',
+                  yAxisIndex: 1,
+                  data: this.kpeArr
+              }
+          ]
+      }
        var echartsOption3 = {
-             title: {
-                     text: '一次性许可费及总许可费占比',
-                     textStyle: {
-                       fontSize: 13
-                     }
-                 },
-             legend: {
-                 data: ['一次性许可费（Mio€)', '总许可费占比（%）']
-             },
-             xAxis: [
-                 {
-                     type: 'category',
-                     data: this.mileStoneArr,
-                     axisPointer: {
-                         type: 'shadow'
-                     }
-                 }
-             ],
-             yAxis: [
-                 {
-                     type: 'value',
-                     interval: 200000,
-                     axisLabel: {
-                         formatter: '{value}'
-                     }
-                 },
-                 {
-                     type: 'value',
-                     min: 0,
-                     max: 100,
-                     minInterval: 5,
-                     axisLabel: {
-                         formatter: '{value} %'
-                     }
-                 }
-             ],
-             series: [
-                 {
-                     name: '一次性许可费（Mio€)',
-                     type: 'bar',
-                     data: this.licenseFeeOnceArr,
-                     itemStyle: {
-                       color: '#82d1ec'
-                     },
-                 },
-                 {
-                     name: '总许可费占比（%）',
-                     type: 'line',
-                     data: this.licensePercentArr,
-                     itemStyle: {
-                       color: '#ffaa7f'
-                     },
-                 }
-             ]
-           }
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                  type: 'cross',
+                  crossStyle: {
+                      color: '#999'
+                  }
+              }
+          },
+          legend: {
+              data: ['一次性许可费', '总许可费占比']
+          },
+          xAxis: [
+              {
+                  type: 'category',
+                  data: this.mileStoneArr,
+                  axisPointer: {
+                      type: 'shadow'
+                  }
+              }
+          ],
+          yAxis: [
+              {
+                  type: 'value',
+                  minInterval: 0,
+                  axisLabel: {
+                      formatter: '{value}'
+                  }
+              },
+              {
+                  type: 'value',
+                  minInterval: 0,
+                  axisLabel: {
+                      formatter: '{value} %'
+                  }
+              }
+          ],
+          series: [
+              {
+                  name: '一次性许可费',
+                  type: 'bar',
+                  data: this.licenseFeeOnceArr
+              },
+              {
+                  name: '总许可费占比',
+                  type: 'line',
+                  yAxisIndex: 1,
+                  data: this.licensePercentArr
+              }
+          ]
+      }
        if(this.brandName == '一汽大众'){
          var myChart1 = echarts.init(document.getElementById('chart1'))
          myChart1.setOption(echartsOption1)

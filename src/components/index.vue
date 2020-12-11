@@ -88,16 +88,16 @@
             </el-row>
             <el-row class="img-box">
               <el-col :span="6">
-                <img src="../assets/01.jpg" style="height: 200px;">
+                <div id="drawFuelShareList0" class="chartBox"></div>
               </el-col>
               <el-col :span="6">
-                <img src="../assets/01.jpg" style="height: 200px;">
+                <div id="drawElectShareList0" class="chartBox"></div>
               </el-col>
               <el-col :span="6">
-                <img src="../assets/01.jpg" style="height: 200px;">
+                <div id="drawFuelShareList1" class="chartBox"></div>
               </el-col>
               <el-col :span="6">
-                <img src="../assets/01.jpg" style="height: 200px;">
+                <div id="drawElectShareList1" class="chartBox"></div>
               </el-col>
             </el-row>
             <el-row class="img-box">
@@ -580,13 +580,20 @@
 
 <script>
   import {selectAllHeziPartnerNews} from '@/api/common/partner.js';
-
+  import {getHeziNewPro} from '@/api/common/newPro.js';
   var echarts = require('echarts');
+
   export default {
     data(){
       return{
         partnerNewsArr: [], //合作伙伴动态
         partnerNewsGroup: [], //重新组合后的合作伙伴动态
+        nowYear: new Date().getFullYear(), //当前年
+        nowMonth: new Date().getMonth()+1, //当前月
+        fuelShareList0:[], //一汽燃油车市场份额饼图数据
+        electShareList0:[], //一汽电动车市场份额饼图数据
+        fuelShareList1:[], //上汽燃油车市场份额饼图数据
+        electShareList1:[], //上汽电动车市场份额饼图数据
         echartsOption1:{
           title: {
                   text: '一汽大众企业搜索指数'
@@ -595,16 +602,10 @@
             height:'50%',
             width:'80%'
           },
-          // tooltip: {
-          //   show:true,
-          //   trigger:'axis',
-
-          // },
          legend: {
                  orient: 'horizontal',
                  right: '10%',
                  width:'500'
-                 // data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
              },
           xAxis: {
               data: ['2020-01-01', '2020-01-01', '2020-01-01', '2020-01-01', '2020-01-01', '2020-01-01']
@@ -703,7 +704,8 @@
       }
     },
     created() {
-      this.initPartnerNews()
+      this.initPartnerNews() // 初始化合作伙伴数据
+      this.initNewPro() // 初始化新产品规划数据
     },
     methods:{
       initPartnerNews(){
@@ -714,6 +716,186 @@
           console.log(error)
           reject(error)
         })
+      },
+      initNewPro(){
+        let req = {}
+        req.year = this.nowYear
+        if(this.nowMonth<=6){
+          req.month = 0
+        }else{
+          req.month = 1
+        }
+        getHeziNewPro(req).then(res => {
+          this.newProList = res.data
+          if(this.newProList != null){
+            this.newProList.forEach(item =>{
+              var obj = {}
+              obj.value = item.share
+              obj.name = item.marketSegment
+              if(item.tag == '1' && item.company == '0'){
+                this.fuelShareList0.push(obj)
+              }else if(item.tag == '0' && item.company == '0'){
+                this.electShareList0.push(obj)
+              }
+              if(item.tag == '1' && item.company == '1'){
+                this.fuelShareList1.push(obj)
+              }else if(item.tag == '0' && item.company == '1'){
+                this.electShareList1.push(obj)
+              }
+            })
+            if(this.fuelShareList0 != null){
+              this.drawFuelShareList0()
+            }
+            if(this.electShareList1 != null){
+              this.drawElectShareList1()
+            }
+            if(this.electShareList0 != null){
+              this.drawElectShareList0()
+            }
+            if(this.fuelShareList1 != null){
+              this.drawFuelShareList1()
+            }
+          }
+        }).catch(error => {
+          console.log(error)
+          reject(error)
+        })
+      },
+      //一汽燃油车饼图
+      drawFuelShareList0(){
+        var drawFuelShareList0 = {
+          title: {
+                  text: '燃油车市场结构',
+                  left: 'center',
+                  textStyle: {
+                    fontSize: 13
+                  }
+              },
+              tooltip: {
+                  trigger: 'item',
+                  formatter: '{a} <br/>{b} : {c} ({d}%)'
+              },
+              series: [
+                  {
+                      name: '燃油车市场结构',
+                      type: 'pie',
+                      radius: '55%',
+                      center: ['50%', '60%'],
+                      data: this.fuelShareList0,
+                      emphasis: {
+                          itemStyle: {
+                              shadowBlur: 10,
+                              shadowOffsetX: 0,
+                              shadowColor: 'rgba(0, 0, 0, 0.5)'
+                          }
+                      }
+                  }
+              ]
+          }
+          var myChart1 = echarts.init(document.getElementById('drawFuelShareList0'))
+          myChart1.setOption(drawFuelShareList0)
+      },
+      //一汽电动车饼图
+      drawElectShareList0(){
+        var drawElectShareList0 = {
+          title: {
+                  text: '电动车市场结构',
+                  left: 'center',
+                  textStyle: {
+                    fontSize: 13
+                  }
+              },
+              tooltip: {
+                  trigger: 'item',
+                  formatter: '{a} <br/>{b} : {c} ({d}%)'
+              },
+              series: [
+                  {
+                      name: '电动车市场结构',
+                      type: 'pie',
+                      radius: '55%',
+                      center: ['50%', '60%'],
+                      data: this.electShareList0,
+                      emphasis: {
+                          itemStyle: {
+                              shadowBlur: 10,
+                              shadowOffsetX: 0,
+                              shadowColor: 'rgba(0, 0, 0, 0.5)'
+                          }
+                      }
+                  }
+              ]
+          }
+          var myChart2 = echarts.init(document.getElementById('drawElectShareList0'))
+          myChart2.setOption(drawElectShareList0)
+      },
+      //上汽燃油车饼图
+      drawFuelShareList1(){
+        var drawFuelShareList1 = {
+          title: {
+                  text: '燃油车市场结构',
+                  left: 'center',
+                  textStyle: {
+                    fontSize: 13
+                  }
+              },
+              tooltip: {
+                  trigger: 'item',
+                  formatter: '{a} <br/>{b} : {c} ({d}%)'
+              },
+              series: [
+                  {
+                      name: '燃油车市场结构',
+                      type: 'pie',
+                      radius: '55%',
+                      center: ['50%', '60%'],
+                      data: this.fuelShareList1,
+                      emphasis: {
+                          itemStyle: {
+                              shadowBlur: 10,
+                              shadowOffsetX: 0,
+                              shadowColor: 'rgba(0, 0, 0, 0.5)'
+                          }
+                      }
+                  }
+              ]
+          }
+          var myChart3 = echarts.init(document.getElementById('drawFuelShareList1'))
+          myChart3.setOption(drawFuelShareList1)
+      },
+      //上汽电动车饼图
+      drawElectShareList1(){
+        var drawElectShareList1 = {
+          title: {
+                  text: '电动车市场结构',
+                  left: 'center',
+                  textStyle: {
+                    fontSize: 13
+                  }
+              },
+              tooltip: {
+                  trigger: 'item',
+                  formatter: '{a} <br/>{b} : {c} ({d}%)'
+              },
+              series: [
+                  {
+                      name: '电动车市场结构',
+                      type: 'pie',
+                      radius: '55%',
+                      center: ['50%', '60%'],
+                      data: this.electShareList1,
+                      emphasis: {
+                          itemStyle: {
+                              shadowBlur: 10,
+                              shadowOffsetX: 0,
+                              shadowColor: 'rgba(0, 0, 0, 0.5)'
+                          }
+                      }
+                  }
+              ]
+          }
+          var myChart4 = echarts.init(document.getElementById('drawElectShareList1'))
+          myChart4.setOption(drawElectShareList1)
       },
       group(){
         var map = {}
@@ -772,11 +954,9 @@
   .text {
       font-size: 14px;
     }
-
     .item {
       margin-bottom: 18px;
     }
-
     .clearfix:before,
     .clearfix:after {
       display: table;
@@ -785,40 +965,36 @@
     .clearfix:after {
       clear: both
     }
-
-
-
-      .el-carousel__item:nth-child(2n) {
-        background-color: #fff;
+    .el-carousel__item:nth-child(2n) {
+      background-color: #fff;
+    }
+    .el-carousel__item:nth-child(2n+1) {
+      background-color: #fff;
+    }
+    .title{padding: 5px 0;background-color: #c8dbf6;width: 100px;text-align: center;}
+    .linkItem{line-height: 40px;margin: 10px;}
+    .el-divider__text, .el-link{font-size: 16px;}
+    .cardTitle{width: 100%;line-height: 25px; text-align: center;}
+    .el-row {
+        margin-bottom: 20px;
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
-
-      .el-carousel__item:nth-child(2n+1) {
-        background-color: #fff;
+      .el-col {
+        border-radius: 4px;
       }
-      .title{padding: 5px 0;background-color: #c8dbf6;width: 100px;text-align: center;}
-      .linkItem{line-height: 40px;margin: 10px;}
-      .el-divider__text, .el-link{font-size: 16px;}
-      .cardTitle{width: 100%;line-height: 25px; text-align: center;}
-      .el-row {
-          margin-bottom: 20px;
-          &:last-child {
-            margin-bottom: 0;
-          }
-        }
-        .el-col {
-          border-radius: 4px;
-        }
-        .chartBox{height: 300px;}
-        .linkItem2{line-height: 25px;margin: 10px;}
-        h4{padding: 0;margin: 0;}
-        .hotNewsbox{border: #c6effd 1px solid;padding: 5px;height: 225px; background-color: #dcf5fe;}
-        .img-box{text-align: center;}
-        img{width: 100%;height: 260px;}
-        .el-carousel__button{background-color: #2C3E50;}
-        a {
-          text-decoration: none;
-        }
-        .router-link-active {
-          text-decoration: none;
-        }
+      .chartBox{height: 300px;}
+      .linkItem2{line-height: 25px;margin: 10px;}
+      h4{padding: 0;margin: 0;}
+      .hotNewsbox{border: #c6effd 1px solid;padding: 5px;height: 225px; background-color: #dcf5fe;}
+      .img-box{text-align: center;}
+      img{width: 100%;height: 260px;}
+      .el-carousel__button{background-color: #2C3E50;}
+      a {
+        text-decoration: none;
+      }
+      .router-link-active {
+        text-decoration: none;
+      }
 </style>
