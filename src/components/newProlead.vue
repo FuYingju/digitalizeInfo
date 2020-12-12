@@ -99,11 +99,11 @@
         monthSelect: new Date().getMonth()+1,
         requestParams: {},
         messageRequestParams: {}, // 留言请求参数
-        newProleadList:[],
         content: '', // 留言内容
         contentList: [], //留言内容列表
         businessSelect: '', //选中品牌的id
         businessNameArr: [] ,//品牌列表
+        newProleadList:[],
         fzgArr:[], //销量规划(Fzg)
         kpeArr:[], //KPE(%)
         vehicleModeArr:[] ,//车型
@@ -169,16 +169,16 @@
        this.yearSelect = e
        this.initNewProlead()
      },
-     // // 选择月份
+     // 选择月份
      monthChange(e){
        this.monthSelect = e
        this.initNewProlead()
      },
-     //选择品牌
+     // 选择品牌
      businessChange(e){
        this.initNewProlead()
      },
-     //初始化品牌下拉
+     // 初始化品牌下拉
      initBussinessSel(){
        getHeziNewProleadParams().then(res => {
          this.businessNameArr = res.data
@@ -259,13 +259,19 @@
               {
                   name: '销量规划',
                   type: 'bar',
-                  data: this.fzgArr
+                  data: this.fzgArr,
+                  itemStyle: {
+                    color: '#82d1ec'
+                  },
               },
               {
                   name: 'KPE',
                   type: 'line',
                   yAxisIndex: 1,
-                  data: this.kpeArr
+                  data: this.kpeArr,
+                  itemStyle: {
+                    color: '#aaaa7f'
+                  },
               }
           ]
       }
@@ -313,13 +319,19 @@
               {
                   name: '一次性许可费',
                   type: 'bar',
-                  data: this.licenseFeeOnceArr
+                  data: this.licenseFeeOnceArr,
+                  itemStyle: {
+                    color: '#82d1ec'
+                  },
               },
               {
                   name: '总许可费占比',
                   type: 'line',
                   yAxisIndex: 1,
-                  data: this.licensePercentArr
+                  data: this.licensePercentArr,
+                  itemStyle: {
+                    color: '#aaaa7f'
+                  },
               }
           ]
       }
