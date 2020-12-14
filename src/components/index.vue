@@ -19,62 +19,6 @@
     </el-card>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>合资公司舆情</span>
-      </div>
-      <div class="cardTitle"><h3>合资公司舆情（2020.08）</h3></div>
-      <el-row>
-        <el-col :span="16">
-          <div id="chart1" class="chartBox"></div>
-        </el-col>
-        <el-col :span="8" class="hotNewsbox">
-          <div><h4>热门关键事件</h4></div>
-          <div v-for="(item,index) in hotNews" :key="index" class="linkItem2">
-            <el-link>{{index+1}} 、{{item.name}}</el-link>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="8">
-          <div id="chart2" class="chartBox"></div>
-        </el-col>
-        <el-col :span="8">
-          <div id="chart3" class="chartBox"></div>
-        </el-col>
-        <el-col :span="8">
-          <div id="chart4" class="chartBox"></div>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="8">
-          <div id="chart5" class="chartBox"></div>
-        </el-col>
-        <el-col :span="8">
-          <div id="chart6" class="chartBox"></div>
-        </el-col>
-        <el-col :span="8" class="hotNewsbox">
-          <div><h4>热门关键事件</h4></div>
-          <div v-for="(item,index) in hotNews" :key="index" class="linkItem2">
-            <el-link>{{index+1}} 、{{item.name}}</el-link>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="8">
-          <div id="chart7" class="chartBox"></div>
-        </el-col>
-        <el-col :span="8">
-          <div id="chart8" class="chartBox"></div>
-        </el-col>
-        <el-col :span="8" class="hotNewsbox">
-          <div><h4>热门关键事件</h4></div>
-          <div v-for="(item,index) in hotNews" :key="index" class="linkItem2">
-            <el-link>{{index+1}} 、{{item.name}}</el-link>
-          </div>
-        </el-col>
-      </el-row>
-    </el-card>
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
         <span>产品管理</span>
       </div>
       <template>
@@ -87,18 +31,18 @@
               </el-col>
             </el-row>
             <el-row class="img-box">
-              <el-col :span="6">
+              <el-col :span="12">
                 <div id="drawFuelShareList0" class="chartBox"></div>
               </el-col>
-              <el-col :span="6">
+              <el-col :span="12">
                 <div id="drawElectShareList0" class="chartBox"></div>
               </el-col>
             </el-row>
-            <el-row class="img-box">
-              <el-col :span="6">
+            <el-row>
+              <el-col :span="12">
                 <div id="drawFuelShareList1" class="chartBox"></div>
               </el-col>
-              <el-col :span="6">
+              <el-col :span="12">
                 <div id="drawElectShareList1" class="chartBox"></div>
               </el-col>
             </el-row>
@@ -699,8 +643,8 @@
       },
       initHeziProjectSchedule(){
         let req = {}
-        req.year = 2020
-        req.month = 12
+        req.year = this.nowYear
+        req.month = this.nowMonth
         req.brandId = 1
         getHeziProjectSchedule(req).then(res => {
           this.heziProjectScheduleList = res.data
@@ -827,7 +771,7 @@
                       name: '燃油车市场结构',
                       type: 'pie',
                       radius: '55%',
-                      center: ['50%', '60%'],
+                      center: ['50%', '45%'],
                       data: this.fuelShareList0,
                       emphasis: {
                           itemStyle: {
@@ -861,7 +805,7 @@
                       name: '电动车市场结构',
                       type: 'pie',
                       radius: '55%',
-                      center: ['50%', '60%'],
+                      center: ['50%', '45%'],
                       data: this.electShareList0,
                       emphasis: {
                           itemStyle: {
@@ -895,7 +839,7 @@
                       name: '燃油车市场结构',
                       type: 'pie',
                       radius: '55%',
-                      center: ['50%', '60%'],
+                      center: ['50%', '45%'],
                       data: this.fuelShareList1,
                       emphasis: {
                           itemStyle: {
@@ -929,7 +873,7 @@
                       name: '电动车市场结构',
                       type: 'pie',
                       radius: '55%',
-                      center: ['50%', '60%'],
+                      center: ['50%', '45%'],
                       data: this.electShareList1,
                       emphasis: {
                           itemStyle: {

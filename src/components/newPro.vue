@@ -138,6 +138,10 @@
    methods:{
      // 初始化新产品规划
      initNewPro(){
+       this.fuelShareList = []
+       this.fuelCoverList = []
+       this.electShareList = []
+       this.electCoverList = []
        this.requestParams.year = this.yearSelect
        this.requestParams.month = this.monthSelect
        this.requestParams.company = this.companySelect
@@ -156,11 +160,6 @@
                this.electCoverList.push(item.cover)
              }
            })
-         }else{
-           this.fuelShareList = []
-           this.fuelCoverList = []
-           this.electShareList = []
-           this.electCoverList = []
          }
          this.draw()
        }).catch(error => {

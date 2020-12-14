@@ -270,7 +270,7 @@
                   yAxisIndex: 1,
                   data: this.kpeArr,
                   itemStyle: {
-                    color: '#aaaa7f'
+                    color: '#ffaa00'
                   },
               }
           ]
@@ -330,7 +330,7 @@
                   yAxisIndex: 1,
                   data: this.licensePercentArr,
                   itemStyle: {
-                    color: '#aaaa7f'
+                    color: '#ffaa00'
                   },
               }
           ]

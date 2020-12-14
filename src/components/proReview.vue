@@ -319,13 +319,19 @@
               {
                   name: '销量规划',
                   type: 'bar',
-                  data: this.fzgArr
+                  data: this.fzgArr,
+                  itemStyle: {
+                    color: '#82d1ec'
+                  }
               },
               {
                   name: 'KPE',
                   type: 'line',
                   yAxisIndex: 1,
-                  data: this.kpeArr
+                  data: this.kpeArr,
+                  itemStyle: {
+                    color: '#ffaa00'
+                  }
               }
           ]
       }
@@ -371,13 +377,19 @@
               {
                   name: '一次性许可费',
                   type: 'bar',
-                  data: this.licenseFeeOnceArr
+                  data: this.licenseFeeOnceArr,
+                  itemStyle: {
+                    color: '#82d1ec'
+                  }
               },
               {
                   name: '总许可费占比',
                   type: 'line',
                   yAxisIndex: 1,
-                  data: this.licensePercentArr
+                  data: this.licensePercentArr,
+                  itemStyle: {
+                    color: '#ffaa00'
+                  }
               }
           ]
       }

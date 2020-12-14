@@ -6,7 +6,7 @@
         <el-menu :default-active="activeIndex" class="el-menu-demo menu" mode="horizontal" @select="handleSelect" router>
           <el-menu-item index="index">主页</el-menu-item>
           <el-menu-item index="partner">合作伙伴</el-menu-item>
-          <el-menu-item index="company">合资企业舆情</el-menu-item>
+          <!-- <el-menu-item index="company">合资企业舆情</el-menu-item> -->
           <el-submenu index="4">
             <template slot="title">产品管理</template>
             <el-menu-item index="newPro">新产品规划</el-menu-item>

@@ -5,7 +5,7 @@ import Main from '@/views/Main'
 import Index from '@/components/index'
 import Partner from '@/components/partner'
 import PartnerNews from '@/components/partnerNews'
-import Company from '@/components/company'
+// import Company from '@/components/company'
 import Newpro from '@/components/newPro'
 import Login from '@/views/Login'
 Vue.use(Router)
@@ -21,7 +21,7 @@ export default new Router({
         { path: '/index', component: Index },
         { path: '/partner', component: Partner },
         { path: '/partnerNews', component: PartnerNews },
-        { path: '/company', component: Company },
+        // { path: '/company', component: Company },
         { path: '/newPro', component: Newpro },
         { path: '/newProlead', component: resolve => require(['@/components/newProlead.vue'], resolve), },
         { path: '/proDev', component: resolve => require(['@/components/proDev.vue'], resolve), },
