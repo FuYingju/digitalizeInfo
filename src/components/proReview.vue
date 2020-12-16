@@ -322,6 +322,9 @@
                   data: this.fzgArr,
                   itemStyle: {
                     color: '#82d1ec'
+                  },
+                  label: {
+                    show: true
                   }
               },
               {
@@ -331,6 +334,9 @@
                   data: this.kpeArr,
                   itemStyle: {
                     color: '#ffaa00'
+                  },
+                  label: {
+                    show: true
                   }
               }
           ]
@@ -380,6 +386,9 @@
                   data: this.licenseFeeOnceArr,
                   itemStyle: {
                     color: '#82d1ec'
+                  },
+                  label: {
+                    show: true
                   }
               },
               {
@@ -389,6 +398,9 @@
                   data: this.licensePercentArr,
                   itemStyle: {
                     color: '#ffaa00'
+                  },
+                  label: {
+                    show: true
                   }
               }
           ]

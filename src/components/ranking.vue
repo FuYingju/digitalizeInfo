@@ -27,13 +27,101 @@
                 </el-option>
               </el-select>
             </div>
+            <div class="selectBox">
+              <span>市场</span>
+              <el-select v-model="businessSelect" placeholder="请选择" size="mini" class="select" @change="businessChange">
+                <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
           </div>
         </el-col>
         <el-col :span="16">
           <div class="container">
-            <el-row class="img-box">
+            <!-- <el-row class="img-box">
               <el-col :span="24">
                 <img :src="picturePath">
+              </el-col>
+            </el-row> -->
+            <el-row style="margin-bottom: 35px;">
+              <el-col :span="24">
+                <el-table
+                  :data="heziMarketRankingList"
+                  border
+                  row-key="id"
+                  style="width: 100%">
+                  <el-table-column
+                    prop="brandName"
+                    label="厂商品牌"
+                    width="100">
+                  </el-table-column>
+                  <el-table-column :label="String(monthSelect)+'月'">
+                    <el-table-column
+                      prop="monthlySalesRanking"
+                      label="排名"
+                      width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthlySales"
+                      label="销量"
+                      width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthYoychangeCompare"
+                      label="同比变化"
+                      :formatter="percentFormatter"
+                      width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthMarketShare"
+                      label="市场份额"
+                      :formatter="percentFormatter"
+                      width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthShareMonthOnMonth"
+                      label="份额环比"
+                      :formatter="percentFormatter"
+                      width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthYearOnYearShare"
+                      label="份额同比"
+                      :formatter="percentFormatter"
+                      width="70">
+                    </el-table-column>
+                  </el-table-column>
+                  <el-table-column :label="'1-'+String(monthSelect)+'月'">
+                    <el-table-column
+                      prop="shareRanking"
+                      label="排名"
+                      width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="salesMonthAgo"
+                      label="销量"
+                      width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthlyChange"
+                      label="同比变化"
+                      :formatter="percentFormatter"
+                      width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="marketShare"
+                      label="累计份额"
+                      :formatter="percentFormatter"
+                      width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="yearOnYearShare"
+                      label="份额同比"
+                      :formatter="percentFormatter"
+                      width="70">
+                    </el-table-column>
+                  </el-table-column>
+                </el-table>
               </el-col>
             </el-row>
           </div>
@@ -74,13 +162,22 @@
     data(){
       return{
         nfOptions: [],
+        options2: [{
+          value: '乘用车',
+          label: '乘用车'
+        }, {
+          value: '豪华车',
+          label: '豪华车'
+        }],
+        businessSelect: '乘用车',
         yearSelect: new Date().getFullYear(),
         monthSelect: new Date().getMonth()+1,
         requestParams: {},
         picturePath: '',
         messageRequestParams: {}, // 留言请求参数
         content: '', // 留言内容
-        contentList: [] //留言内容列表
+        contentList: [] ,//留言内容列表
+        heziMarketRankingList: []
       }
    },
    created() {
@@ -111,21 +208,48 @@
        this.monthSelect = e
        this.initHeziMarketRanking()
      },
+     // 选择企业
+     businessChange(e){
+       this.businessSelect = e
+       this.initHeziMarketRanking()
+     },
      // 初始化厂商排名
+     // initHeziMarketRanking(){
+     //   this.picturePath = ''
+     //   this.requestParams.year = this.yearSelect
+     //   this.requestParams.month = this.monthSelect
+     //   getHeziMarketRanking(this.requestParams).then(res => {
+     //     this.marketRankingList = res.data
+     //     if(this.marketRankingList != null){
+     //       var curWwwPath = window.document.location.href.substring(0,16) //获取根路径http://localhost
+     //       this.picturePath = curWwwPath+this.marketRankingList[0].picturePath
+     //     }
+     //   }).catch(error => {
+     //     console.log(error)
+     //     reject(error)
+     //   })
+     // },
+     //加载市场排名表格数据
      initHeziMarketRanking(){
-       this.picturePath = ''
+       this.heziMarketRankingList = []
+       this.requestParams = {}
        this.requestParams.year = this.yearSelect
        this.requestParams.month = this.monthSelect
+       this.requestParams.tag = this.businessSelect
        getHeziMarketRanking(this.requestParams).then(res => {
-         this.marketRankingList = res.data
-         if(this.marketRankingList != null){
-           var curWwwPath = window.document.location.href.substring(0,16) //获取根路径http://localhost
-           this.picturePath = curWwwPath+this.marketRankingList[0].picturePath
-         }
+         this.heziMarketRankingList = res.data
        }).catch(error => {
          console.log(error)
          reject(error)
        })
+     },
+     // 数字格式化成百分比
+     percentFormatter(row, column, cellValue, index) {
+       if (cellValue==0 || cellValue==-0 || isNaN(cellValue) ) {
+           return 0
+       }
+       var str = ( cellValue * 100 ).toFixed(2) + "%";
+       return str
      },
      // 获取页面留言
      getMessage(){

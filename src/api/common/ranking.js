@@ -5,7 +5,7 @@ import { request } from '@/utils/request'
  */
 export function getHeziMarketRanking(data) {
   return request({
-    url: 'api/ruoyi/heziManufacturerRanking/list',
+    url: 'api/ruoyi/heziMarketRanking/list',
     data: data,
     method: 'post'
   })
