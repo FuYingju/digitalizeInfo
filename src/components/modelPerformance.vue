@@ -81,13 +81,12 @@
                     <el-table-column
                       prop="yearCompletionRate"
                       label="年计完成率"
-                      :formatter="percentFormatter"
                       width="70">
                     </el-table-column>
                   </el-table-column>
                   <el-table-column :label="String(monthSelect+1)+'月'">
                     <el-table-column
-                      prop="stockJv"
+                      prop="monthPlanNo"
                       label="计划"
                       width="70">
                     </el-table-column>
@@ -106,8 +105,8 @@
                       width="60">
                     </el-table-column>
                     <el-table-column
-                      prop="stockJvDepth"
-                      label="深度"
+                      prop="stockDepth"
+                      label="Δ深度"
                       width="60">
                     </el-table-column>
                   </el-table-column>
@@ -178,7 +177,7 @@
                       </el-table-column>
                       <el-table-column
                         prop="stockJvDepth"
-                        label="深度"
+                        label="Δ深度"
                         width="60">
                       </el-table-column>
                     </el-table-column>
@@ -246,6 +245,25 @@
      this.getMessage()
    },
     methods:{
+      //初始化车型表现
+      initHeziSalesPlan(){
+        this.requestParams.year = this.yearSelect
+        this.requestParams.month = this.monthSelect
+        this.requestParams.brandId = this.businessSelect
+        getHeziSalesPlan(this.requestParams).then(res => {
+          this.heziSalesPlanRespList = res.data
+          if(this.heziSalesPlanRespList !=  null){
+            this.heziSalesPlanRespListSTD = this.heziSalesPlanRespList.filter(item => item.tag.toUpperCase() === 'STD');
+            this.heziSalesPlanRespListAaK = this.heziSalesPlanRespList.filter(item => item.tag.toUpperCase() === 'AAK');
+          }else{
+            this.heziSalesPlanRespListSTD = []
+            this.heziSalesPlanRespListAaK = []
+          }
+        }).catch(error => {
+          console.log(error)
+          reject(error)
+        })
+      },
       // 获取本年及前后一年的数组
       getNf(){
        var nfOptionsArray = new Array();
@@ -286,25 +304,6 @@
             this.businessSelect = this.businessNameArr[0].brandId // 预选中第一项
             this.brandName = this.businessNameArr[0].brandName
             this.initHeziSalesPlan()
-          }
-        }).catch(error => {
-          console.log(error)
-          reject(error)
-        })
-      },
-      //初始化车型表现
-      initHeziSalesPlan(){
-        this.requestParams.year = this.yearSelect
-        this.requestParams.month = this.monthSelect
-        this.requestParams.brandId = this.businessSelect
-        getHeziSalesPlan(this.requestParams).then(res => {
-          this.heziSalesPlanRespList = res.data
-          if(this.heziSalesPlanRespList !=  null){
-            this.heziSalesPlanRespListSTD = this.heziSalesPlanRespList.filter(item => item.tag.toUpperCase() === 'STD');
-            this.heziSalesPlanRespListAaK = this.heziSalesPlanRespList.filter(item => item.tag.toUpperCase() === 'AAK');
-          }else{
-            this.heziSalesPlanRespListSTD = []
-            this.heziSalesPlanRespListAaK = []
           }
         }).catch(error => {
           console.log(error)
