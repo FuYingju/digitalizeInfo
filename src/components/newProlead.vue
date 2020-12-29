@@ -5,7 +5,7 @@
         <el-col :span="4">
           <div class="box">
             <div class="title"><h4>信息列表</h4></div>
-            <!-- <div class="selectBox">
+            <div class="selectBox">
               <span>年度</span>
               <el-select v-model="yearSelect" placeholder="请选择" size="mini" class="select" @change="yearChange">
                 <el-option
@@ -15,7 +15,7 @@
                   :value="item.dictValue">
                 </el-option>
               </el-select>
-            </div> -->
+            </div>
             <!-- <div class="selectBox">
               <span>月度</span>
               <el-select v-model="monthSelect" placeholder="请选择" size="mini" class="select" @change="monthChange">
@@ -47,9 +47,249 @@
                 <div id="chart1" class="chartBox"></div>
               </el-col>
             </el-row>
-            <el-row style="margin-bottom: 35px;">
+            <el-row style="margin-bottom: 35px;" v-show="this.businessSelect != '2'">
               <el-col :span="24">
                 <div id="chart2" class="chartBox"></div>
+              </el-col>
+            </el-row>
+            <el-row style="margin-bottom: 35px;" v-show="this.businessSelect != '2'">
+              <el-col :span="24">
+                <el-table
+                  :data="newProleadList"
+                  border
+                  row-key="id"
+                  style="width: 100%">
+                    <el-table-column type="expand">
+                      <template slot-scope="props">
+                        <el-form label-position="left" inline class="demo-table-expand">
+                          <el-form-item label="hut">
+                            <span>{{ props.row.hut || '-' }}</span>
+                          </el-form-item>
+                          <el-form-item label="平台分摊">
+                            <span>{{ props.row.platformShar || '-' }}</span>
+                          </el-form-item>
+                          <el-form-item label="MIB/I CAS 3 分摊">
+                            <span>{{ props.row.mib || '-' }}</span>
+                          </el-form-item>
+                          <el-form-item label="ICAS 3中国专有">
+                            <span>{{ props.row.icas || '-' }}</span>
+                          </el-form-item>
+                          <el-form-item label="ENP P">
+                            <span>{{ props.row.enpP || '-' }}</span>
+                          </el-form-item>
+                          <el-form-item label="ENP Q">
+                            <span>{{ props.row.enpQ || '-' }}</span>
+                          </el-form-item>
+                          <el-form-item label="ENP VSC">
+                            <span>{{ props.row.enpVsc || '-' }}</span>
+                          </el-form-item>
+                          <el-form-item label="FAS Module">
+                            <span>{{ props.row.fasModule || '-' }}</span>
+                          </el-form-item>
+                          <el-form-item label="HUT Module">
+                            <span>{{ props.row.hutModule || '-' }}</span>
+                          </el-form-item>
+                          <el-form-item label="中国专有平台">
+                            <span>{{ props.row.proprietaryPlatform || '-' }}</span>
+                          </el-form-item>
+                          <el-form-item label="中国专有平台分摊">
+                            <span>{{ props.row.proprietaryPlatformShar || '-' }}</span>
+                          </el-form-item>
+                          <el-form-item label="SEL">
+                            <span>{{ props.row.sel || '-' }}</span>
+                          </el-form-item>
+                          <el-form-item label="Lokaliesirung">
+                            <span>{{ props.row.lokaliesirung || '-' }}</span>
+                          </el-form-item>
+                        </el-form>
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      prop="sopTime"
+                      label="SOP时间"
+                      width="110">
+                    </el-table-column>
+                    <el-table-column
+                      prop="level"
+                      label="级别"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="length"
+                      label="长"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="width"
+                      label="宽"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="height"
+                      label="高"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="wheel"
+                      label="轴距"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="fzg"
+                      label="销量规划"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="mainPrice"
+                      label="主力车型售价"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="licenseFeeOnce"
+                      label="一次性许可费"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="licenceFeeCar"
+                      label="单车许可费"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="licensePercent"
+                      label="总许可费占比"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="kpe"
+                      label="KPE"
+                      width="80">
+                    </el-table-column>
+                </el-table>
+              </el-col>
+            </el-row>
+            <el-row style="margin-bottom: 35px;" v-show="this.businessSelect == '2'">
+              <el-col :span="24">
+                <el-table
+                  :data="newProleadList"
+                  border
+                  row-key="id"
+                  style="width: 100%">
+                    <el-table-column
+                      prop="sopTime"
+                      label="SOP时间"
+                      width="110">
+                    </el-table-column>
+                    <el-table-column
+                      prop="level"
+                      label="级别"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="length"
+                      label="长"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="width"
+                      label="宽"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="height"
+                      label="高"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="wheel"
+                      label="轴距"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="fzg"
+                      label="销量规划"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="mainPrice"
+                      label="主力车型售价"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="dealerCommision"
+                      label="经销商佣金"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="salesSupport"
+                      label="销售支持"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="ckd100"
+                      label="100%CKD价格"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="lcr"
+                      label="LCR"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="lbi"
+                      label="LBI"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="importedMaterialsCost"
+                      label="进口材料成本"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="domesticMaterialsCost"
+                      label="国产化材料成本"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="licenceFeeCar"
+                      label="单车许可费"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="compensate"
+                      label="补偿"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="directCost"
+                      label="直接成本"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="depreciationShare"
+                      label="折旧分摊"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="licenseFeeOnce"
+                      label="一次性许可费"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="adRate"
+                      label="广告费"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="fawFee"
+                      label="一汽-大众管理费"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="kpe"
+                      label="KPE"
+                      width="80">
+                    </el-table-column>
+                </el-table>
               </el-col>
             </el-row>
             <el-row style="margin-bottom: 35px;">
@@ -119,8 +359,7 @@
    methods:{
      // 初始化新产品导入数据
      initNewProlead(){
-       // this.requestParams.year = this.yearSelect
-       // this.requestParams.month = this.monthSelect
+       this.requestParams.year = this.yearSelect
        this.requestParams.brandId = this.businessSelect
        getHeziNewProlead(this.requestParams).then(res => {
          this.newProleadList = res.data
@@ -145,6 +384,12 @@
            this.licensePercentArr = this.newProleadList.map(function (item) {
              return item.licensePercent
            })
+         }else{
+           this.kpeArr = []
+           this.fzgArr = []
+           this.vehicleModeArr = []
+           this.licenseFeeOnceArr = []
+           this.licensePercentArr = []
          }
          this.draw()
        }).catch(error => {
@@ -216,7 +461,6 @@
      },
      // 折线图
      draw() {
-
        var echartsOption1 = {
           tooltip: {
               trigger: 'axis',
@@ -359,4 +603,16 @@
   .message{margin: 10px;font-size: 12px;}
   img{width: 100%;}
   .linkItem2{line-height: 10px;margin: 10px;}
+   .demo-table-expand {
+      font-size: 0;
+    }
+    .demo-table-expand label {
+      width: 90px;
+      color: #99a9bf;
+    }
+    .demo-table-expand .el-form-item {
+      margin-right: 0;
+      margin-bottom: 0;
+      width: 50%;
+    }
 </style>

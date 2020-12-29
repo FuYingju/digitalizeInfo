@@ -164,6 +164,18 @@
              fontSize: 13
            }
          },
+         tooltip: {
+             trigger: 'axis',
+             axisPointer: {
+                 type: 'cross',
+                 crossStyle: {
+                     color: '#999'
+                 }
+             }
+         },
+         legend: {
+             data: ['利润总额预测', '利润总额目标']
+         },
          grid: {
            height: '50%',
            width: '90%' //左右边距，设置为100，显示不全12月
@@ -182,6 +194,7 @@
          },
          yAxis: {},
          series: [{
+             name: '利润总额预测',
              type: 'line',
              data: this.totalProfitsPredictArr,
              itemStyle: {
@@ -192,6 +205,7 @@
              }
            },
            {
+             name: '利润总额目标',
              type: 'line',
              data: this.totalProfitsTargetArr,
              itemStyle: {
