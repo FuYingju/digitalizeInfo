@@ -10,73 +10,91 @@
                   :data="heziReportAnalysisList"
                   border
                   row-key="id"
-                  style="width: 100%">
+                  :header-cell-style="{'text-align':'center'}"
+                  :row-style="{height:'20px'}"
+                  :cell-style="{padding:'0px'}"
+                  style="font-size: 10px;width: 100%;">
                     <el-table-column
                       prop="item"
                       label="项目"
-                      width="140">
+                      align="right"
+                      min-width="140">
                     </el-table-column>
                     <el-table-column
                       prop="nowMonth"
                       :label="this.year"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="accumPercent"
                       label="同比变化"
                       :formatter="percentFormatter"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                 </el-table>
                 <el-table v-if="this.reportType == '2' || this.reportType == '3'"
                   :data="heziReportAnalysisList"
                   border
                   row-key="id"
-                  style="width: 100%">
+                  :header-cell-style="{'text-align':'center'}"
+                  :row-style="{height:'20px'}"
+                  :cell-style="{padding:'0px'}"
+                  style="font-size: 10px;width: 100%;">
                     <el-table-column
                       prop="item"
                       label="项目"
-                      width="140">
+                      align="right"
+                      min-width="140">
                     </el-table-column>
                     <el-table-column
                       prop="nowMonth"
                       label="当月"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="accum"
                       label="累计"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column v-if="this.reportType == '2'"
                       prop="nowAccumPercent"
                       label="累计占收入比"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="sameTime"
                       label="同期"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="sameTimeAccum"
                       label="同期累计"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column v-if="this.reportType == '2'"
                       prop="sameAccumPercent"
                       label="累计占收入比"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="monthPercent"
                       label="当月同比变化"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="accumPercent"
                       label="累计同比变化"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                 </el-table>
               </el-col>

@@ -24,23 +24,28 @@
       <template>
         <el-carousel :interval="5000" indicator-position='outside' height="650px">
           <el-carousel-item>
-            <div class="cardTitle"><h3>合资品牌新产品规划（2020.H1）</h3></div>
+            <div class="cardTitle"><h3>合资品牌新产品规划（{{this.nowYear}}.{{this.halfYear}}）</h3></div>
             <el-row>
               <el-col :span="24">
                 <h4>合资品牌燃油车细分市场覆盖度</h4>
               </el-col>
             </el-row>
-            <el-row class="img-box">
-              <el-col :span="12">
+            <el-row>
+              <el-col :span="12" >
                 <div id="drawFuelShareList0" class="chartBox"></div>
               </el-col>
               <el-col :span="12">
-                <div id="drawElectShareList0" class="chartBox"></div>
+                <div id="drawFuelShareList1" class="chartBox"></div>
               </el-col>
             </el-row>
-            <el-row>
+            <el-row style="margin-bottom: -45px;">
+              <el-col :span="24">
+                <h4>合资品牌电动车细分市场覆盖度</h4>
+              </el-col>
+            </el-row>
+            <el-row style="margin-bottom: -35px;">
               <el-col :span="12">
-                <div id="drawFuelShareList1" class="chartBox"></div>
+                <div id="drawElectShareList0" class="chartBox"></div>
               </el-col>
               <el-col :span="12">
                 <div id="drawElectShareList1" class="chartBox"></div>
@@ -48,28 +53,15 @@
             </el-row>
           </el-carousel-item>
           <el-carousel-item>
-            <div class="cardTitle"><h3>合资品牌新产品规划（2020.H1）</h3></div>
+            <div class="cardTitle"><h3>合资品牌新产品导入（{{this.nowYear}}.{{this.nowMonth}}）</h3></div>
             <el-row>
-              <el-col :span="24">
-                <h4>销量及KPE</h4>
+              <el-col :span="12" v-for="(item,index) in this.newProleadList" :key="index">
+                <div class="chartBox roseChart"></div>
               </el-col>
             </el-row>
-            <el-row>
-              <el-col :span="24">
-                <div id="drawNewProlead" class="chartBox"></div>
-              </el-col>
-            </el-row>
-            <!-- <el-row>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/02.jpg">
-              </el-col>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/02.jpg">
-              </el-col>
-            </el-row> -->
           </el-carousel-item>
           <el-carousel-item>
-            <div class="cardTitle"><h3>合资品牌新产品规划（2020.H1）</h3></div>
+            <div class="cardTitle"><h3>合资品牌新产品项目开发进度（{{this.nowYear}}.{{this.nowMonth}}）</h3></div>
             <el-row>
               <el-col :span="24">
                 <h4>项目开发进度</h4>
@@ -80,35 +72,14 @@
                 <img :src="basePath+item.picturePath">
               </el-col>
             </el-row>
-            <!-- <el-row>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/03.jpg">
-              </el-col>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/03.jpg">
-              </el-col>
-            </el-row> -->
           </el-carousel-item>
           <el-carousel-item>
-            <div class="cardTitle"><h3>合资品牌新产品规划（2020.H1）</h3></div>
+            <div class="cardTitle"><h3>合资品牌产品项目收益回顾（{{this.nowYear}}）</h3></div>
             <el-row>
-              <el-col :span="24">
-                <h4>项目回顾对比</h4>
+              <el-col :span="12" v-for="(item,index) in this.newProReviewList" :key="index">
+                <div class="chartBox roseChartReview"></div>
               </el-col>
             </el-row>
-            <el-row>
-              <el-col :span="12" class="img-box">
-                <div id="drawProReview" class="chartBox"></div>
-              </el-col>
-            </el-row>
-            <!-- <el-row>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/04.jpg">
-              </el-col>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/04.jpg">
-              </el-col>
-            </el-row> -->
           </el-carousel-item>
         </el-carousel>
       </template>
@@ -122,9 +93,9 @@
           <el-carousel-item>
             <div class="cardTitle"><h3>新车销售厂商排名（2020.08）</h3></div>
             <el-row>
-              <el-col :span="24" class="img-box">
+              <!-- <el-col :span="24" class="img-box">
                 <img :src="rankingPicturePath" style="height: 800px;">
-              </el-col>
+              </el-col> -->
             </el-row>
           </el-carousel-item>
           <el-carousel-item>
@@ -145,14 +116,6 @@
                 <img src="../assets/09.jpg">
               </el-col>
             </el-row>
-            <el-row>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/10.jpg">
-              </el-col>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/11.jpg">
-              </el-col>
-            </el-row>
           </el-carousel-item>
           <el-carousel-item>
             <div class="cardTitle"><h3>合资车型表现（2020.08）</h3></div>
@@ -163,7 +126,7 @@
             </el-row>
 
           </el-carousel-item>
-          <el-carousel-item>
+          <!-- <el-carousel-item>
             <div class="cardTitle"><h3>合资双积分合规情况（2020.6）</h3></div>
             <el-row>
               <el-col :span="24">
@@ -204,7 +167,7 @@
                 <img src="../assets/16.jpg">
               </el-col>
             </el-row>
-          </el-carousel-item>
+          </el-carousel-item> -->
         </el-carousel>
       </template>
 
@@ -216,101 +179,15 @@
       <template>
         <el-carousel :interval="5000" indicator-position='outside' height="1100px">
           <el-carousel-item>
-            <div class="cardTitle"><h3>合资公司财务报表重点关注项（2020.08）</h3></div>
+            <div class="cardTitle"><h3>合资公司财务报表重点关注项（{{this.nowYear}}.{{this.nowMonth}}）</h3></div>
             <el-row>
-              <el-col :span="12">
-                <el-row>
-                  <el-col :span="24">
-                    <h4>一汽大众</h4>
-                  </el-col>
-               </el-row>
-               <el-row>
-                 <el-col :span="12" class="img-box">
-                   <img src="../assets/17.png">
-                 </el-col>
-                 <el-col :span="12" class="img-box">
-                   <img src="../assets/18.png">
-                 </el-col>
-                </el-row>
-              </el-col>
-              <el-col :span="12">
-                <el-row>
-                  <el-col :span="24">
-                    <h4>一汽大众</h4>
-                  </el-col>
-               </el-row>
-               <el-row>
-                 <el-col :span="12" class="img-box">
-                   <img src="../assets/17.png">
-                 </el-col>
-                 <el-col :span="12" class="img-box">
-                   <img src="../assets/18.png">
-                 </el-col>
-                </el-row>
+              <el-col :span="12" v-for="(item,index) in this.inventoryStatusList" :key="index">
+                <div class="chartBox roseChart1"></div>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="12">
-                <el-row>
-                  <el-col :span="24">
-                    <h4>一汽大众</h4>
-                  </el-col>
-               </el-row>
-               <el-row>
-                 <el-col :span="12" class="img-box">
-                   <img src="../assets/17.png">
-                 </el-col>
-                 <el-col :span="12" class="img-box">
-                   <img src="../assets/18.png">
-                 </el-col>
-                </el-row>
-              </el-col>
-              <el-col :span="12">
-                <el-row>
-                  <el-col :span="24">
-                    <h4>一汽大众</h4>
-                  </el-col>
-               </el-row>
-               <el-row>
-                 <el-col :span="12" class="img-box">
-                   <img src="../assets/17.png">
-                 </el-col>
-                 <el-col :span="12" class="img-box">
-                   <img src="../assets/18.png">
-                 </el-col>
-                </el-row>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12">
-                <el-row>
-                  <el-col :span="24">
-                    <h4>一汽大众</h4>
-                  </el-col>
-               </el-row>
-               <el-row>
-                 <el-col :span="12" class="img-box">
-                   <img src="../assets/17.png">
-                 </el-col>
-                 <el-col :span="12" class="img-box">
-                   <img src="../assets/18.png">
-                 </el-col>
-                </el-row>
-              </el-col>
-              <el-col :span="12">
-                <el-row>
-                  <el-col :span="24">
-                    <h4>一汽大众</h4>
-                  </el-col>
-               </el-row>
-               <el-row>
-                 <el-col :span="12" class="img-box">
-                   <img src="../assets/17.png">
-                 </el-col>
-                 <el-col :span="12" class="img-box">
-                   <img src="../assets/18.png">
-                 </el-col>
-                </el-row>
+              <el-col :span="12" v-for="(item,index) in this.cashFlowStatusList" :key="index">
+                <div class="chartBox roseChart2"></div>
               </el-col>
             </el-row>
           </el-carousel-item>
@@ -329,7 +206,7 @@
     </el-card>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>财务管理</span>
+        <span>参股公司管理</span>
       </div>
       <template>
         <el-carousel :interval="5000" indicator-position='outside' height="670px">
@@ -501,11 +378,12 @@
 <script>
   import {selectAllHeziPartnerNews} from '@/api/common/partner.js';
   import {getHeziNewPro} from '@/api/common/newPro.js';
-  import {getHeziNewProlead} from '@/api/common/newProlead.js';
+  import {getHeziNewProleadIndex} from '@/api/common/newProlead.js';
   import {getHeziProjectSchedule} from '@/api/common/proDev.js';
-  import {getHeziProReview} from '@/api/common/proReview.js';
+  import {getHeziProReviewIndex} from '@/api/common/proReview.js';
   import {getHeziMarketRanking} from '@/api/common/ranking.js';
   import {getHeziBudget} from '@/api/common/budget.js';
+  import {getInventoryStatus,getCashFlowStatus} from '@/api/common/reportAnalysis.js';
 
   var echarts = require('echarts');
 
@@ -514,20 +392,17 @@
       return{
         partnerNewsArr: [], //合作伙伴动态
         partnerNewsGroup: [], //重新组合后的合作伙伴动态
-        nowYear: new Date().getFullYear(), //当前年
-        nowMonth: new Date().getMonth()+1, //当前月
+        nowYear: 2020, //当前年new Date().getFullYear()
+        nowMonth: 12, //当前月new Date().getMonth()+1
+        halfYear: 'H1',
         fuelShareList0:[], //一汽燃油车市场份额饼图数据
         electShareList0:[], //一汽电动车市场份额饼图数据
         fuelShareList1:[], //上汽燃油车市场份额饼图数据
         electShareList1:[], //上汽电动车市场份额饼图数据
-        newProleadList:[],
-        fzgArr:[], //销量规划(Fzg)
-        kpeArr:[], //KPE(%)
-        feasibleSalesArr:[], //可研销量
-        feasibleRateArr:[], //可研利润率
-        actualSalesArr:[], //实际销量
-        actualRateArr:[],//实际利润率
-        proNameArr:[],  //产品
+        newProleadList:[], //新产品导入数据
+        newProReviewList:[], //项目回顾数据
+        inventoryStatusList:[], //存货状态的ECharts数据
+        cashFlowStatusList:[], //现金流状态的ECharts数据
         basePath: window.document.location.href.substring(0,16),
         heziProjectScheduleList: [],
         rankingPicturePath:'',
@@ -554,6 +429,11 @@
       }
     },
     created() {
+      if(this.nowMonth<=6){
+        this.halfYear = 'H1'
+      }else{
+        this.halfYear = 'H2'
+      }
       this.initPartnerNews() // 初始化合作伙伴数据
       this.initNewPro() // 初始化新产品规划数据
       this.initNewProlead() //初始化新产品导入数据
@@ -561,6 +441,8 @@
       this.initHeziProReview() // 初始化项目回顾对比数据
       this.initHeziMarketRanking() //初始化厂商排名图片
       this.initBudget() //初始化预算管理数据
+      this.initInventoryStatus() //初始化存货状态
+      this.initCashFlowStatus() //初始化现金流状态
     },
     methods:{
       initPartnerNews(){
@@ -598,18 +480,10 @@
                 this.electShareList1.push(obj)
               }
             })
-            if(this.fuelShareList0 != null){
-              this.drawFuelShareList0()
-            }
-            if(this.electShareList1 != null){
-              this.drawElectShareList1()
-            }
-            if(this.electShareList0 != null){
-              this.drawElectShareList0()
-            }
-            if(this.fuelShareList1 != null){
-              this.drawFuelShareList1()
-            }
+            this.drawFuelShareList0()
+            this.drawElectShareList1()
+            this.drawElectShareList0()
+            this.drawFuelShareList1()
           }
         }).catch(error => {
           console.log(error)
@@ -618,24 +492,37 @@
       },
       initNewProlead(){
         let req = {}
-        req.brand = 1
-        getHeziNewProlead(req).then(res => {
-          this.newProleadList = res.data
-          if(this.newProleadList != null){
-            // KPE
-            this.kpeArr = this.newProleadList.map(function (item) {
-              return item.kpe
-            })
-            // 销量规划
-            this.fzgArr = this.newProleadList.map(function (item) {
-              return item.fzg
-            })
-            // 里程碑
-            this.vehicleModeArr = this.newProleadList.map(function (item) {
-              return item.vehicleMode
-            })
-            this.drawNewProlead()
+        req.year = this.nowYear
+        getHeziNewProleadIndex(req).then(res => {
+          if(res.data != null){
+             var map = {}
+             var dest = []
+             for(var i = 0; i < res.data.length; i++){
+               var ai = res.data[i]
+               if(!map[ai.brandName]){
+                   dest.push({
+                       id: ai.id,
+                       brandName: ai.brandName,
+                       data: [ai]
+                   });
+                   map[ai.brandName] = ai
+               }else{
+                   for(var j = 0; j < dest.length; j++){
+                       var dj = dest[j];
+                       if(dj.brandName== ai.brandName){
+                           dj.data.push(ai)
+                           break
+                       }
+                   }
+               }
+           }
+            this.newProleadList = dest
+          }else{
+            this.newProleadList = []
           }
+          this.$nextTick(() => {
+            this.drawNewProlead()
+          })
         }).catch(error => {
           console.log(error)
           reject(error)
@@ -655,32 +542,39 @@
       },
       initHeziProReview(){
         let req = {}
-        req.brandId = 1
-        getHeziProReview(req).then(res => {
-          this.heziProReviewList = res.data
-          if(this.heziProReviewList != null){
-            // 可研销量
-            this.feasibleSalesArr = this.heziProReviewList.map(function (item) {
-              return item.feasibleSales
-            })
-            // 可研利润率
-            this.feasibleRateArr = this.heziProReviewList.map(function (item) {
-              return item.feasibleRate
-            })
-            // 实际销量
-            this.actualSalesArr = this.heziProReviewList.map(function (item) {
-              return item.actualSales
-            })
-            // 实际利润率
-            this.actualRateArr = this.heziProReviewList.map(function (item) {
-              return item.actualRate
-            })
-            // 产品
-            this.proNameArr = this.heziProReviewList.map(function (item) {
-              return item.proName
-            })
-            this.drawProReview()
+        req.year = this.nowYear
+        req.month = this.nowMonth
+        req.tag = 0
+        getHeziProReviewIndex(req).then(res => {
+          if(res.data != null){
+             var map = {}
+             var dest = []
+             for(var i = 0; i < res.data.length; i++){
+               var ai = res.data[i]
+               if(!map[ai.brandName]){
+                   dest.push({
+                       id: ai.id,
+                       brandName: ai.brandName,
+                       data: [ai]
+                   });
+                   map[ai.brandName] = ai
+               }else{
+                   for(var j = 0; j < dest.length; j++){
+                       var dj = dest[j];
+                       if(dj.brandName== ai.brandName){
+                           dj.data.push(ai)
+                           break
+                       }
+                   }
+               }
+           }
+            this.newProReviewList = dest
+          }else{
+            this.newProReviewList = []
           }
+          this.$nextTick(() => {
+            this.drawProReview()
+          })
         }).catch(error => {
           console.log(error)
           reject(error)
@@ -752,6 +646,46 @@
           reject(error)
         })
       },
+      initInventoryStatus(){
+        let req = {}
+        req.year = this.nowYear
+        req.month = this.nowMonth
+        getInventoryStatus(req).then(res => {
+          this.inventoryStatusList = res.data
+          this.$nextTick(() => {
+            if(this.inventoryStatusList != null){
+                this.inventoryStatusList.forEach((item,index)=>{
+                this.draw1(this.inventoryStatusList)
+              })
+            }else{
+              this.inventoryStatusList = []
+            }
+          })
+        }).catch(error => {
+          console.log(error)
+          reject(error)
+        })
+      },
+      initCashFlowStatus(){
+        let req = {}
+        req.year = this.nowYear
+        req.month = this.nowMonth
+        getCashFlowStatus(req).then(res => {
+          this.cashFlowStatusList = res.data
+          this.$nextTick(() => {
+            if(this.cashFlowStatusList != null){
+                this.cashFlowStatusList.forEach((item,index)=>{
+                this.draw2(this.cashFlowStatusList)
+              })
+            }else{
+              this.cashFlowStatusList = []
+            }
+          })
+        }).catch(error => {
+          console.log(error)
+          reject(error)
+        })
+      },
       //一汽燃油车饼图
       drawFuelShareList0(){
         var drawFuelShareList0 = {
@@ -759,7 +693,7 @@
                   text: '燃油车市场结构',
                   left: 'center',
                   textStyle: {
-                    fontSize: 13
+                    fontSize: 11
                   }
               },
               tooltip: {
@@ -771,7 +705,7 @@
                       name: '燃油车市场结构',
                       type: 'pie',
                       radius: '55%',
-                      center: ['50%', '45%'],
+                      center: ['40%', '40%'],
                       data: this.fuelShareList0,
                       emphasis: {
                           itemStyle: {
@@ -793,7 +727,7 @@
                   text: '电动车市场结构',
                   left: 'center',
                   textStyle: {
-                    fontSize: 13
+                    fontSize: 11
                   }
               },
               tooltip: {
@@ -805,7 +739,7 @@
                       name: '电动车市场结构',
                       type: 'pie',
                       radius: '55%',
-                      center: ['50%', '45%'],
+                      center: ['40%', '40%'],
                       data: this.electShareList0,
                       emphasis: {
                           itemStyle: {
@@ -827,7 +761,7 @@
                   text: '燃油车市场结构',
                   left: 'center',
                   textStyle: {
-                    fontSize: 13
+                    fontSize: 11
                   }
               },
               tooltip: {
@@ -839,7 +773,7 @@
                       name: '燃油车市场结构',
                       type: 'pie',
                       radius: '55%',
-                      center: ['50%', '45%'],
+                      center: ['40%', '40%'],
                       data: this.fuelShareList1,
                       emphasis: {
                           itemStyle: {
@@ -861,7 +795,7 @@
                   text: '电动车市场结构',
                   left: 'center',
                   textStyle: {
-                    fontSize: 13
+                    fontSize: 11
                   }
               },
               tooltip: {
@@ -873,7 +807,7 @@
                       name: '电动车市场结构',
                       type: 'pie',
                       radius: '55%',
-                      center: ['50%', '45%'],
+                      center: ['40%', '40%'],
                       data: this.electShareList1,
                       emphasis: {
                           itemStyle: {
@@ -890,91 +824,136 @@
       },
       // 新产品导入—销量及KPE折线图
       drawNewProlead(){
-        var drawNewProlead = {
-          tooltip: {
-              trigger: 'axis',
-              axisPointer: {
-                  type: 'cross',
-                  crossStyle: {
-                      color: '#999'
-                  }
+        var roseCharts = document.getElementsByClassName('roseChart')
+        for(var i = 0;i < roseCharts.length;i++ ){
+          let arr1 = []
+          let kpeArr = []
+          let fzgArr = []
+          this.newProleadList[i].data.forEach(item =>{
+            arr1.push(item.vehicleMode)
+            kpeArr.push(item.kpe)
+            fzgArr.push(item.fzg)
+          })
+          let xAxisObj = {}
+          xAxisObj.type = 'category'
+          xAxisObj.data = arr1
+          xAxisObj.axisPointer = {type: 'shadow'}
+          var myChart = echarts.init(roseCharts[i])
+          myChart.setOption({
+            title: {
+              text: this.newProleadList[i].brandName+'品牌',
+              textStyle: {
+                fontSize: 11
               }
-          },
-          legend: {
-              data: ['销量规划', 'KPE']
-          },
-          xAxis: [
-              {
-                  type: 'category',
-                  data: this.vehicleModeArr,
-                  axisPointer: {
-                      type: 'shadow'
-                  }
-              }
-          ],
-          yAxis: [
-              {
-                  type: 'value',
-                  minInterval: 0,
-                  axisLabel: {
-                      formatter: '{value}'
-                  }
-              },
-              {
-                  type: 'value',
-                  minInterval: 0,
-                  axisLabel: {
-                      formatter: '{value} %'
-                  }
-              }
-          ],
-          series: [
-              {
-                  name: '销量规划',
-                  type: 'bar',
-                  data: this.fzgArr,
-                  itemStyle: {
-                    color: '#82d1ec'
-                  },
-              },
-              {
-                  name: 'KPE',
-                  type: 'line',
-                  yAxisIndex: 1,
-                  data: this.kpeArr,
-                  itemStyle: {
-                    color: '#aaaa7f'
-                  },
-              }
-          ],
-        }
-        var myChart5 = echarts.init(document.getElementById('drawNewProlead'))
-        myChart5.setOption(drawNewProlead)
-      },
-      // 项目回顾折线图
-      drawProReview(){
-        var drawProReview = {
-           tooltip: {
-               trigger: 'axis',
-               axisPointer: {
-                   type: 'cross',
-                   crossStyle: {
-                       color: '#999'
-                   }
-               }
-           },
-            legend: {
-                data: ['可研销量','实际销量','可研利润率','实际利润率']
             },
-            xAxis: [
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+            legend: {
+                data: ['销量规划', 'KPE']
+            },
+            grid: {
+              left:'60',
+              height: '50%',
+              width: '60%'
+            },
+            xAxis: xAxisObj,
+            yAxis: [
                 {
-                    type: 'category',
-                    data: this.proNameArr,
-                    axisPointer: {
-                        type: 'shadow'
+                    type: 'value',
+                    minInterval: 0,
+                    axisLabel: {
+                        formatter: '{value}'
+                    }
+                },
+                {
+                    type: 'value',
+                    minInterval: 0,
+                    axisLabel: {
+                        formatter: '{value} %'
                     }
                 }
             ],
+            series: [
+                {
+                    name: '销量规划',
+                    type: 'bar',
+                    data: fzgArr,
+                    itemStyle: {
+                      color: '#82d1ec'
+                    },
+                    label: {
+                      show: true
+                    }
+                },
+                {
+                    name: 'KPE',
+                    type: 'line',
+                    yAxisIndex: 1,
+                    data: kpeArr,
+                    itemStyle: {
+                      color: '#aaaa7f'
+                    },
+                    label: {
+                      show: true
+                    }
+                }
+            ],
+          })
+        }
+      },
+      // 项目回顾折线图
+      drawProReview(){
+        var roseCharts = document.getElementsByClassName('roseChartReview')
+        for(var i = 0;i < roseCharts.length;i++ ){
+          let proNameArr = []
+          let feasibleSalesArr = []
+          let actualSalesArr = []
+          let feasibleRateArr = []
+          let actualRateArr = []
+          this.newProReviewList[i].data.forEach(item =>{
+            proNameArr.push(item.proName)
+            feasibleSalesArr.push(item.feasibleSales)
+            actualSalesArr.push(item.actualSales)
+            feasibleRateArr.push(item.feasibleRate)
+            actualRateArr.push(item.actualRate)
+          })
+          let xAxisObj = {}
+          xAxisObj.type = 'category'
+          xAxisObj.data = proNameArr
+          xAxisObj.axisPointer = {type: 'shadow'}
+          var myChart = echarts.init(roseCharts[i])
+          myChart.setOption({
+            title: {
+              text: this.newProReviewList[i].brandName+'品牌',
+              textStyle: {
+                fontSize: 11
+              }
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+            legend: {
+                data: ['可研销量','实际销量','可研利润率','实际利润率']
+            },
+            grid: {
+              left:'60',
+              height: '50%',
+              width: '60%'
+            },
+            xAxis: xAxisObj,
             yAxis: [
               {
                   type: 'value',
@@ -997,7 +976,7 @@
                 {
                     name: '可研销量',
                     type: 'bar',
-                    data: this.feasibleSalesArr,
+                    data: feasibleSalesArr,
                     itemStyle: {
                       color: '#ff5500'
                     },
@@ -1005,7 +984,7 @@
                 {
                     name: '实际销量',
                     type: 'bar',
-                    data: this.actualSalesArr,
+                    data: actualSalesArr,
                     itemStyle: {
                       color: '#82d1ec'
                     },
@@ -1013,7 +992,7 @@
                 {
                     name: '可研利润率',
                     type: 'line',
-                    data: this.feasibleRateArr,
+                    data: feasibleRateArr,
                     itemStyle: {
                       color: '#ffaa7f'
                     },
@@ -1021,15 +1000,14 @@
                 {
                     name: '实际利润率',
                     type: 'line',
-                    data: this.actualRateArr,
+                    data: actualRateArr,
                     itemStyle: {
                       color: '#aaaa7f'
                     },
                 }
-            ]
-          }
-          var myChart6 = echarts.init(document.getElementById('drawProReview'))
-          myChart6.setOption(drawProReview)
+            ],
+          })
+        }
       },
       // 市场销量折线图
       drawBudget() {
@@ -1081,6 +1059,72 @@
         };
         var myChart7 = echarts.init(document.getElementById('drawBudget'));
         myChart7.setOption(drawBudget)
+      },
+      draw1(inventoryStatusList){
+        var roseCharts = document.getElementsByClassName('roseChart1')
+        for(var i = 0;i < roseCharts.length;i++ ){
+          var myChart = echarts.init(roseCharts[i])
+          myChart.setOption({
+              title: {
+                text: inventoryStatusList[i].company+'存货状态',
+                textStyle: {
+                  fontSize: 13
+                }
+              },
+              grid: {
+                left:'50',// 调整这个属性
+                height: '50%',
+                width: '60%' //左右边距，设置为100，显示不全12月
+              },
+              xAxis: {
+                  type: 'category',
+                  data: ['上年同期', '当月']
+              },
+              yAxis: {
+                  type: 'value'
+              },
+              series: [{
+                  data: [inventoryStatusList[i].nowMonth, inventoryStatusList[i].nowMonthPass],
+                  type: 'bar',
+                  label: {
+                    show: true
+                  }
+              }]
+          })
+        }
+      },
+      draw2(cashFlowStatusList){
+        var roseCharts = document.getElementsByClassName('roseChart2')
+        for(var i = 0;i < roseCharts.length;i++ ){
+          var myChart = echarts.init(roseCharts[i])
+          myChart.setOption({
+              title: {
+                text: cashFlowStatusList[i].company+'现金流状态',
+                textStyle: {
+                  fontSize: 13
+                }
+              },
+              grid: {
+                left:'50',// 调整这个属性
+                height: '50%',
+                width: '60%' //左右边距，设置为100，显示不全12月
+              },
+              xAxis: {
+                  type: 'category',
+                  data: ['月初现金流', '月末现金流']
+              },
+              yAxis: {
+                  type: 'value'
+              },
+              series: [{
+                  data: [cashFlowStatusList[i].lastSum, cashFlowStatusList[i].nextSum],
+                  type: 'bar',
+                  label: {
+                    show: true
+                  }
+              }]
+          })
+        }
       },
       group(){
         var map = {}

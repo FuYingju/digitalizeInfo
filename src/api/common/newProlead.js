@@ -12,6 +12,17 @@ export function getHeziNewProlead(data) {
 }
 
 /**
+ * 查询新产品导入列表(主页)
+ */
+export function getHeziNewProleadIndex(data) {
+  return request({
+    url: 'api/ruoyi/heziNewProlead/index',
+    data: data,
+    method: 'post'
+  })
+}
+
+/**
  * 查询新产品导入车辆品牌
  */
 export function getHeziNewProleadParams() {

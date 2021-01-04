@@ -16,28 +16,6 @@
                 </el-option>
               </el-select>
             </div>
-            <!-- <div class="selectBox">
-              <span>月度</span>
-              <el-select v-model="monthSelect" placeholder="请选择" size="mini" class="select" @change='monthChange'>
-                <el-option
-                  v-for="item in 12"
-                  :key="item.index"
-                  :label="item"
-                  :value="item">
-                </el-option>
-              </el-select>
-            </div> -->
-            <!-- <div class="selectBox">
-              <span>企业</span>
-              <el-select v-model="value3" placeholder="请选择" size="mini" class="select">
-                <el-option
-                  v-for="item in options2"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </div> -->
           </div>
         </el-col>
         <el-col :span="16">
@@ -58,29 +36,36 @@
                   :data="heziReportAnalysisList"
                   border
                   row-key="id"
-                  style="width: 100%">
+                  :header-cell-style="{'text-align':'center'}"
+                  :row-style="{height:'20px'}"
+                  :cell-style="{padding:'0px'}"
+                  style="font-size: 10px;width: 100%;">
                     <el-table-column
                       prop="reportType"
                       label="报表"
                       :formatter="formatterReportType"
-                      width="140">
+                      align="right"
+                      min-width="140">
                     </el-table-column>
                     <el-table-column
                       prop="company"
                       label="企业"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="year"
                       label="年份"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="month"
                       label="月份"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
-                    <el-table-column width="110">
+                    <el-table-column min-width="110">
                        <template slot-scope="scope">
                           <el-button size="mini">
                             <router-link :to="{path:'/reportAnalysisDetail', query:{reportType:scope.row.reportType,year:scope.row.year,month:scope.row.month,company:scope.row.company}}">
@@ -349,4 +334,10 @@
   h5{margin: 0;font-size: 14px;}
   .message{margin: 10px;font-size: 12px;}
   .chartBox {height: 200px;}
+  a {
+    text-decoration: none;
+  }
+  .router-link-active {
+    text-decoration: none;
+  }
 </style>

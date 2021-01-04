@@ -16,17 +16,6 @@
                 </el-option>
               </el-select>
             </div>
-            <!-- <div class="selectBox">
-              <span>月度</span>
-              <el-select v-model="monthSelect" placeholder="请选择" size="mini" class="select" @change="monthChange">
-                <el-option
-                  v-for="item in 12"
-                  :key="item.index"
-                  :label="item"
-                  :value="item">
-                </el-option>
-              </el-select>
-            </div> -->
             <div class="selectBox">
               <span>品牌</span>
               <el-select v-model="businessSelect" placeholder="请选择" size="mini" class="select" @change='businessChange'>
@@ -427,6 +416,7 @@
      initBussinessSel(){
        getHeziNewProleadParams().then(res => {
          this.businessNameArr = res.data
+         alert(JSON.stringify(res.data))
          if(this.businessNameArr != null){
            this.businessSelect = this.businessNameArr[0].brandId // 预选中第一项
            this.initNewProlead()

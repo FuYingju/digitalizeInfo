@@ -18,13 +18,6 @@
                 </el-option>
               </el-select>
             </div>
-            <!-- <div class="selectBox">
-              <span>月度</span>
-              <el-select v-model="monthSelect" placeholder="请选择" size="mini" class="select" @change="monthChange">
-                <el-option v-for="item in 12" :key="item.index" :label="item" :value="item">
-                </el-option>
-              </el-select>
-            </div> -->
             <div class="selectBox">
               <span>市场</span>
               <el-select v-model="businessSelect" placeholder="请选择" size="mini" class="select" @change="businessChange">
@@ -32,9 +25,6 @@
                 </el-option>
               </el-select>
             </div>
-            <!-- <div class="buttonGroup">
-              <Buttongroup />
-            </div> -->
           </div>
         </el-col>
         <el-col :span="16">
@@ -44,19 +34,24 @@
             </el-col>
           </el-row>
           <el-row style="margin-bottom: 35px;">
-            <el-col :span="24">
+            <el-col :span="24" class="main-title">
               <p><h5>{{this.businessSelect}}车市场销量</h5></p>
               <el-table
                 :data="transPerformanceList"
                 border
                 center
                 row-key="index"
-                style="width: 100%;">
+                :header-cell-style="{'text-align':'center'}"
+                :row-style="{height:'20px'}"
+                :cell-style="{padding:'0px'}"
+                style="font-size: 10px;width: 90%;">
                     <el-table-column
                       v-for="(item, index) in monthTitle"
                       :key="index"
                       :prop="item"
                       :label="item"
+                      align="right"
+                      :min-width="30"
                      >
                        <template slot-scope="scope" >
                             <span>{{ scope.row[index] }}</span>
@@ -71,77 +66,93 @@
             </el-col>
           </el-row>
           <el-row style="margin-bottom: 35px;">
-            <el-col :span="24">
+            <el-col :span="24" class="main-title">
               <p><h5>折扣表现</h5></p>
               <el-table
                 :data="brandDiscountArr"
                 border
                 row-key="id"
-                style="width: 100%">
+                :header-cell-style="{'text-align':'center'}"
+                :row-style="{height:'20px'}"
+                :cell-style="{padding:'0px'}"
+                style="font-size: 10px;width: 100%;">
                   <el-table-column
                     prop="brandName"
                     label=""
-                    width="110">
+                    align="right"
+                    width="80">
                   </el-table-column>
                   <el-table-column
                     prop="month1"
                     label="1月"
-                    width="80">
+                    align="right"
+                    min-width="50">
                   </el-table-column>
                   <el-table-column
                     prop="month2"
                     label="2月"
-                    width="80">
+                    align="right"
+                    min-width="50">
                   </el-table-column>
                   <el-table-column
                     prop="month3"
                     label="3月"
-                    width="80">
+                    align="right"
+                    min-width="50">
                   </el-table-column>
                   <el-table-column
                     prop="month4"
                     label="4月"
-                    width="80">
+                    align="right"
+                    min-width="50">
                   </el-table-column>
                   <el-table-column
                     prop="month5"
                     label="5月"
-                    width="80">
+                    align="right"
+                    min-width="50">
                   </el-table-column>
                   <el-table-column
                     prop="month6"
                     label="6月"
-                    width="80">
+                    align="right"
+                    width="50">
                   </el-table-column>
                   <el-table-column
                     prop="month7"
                     label="7月"
-                    width="80">
+                    align="right"
+                    min-width="50">
                   </el-table-column>
                   <el-table-column
                     prop="month8"
                     label="8月"
-                    width="80">
+                    align="right"
+                    min-width="50">
                   </el-table-column>
                   <el-table-column
                     prop="month9"
                     label="9月"
-                    width="80">
+                    align="right"
+                    min-width="50">
                   </el-table-column>
                   <el-table-column
                     prop="month10"
                     label="10月"
-                    width="80">
+                    align="right"
+                    min-width="50">
                   </el-table-column>
                   <el-table-column
                     prop="month11"
                     label="11月"
-                    width="80">
+                    align="right"
+                    min-width="50">
                   </el-table-column>
                   <el-table-column
                     prop="month12"
                     label="12月"
-                    width="80">
+                    align="right"
+                    min-width="50">
                   </el-table-column>
               </el-table>
             </el-col>
@@ -385,14 +396,11 @@
             trigger: 'axis'   // axis   item   none三个值
           },
           grid: {
-            height: '50%',
-            width: '90%' //左右边距，设置为100，显示不全12月
+            height: '60%',
+            width: '70%'
           },
           legend: {
             orient: 'horizontal',
-            right: '10%',
-            width: '500',
-            top: '25'
           },
           xAxis: {
             data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
@@ -485,8 +493,8 @@
         })
         var echartsOption2 = {
           grid: {
-            height: '50%',
-            width: '90%' //左右边距，设置为100，显示不全12月
+            height: '60%',
+            width: '70%'
           },
           tooltip: {
             trigger: 'axis',

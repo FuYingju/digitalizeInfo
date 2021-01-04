@@ -20,3 +20,14 @@ export function getHeziProReview(data) {
     method: 'post'
   })
 }
+
+/**
+ * 项目回顾对比数据查询(主页)
+ */
+export function getHeziProReviewIndex(data) {
+  return request({
+    url: 'api/ruoyi/proReview/index',
+    data: data,
+    method: 'post'
+  })
+}

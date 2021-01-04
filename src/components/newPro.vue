@@ -38,17 +38,6 @@
                 </el-option>
               </el-select>
             </div>
-            <!-- <div class="selectBox">
-              <span>分类</span>
-              <el-select v-model="tagSelect" placeholder="请选择" size="mini" class="select" @change="tagChange">
-                <el-option
-                  v-for="item in tagOptions"
-                  :key="item.index"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </div> -->
           </div>
         </el-col>
         <el-col :span="16">
@@ -73,27 +62,36 @@
                   :data="newProFuelList"
                   border
                   row-key="id"
-                  style="width: 100%">
+                  style="width: 70%">
                     <el-table-column
                       prop="marketSegment"
                       label="细分市场"
                       :formatter="ifendcase"
-                      width="110">
+                      width="140">
                     </el-table-column>
                     <el-table-column
                       prop="share"
                       label="市场份额"
-                      width="80">
+                      width="100">
+                      <template slot-scope="scope">
+                        <div v-if="scope.row.marketSegment != 'cover' && scope.row.share != null" class="share" :style="{width: scope.row.share+'%'}"><span style="position: absolute;">{{ scope.row.share }}%</span></div>
+                        <div v-else>{{ scope.row.share || 0 }}%</div>
+                      </template>
                     </el-table-column>
                     <el-table-column
                       prop="yoychange"
                       label="同比"
-                      width="80">
+                      width="100">
+                      <template slot-scope="scope">
+                        <div v-if="scope.row.yoychange > 0" class="yoychange1" :style="{width: (scope.row.yoychange)*10+'%'}"><span style="position: absolute;">{{ scope.row.yoychange }}%</span></div>
+                        <div v-else-if="scope.row.yoychange < 0" class="yoychange2" :style="{width:(scope.row.yoychange)*-1*10+'%'}"><span style="position: absolute;">{{ scope.row.yoychange }}%</span></div>
+                        <div v-else>{{ scope.row.yoychange || 0 }}%</div>
+                      </template>
                     </el-table-column>
                     <el-table-column
                       prop="brandName"
                       label="车辆品牌"
-                      width="80">
+                      min-width="150">
                     </el-table-column>
                 </el-table>
               </el-col>
@@ -105,27 +103,36 @@
                   :data="newProElectList"
                   border
                   row-key="id"
-                  style="width: 100%">
+                  style="width: 70%">
                     <el-table-column
                       prop="marketSegment"
                       label="细分市场"
                       :formatter="ifendcase"
-                      width="110">
+                      width="140">
                     </el-table-column>
                     <el-table-column
                       prop="share"
                       label="市场份额"
-                      width="80">
+                      width="100">
+                      <template slot-scope="scope">
+                        <div v-if="scope.row.marketSegment != 'cover' && scope.row.share != null" class="share" :style="{width: scope.row.share+'%'}"><span style="position: absolute;">{{ scope.row.share }}%</span></div>
+                        <div v-else>{{ scope.row.share || 0 }}%</div>
+                      </template>
                     </el-table-column>
                     <el-table-column
                       prop="yoychange"
                       label="同比"
-                      width="80">
+                      width="100">
+                      <template slot-scope="scope">
+                        <div v-if="scope.row.yoychange > 0" class="yoychange1" :style="{width: (scope.row.yoychange)*10+'%'}"><span style="position: absolute;">{{ scope.row.yoychange }}%</span></div>
+                        <div v-else-if="scope.row.yoychange < 0" class="yoychange2" :style="{width:(scope.row.yoychange)*-1*10+'%'}"><span style="position: absolute;">{{ scope.row.yoychange }}%</span></div>
+                        <div v-else>{{ scope.row.yoychange || 0 }}%</div>
+                      </template>
                     </el-table-column>
                     <el-table-column
                       prop="brandName"
                       label="车辆品牌"
-                      width="80">
+                      min-width="150">
                     </el-table-column>
                 </el-table>
               </el-col>
@@ -170,11 +177,11 @@
       return{
         nfOptions: [],
         monthOptions:[{
-            label:'1~6月',
+            label:'H1',
             value:'0'
           },
           {
-            label:'6~12月',
+            label:'H2',
             value:'1'
           }
         ],
@@ -200,7 +207,7 @@
         tagSelect: '1',
         yearSelect: new Date().getFullYear(),
         monthSelect: '0',
-        monthFormat: '1~6月', //当前选择的品牌名称
+        monthFormat: 'H1', //当前选择的品牌名称
         requestParams: {},
         messageRequestParams: {}, // 留言请求参数
         newProList:[],
@@ -216,7 +223,6 @@
      this.getNf()
      this.getMessage()
      this.initNewPro()
-     this.initCoverListByYear()
    },
    methods:{
      // 初始化新产品规划
@@ -475,5 +481,14 @@
   .linkItem2{line-height: 10px;margin: 10px;}
   .chartBox {
     height: 200px;
+  }
+  .share{
+    background:#FC9; height:20px; display:block;
+  }
+  .yoychange1{
+    background: linear-gradient(to right, white 0%, green 100%); border: 1px solid #ccc;height:20px;
+  }
+  .yoychange2{
+    background: linear-gradient(to right, white 0%, red 100%); border: 1px solid #ccc;height:20px;
   }
 </style>

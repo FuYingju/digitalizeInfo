@@ -177,14 +177,11 @@
              data: ['利润总额预测', '利润总额目标']
          },
          grid: {
-           height: '50%',
-           width: '90%' //左右边距，设置为100，显示不全12月
+           height: '60%',
+           width: '70%'
          },
          legend: {
-           orient: 'horizontal',
-           right: '10%',
-           width: '500',
-           top: '25'
+           orient: 'horizontal'
          },
          xAxis: {
            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],

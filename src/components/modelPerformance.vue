@@ -48,66 +48,79 @@
                 <el-table
                   :data="heziSalesPlanRespListSTD"
                   row-key="id"
-                  style="width: 100%">
+                  :header-cell-style="{'text-align':'center'}"
+                  :row-style="{height:'20px'}"
+                  :cell-style="{padding:'0px'}"
+                  style="font-size: 10px;width: 100%;">
                   <el-table-column
                     prop="vehicleMode"
                     label="STD"
-                    width="70">
+                    align="right"
+                    min-width="70">
                   </el-table-column>
                   <el-table-column
                     prop="yearPlanNo"
                     label="年度计划"
-                    width="80">
+                    align="right"
+                    min-width="80">
                   </el-table-column>
                   <el-table-column :label="String(monthSelect)+'月'">
                     <el-table-column
                       prop="monthSalesNo"
                       label="销量"
-                      width="60">
+                      align="right"
+                      min-width="60">
                     </el-table-column>
                     <el-table-column
                       prop="monthYoychange"
                       label="同比变化"
                       :formatter="percentFormatter"
-                      width="70">
+                      align="right"
+                      min-width="70">
                     </el-table-column>
                   </el-table-column>
                   <el-table-column :label="'1-'+String(monthSelect)+'月'">
                     <el-table-column
                       prop="salesNoSubtotal"
                       label="销量"
-                      width="60">
+                      align="right"
+                      min-width="60">
                     </el-table-column>
                     <el-table-column
                       prop="yearCompletionRate"
                       label="年计完成率"
-                      width="70">
+                      align="right"
+                      min-width="70">
                     </el-table-column>
                   </el-table-column>
                   <el-table-column :label="String(monthSelect+1)+'月'">
                     <el-table-column
                       prop="monthPlanNo"
                       label="计划"
-                      width="70">
+                      align="right"
+                      min-width="70">
                     </el-table-column>
                   </el-table-column>
                   <el-table-column :label="String(monthSelect)+'月末'">
                     <el-table-column
                       prop="stockJv"
                       label="厂家库存"
-                      width="60">
+                      align="right"
+                      min-width="60">
                     </el-table-column>
                   </el-table-column>
                   <el-table-column :label="String(monthSelect)+'月末'">
                     <el-table-column
                       prop="stockJvDepth"
                       label="库存深度"
-                      width="60">
+                      align="right"
+                      min-width="60">
                     </el-table-column>
                     <el-table-column
                       prop="stockDepth"
                       label="Δ深度"
-                      width="60">
+                      align="right"
+                      min-width="60">
                     </el-table-column>
                   </el-table-column>
                 </el-table>
@@ -118,28 +131,35 @@
                 <el-table
                   :data="heziSalesPlanRespListAaK"
                   row-key="id"
-                  style="width: 100%">
+                  :header-cell-style="{'text-align':'center'}"
+                  :row-style="{height:'20px'}"
+                  :cell-style="{padding:'0px'}"
+                  style="font-size: 10px;width: 100%;">
                   <el-table-column
                     prop="vehicleMode"
                     label="AaK"
-                    width="70">
+                    align="right"
+                    min-width="70">
                   </el-table-column>
                   <el-table-column
                     prop="yearPlanNo"
                     label="年度计划"
-                    width="80">
+                    align="right"
+                    min-width="80">
                   </el-table-column>
                     <el-table-column :label="String(monthSelect)+'月'">
                       <el-table-column
                         prop="monthSalesNo"
                         label="销量"
-                        width="60">
+                        align="right"
+                        min-width="60">
                       </el-table-column>
                       <el-table-column
                         prop="monthYoychange"
                         label="同比变化"
                         :formatter="percentFormatter"
-                        width="70">
+                        align="right"
+                        min-width="60">
                       </el-table-column>
                     </el-table-column>
                     <el-table-column :label="'1-'+String(monthSelect)+'月'">
@@ -152,33 +172,37 @@
                         prop="yearCompletionRate"
                         label="年计完成率"
                         :formatter="percentFormatter"
-                        width="70">
+                        align="right"
+                        min-width="60">
                       </el-table-column>
                     </el-table-column>
                     <el-table-column :label="String(monthSelect+1)+'月'">
                       <el-table-column
                         prop="stockJv"
                         label="计划"
-                        width="70">
+                        min-width="60">
                       </el-table-column>
                     </el-table-column>
                     <el-table-column :label="String(monthSelect)+'月末'">
                       <el-table-column
                         prop="stockJv"
                         label="厂家库存"
-                        width="60">
+                        align="right"
+                        min-width="60">
                       </el-table-column>
                     </el-table-column>
                     <el-table-column :label="String(monthSelect)+'月末'">
                       <el-table-column
                         prop="stockJvDepth"
                         label="库存深度"
-                        width="60">
+                        align="right"
+                        min-width="60">
                       </el-table-column>
                       <el-table-column
                         prop="stockJvDepth"
                         label="Δ深度"
-                        width="60">
+                        align="right"
+                        min-width="60">
                       </el-table-column>
                     </el-table-column>
                   </el-table>

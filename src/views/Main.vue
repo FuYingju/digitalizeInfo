@@ -70,7 +70,9 @@
       color: #333;
       text-align: center;
       line-height: 160px;
-      padding: 20px 15%;
+      /* padding: 20px 15%; */
+      /* 调整为铺满整个屏幕*/
+      padding: 20px;
     }
 
     body > .el-container {
@@ -93,4 +95,11 @@
       min-width: 800px;
     }
     .menu{min-width: 800px;}
+    body .el-table th.gutter{
+    display: table-cell!important;
+    }
+    /* 自己额外加的全局样式*/
+    .main-title{
+      margin-left: 45px;
+    }
 </style>

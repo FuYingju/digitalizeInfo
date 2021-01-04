@@ -38,87 +38,96 @@
         </el-col>
         <el-col :span="16">
           <div class="container">
-            <!-- <el-row class="img-box">
-              <el-col :span="24">
-                <img :src="picturePath">
-              </el-col>
-            </el-row> -->
             <el-row style="margin-bottom: 35px;">
               <el-col :span="24">
                 <el-table
                   :data="heziMarketRankingList"
                   border
                   row-key="id"
-                  style="width: 100%">
+                  :header-cell-style="{'text-align':'center'}"
+                  :row-style="{height:'20px'}"
+                  :cell-style="{padding:'0px'}"
+                  style="font-size: 10px;width: 100%;">
                   <el-table-column
                     prop="brandName"
                     label="厂商品牌"
-                    width="100">
+                    align="right"
+                    min-width="100">
                   </el-table-column>
                   <el-table-column :label="String(monthSelect)+'月'">
                     <el-table-column
                       prop="monthlySalesRanking"
                       label="排名"
-                      width="50">
+                      align="right"
+                      min-width="50">
                     </el-table-column>
                     <el-table-column
                       prop="monthlySales"
                       label="销量"
-                      width="70">
+                      align="right"
+                      min-width="70">
                     </el-table-column>
                     <el-table-column
                       prop="monthYoychangeCompare"
                       label="同比变化"
                       :formatter="percentFormatter"
-                      width="70">
+                      align="right"
+                      min-width="70">
                     </el-table-column>
                     <el-table-column
                       prop="monthMarketShare"
                       label="市场份额"
                       :formatter="percentFormatter"
-                      width="70">
+                      align="right"
+                      min-width="70">
                     </el-table-column>
                     <el-table-column
                       prop="monthShareMonthOnMonth"
                       label="份额环比"
                       :formatter="percentFormatter"
-                      width="70">
+                      align="right"
+                      min-width="70">
                     </el-table-column>
                     <el-table-column
                       prop="monthYearOnYearShare"
                       label="份额同比"
                       :formatter="percentFormatter"
-                      width="70">
+                      align="right"
+                      min-width="70">
                     </el-table-column>
                   </el-table-column>
                   <el-table-column :label="'1-'+String(monthSelect)+'月'">
                     <el-table-column
                       prop="shareRanking"
                       label="排名"
-                      width="50">
+                      align="right"
+                      min-width="50">
                     </el-table-column>
                     <el-table-column
                       prop="salesMonthAgo"
                       label="销量"
-                      width="70">
+                      align="right"
+                      min-width="70">
                     </el-table-column>
                     <el-table-column
                       prop="monthlyChange"
                       label="同比变化"
                       :formatter="percentFormatter"
-                      width="70">
+                      min-width="70">
                     </el-table-column>
                     <el-table-column
                       prop="marketShare"
                       label="累计份额"
                       :formatter="percentFormatter"
+                      align="right"
                       width="70">
                     </el-table-column>
                     <el-table-column
                       prop="yearOnYearShare"
                       label="份额同比"
                       :formatter="percentFormatter"
-                      width="70">
+                      align="right"
+                      min-width="70">
                     </el-table-column>
                   </el-table-column>
                 </el-table>
