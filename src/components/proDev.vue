@@ -42,13 +42,13 @@
         </el-col>
         <el-col :span="16">
           <div class="container">
-            <el-row>
+            <!-- <el-row>
               <el-col :span="24">
                 <h5>合资品牌新产品项目开发进度</h5>
               </el-col>
-            </el-row>
+            </el-row> -->
             <el-row class="img-box">
-              <el-col :span="12" v-for="item in this.heziProjectScheduleList" :key="item.id">
+              <el-col :span="24" v-for="item in this.heziProjectScheduleList" :key="item.id">
                 <img :src="basePath+item.picturePath" @click="vShow">
               </el-col>
             </el-row>
@@ -92,19 +92,6 @@
                 </el-table>
               </el-col>
             </el-row>
-            <el-row>
-              <el-col>
-                <el-input
-                  type="textarea"
-                  placeholder="请输入留言内容"
-                  v-model="content"
-                  maxlength="100"
-                  show-word-limit
-                >
-                </el-input>
-                <el-button type="text" @click="submitMessage">提交留言</el-button>
-              </el-col>
-            </el-row>
           </div>
         </el-col>
         <el-col :span="4">
@@ -119,6 +106,9 @@
               </div>
             </div>
           </div>
+          <div>
+            <AddComments :moduleName ="moduleName" @reload="getMessage"/>
+          </div>
         </el-col>
       </el-row>
     </el-card>
@@ -127,12 +117,14 @@
 
 <script>
 
-  import {addComments,getHeziComments} from '@/api/common/comments.js';
+  import AddComments from '@/components/addComments.vue';
+  import {getHeziComments} from '@/api/common/comments.js';
   import {getHeziProjectSchedule,getHeziProjectScheduleParams} from '@/api/common/proDev.js';
 
   export default {
     data(){
       return{
+        moduleName:'项目开发进度',
         nfOptions: [],
         heziProjectScheduleList: [],
         yearSelect: new Date().getFullYear(),
@@ -221,28 +213,18 @@
      },
      // 获取页面留言
      getMessage(){
-       this.messageRequestParams.belongModule = '项目开发进度'
+       this.messageRequestParams.belongModule = this.moduleName
        this.messageRequestParams = getHeziComments(this.messageRequestParams).then(res => {
          this.contentList = res.data
        }).catch(error => {
          console.log(error)
          reject(error)
        })
-     },
-     // 留言
-     submitMessage(){
-       this.messageRequestParams.content = this.content
-       this.messageRequestParams.belongModule = '项目开发进度'
-       addComments(this.messageRequestParams).then(res => {
-         alert('留言成功')
-         this.content = ''
-         this.getMessage()
-       }).catch(error => {
-         console.log(error)
-         reject(error)
-       })
      }
-   }
+   },
+   components:{
+       'AddComments': AddComments
+     },
  }
 </script>
 

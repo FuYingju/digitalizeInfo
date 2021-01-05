@@ -208,17 +208,6 @@
                   </el-table>
               </el-col>
             </el-row>
-            <el-row>
-              <el-input
-                type="textarea"
-                placeholder="请输入留言内容"
-                v-model="content"
-                maxlength="100"
-                show-word-limit
-              >
-              </el-input>
-              <el-button type="text" @click="submitMessage">提交留言</el-button>
-            </el-row>
           </div>
         </el-col>
         <el-col :span="4">
@@ -233,6 +222,9 @@
               </div>
             </div>
           </div>
+          <div>
+            <AddComments :moduleName ="moduleName" @reload="getMessage"/>
+          </div>
         </el-col>
       </el-row>
     </el-card>
@@ -241,12 +233,14 @@
 
 <script>
 
+  import AddComments from '@/components/addComments.vue';
   import {getHeziSalesPlan, getHeziSalesPlanParams} from '@/api/common/modelPerformance.js';
-  import {addComments,getHeziComments} from '@/api/common/comments.js';
+  import {getHeziComments} from '@/api/common/comments.js';
 
   export default {
     data(){
       return{
+        moduleName:'车型表现',
         nfOptions: [],
         businessSelect: '', //选中品牌的id
         businessNameArr: [], //品牌列表
@@ -336,7 +330,7 @@
       },
       // 获取页面留言
       getMessage(){
-        this.messageRequestParams.belongModule = '车型表现'
+        this.messageRequestParams.belongModule = this.moduleName
         this.messageRequestParams = getHeziComments(this.messageRequestParams).then(res => {
           this.contentList = res.data
         }).catch(error => {
@@ -351,21 +345,11 @@
         }
         var str = ( cellValue * 100 ).toFixed(2) + "%";
         return str
-      },
-      // 留言
-      submitMessage(){
-        this.messageRequestParams.content = this.content
-        this.messageRequestParams.belongModule = '车型表现'
-        addComments(this.messageRequestParams).then(res => {
-          alert('留言成功')
-          this.content = ''
-          this.getMessage()
-        }).catch(error => {
-          console.log(error)
-          reject(error)
-        })
       }
-    }
+    },
+    components:{
+        'AddComments': AddComments
+      },
  }
 </script>
 

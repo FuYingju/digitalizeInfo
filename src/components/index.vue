@@ -93,81 +93,216 @@
           <el-carousel-item>
             <div class="cardTitle"><h3>新车销售厂商排名（2020.08）</h3></div>
             <el-row>
-              <!-- <el-col :span="24" class="img-box">
-                <img :src="rankingPicturePath" style="height: 800px;">
-              </el-col> -->
+              <el-col :span="24">
+                <el-table
+                  :data="heziMarketRankingListC"
+                  border
+                  row-key="id"
+                  :header-cell-style="{'text-align':'center'}"
+                  :row-style="{height:'20px'}"
+                  :cell-style="{padding:'0px'}"
+                  style="font-size: 10px;width: 100%;margin-bottom: 35px;">
+                  <el-table-column
+                    prop="brandName"
+                    label="乘用车"
+                    align="right"
+                    min-width="100">
+                  </el-table-column>
+                  <el-table-column :label="String(this.nowMonth)+'月'">
+                    <el-table-column
+                      prop="monthlySalesRanking"
+                      label="排名"
+                      align="right"
+                      min-width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthlySales"
+                      label="销量"
+                      align="right"
+                      min-width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthYoychangeCompare"
+                      label="同比变化"
+                      :formatter="percentFormatter"
+                      align="right"
+                      min-width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthMarketShare"
+                      label="市场份额"
+                      :formatter="percentFormatter"
+                      align="right"
+                      min-width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthShareMonthOnMonth"
+                      label="份额环比"
+                      :formatter="percentFormatter"
+                      align="right"
+                      min-width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthYearOnYearShare"
+                      label="份额同比"
+                      :formatter="percentFormatter"
+                      align="right"
+                      min-width="70">
+                    </el-table-column>
+                  </el-table-column>
+                  <el-table-column :label="'1-'+String(this.nowMonth)+'月'">
+                    <el-table-column
+                      prop="shareRanking"
+                      label="排名"
+                      align="right"
+                      min-width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="salesMonthAgo"
+                      label="销量"
+                      align="right"
+                      min-width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthlyChange"
+                      label="同比变化"
+                      align="right"
+                      :formatter="percentFormatter"
+                      min-width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="marketShare"
+                      label="累计份额"
+                      :formatter="percentFormatter"
+                      align="right"
+                      width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="yearOnYearShare"
+                      label="份额同比"
+                      :formatter="percentFormatter"
+                      align="right"
+                      min-width="70">
+                    </el-table-column>
+                  </el-table-column>
+                </el-table>
+                <el-table
+                  :data="heziMarketRankingListH"
+                  border
+                  row-key="id"
+                  :header-cell-style="{'text-align':'center'}"
+                  :row-style="{height:'20px'}"
+                  :cell-style="{padding:'0px'}"
+                  style="font-size: 10px;width: 100%;margin-bottom: 35px;">
+                  <el-table-column
+                    prop="brandName"
+                    label="豪华车"
+                    align="right"
+                    min-width="100">
+                  </el-table-column>
+                  <el-table-column :label="String(this.nowMonth)+'月'">
+                    <el-table-column
+                      prop="monthlySalesRanking"
+                      label="排名"
+                      align="right"
+                      min-width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthlySales"
+                      label="销量"
+                      align="right"
+                      min-width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthYoychangeCompare"
+                      label="同比变化"
+                      :formatter="percentFormatter"
+                      align="right"
+                      min-width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthMarketShare"
+                      label="市场份额"
+                      :formatter="percentFormatter"
+                      align="right"
+                      min-width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthShareMonthOnMonth"
+                      label="份额环比"
+                      :formatter="percentFormatter"
+                      align="right"
+                      min-width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthYearOnYearShare"
+                      label="份额同比"
+                      :formatter="percentFormatter"
+                      align="right"
+                      min-width="70">
+                    </el-table-column>
+                  </el-table-column>
+                  <el-table-column :label="'1-'+String(this.nowMonth)+'月'">
+                    <el-table-column
+                      prop="shareRanking"
+                      label="排名"
+                      align="right"
+                      min-width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="salesMonthAgo"
+                      label="销量"
+                      align="right"
+                      min-width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="monthlyChange"
+                      label="同比变化"
+                      align="right"
+                      :formatter="percentFormatter"
+                      min-width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="marketShare"
+                      label="累计份额"
+                      :formatter="percentFormatter"
+                      align="right"
+                      width="70">
+                    </el-table-column>
+                    <el-table-column
+                      prop="yearOnYearShare"
+                      label="份额同比"
+                      :formatter="percentFormatter"
+                      align="right"
+                      min-width="70">
+                    </el-table-column>
+                  </el-table-column>
+                </el-table>
+              </el-col>
             </el-row>
           </el-carousel-item>
           <el-carousel-item>
-            <div class="cardTitle"><h3>合资品牌表现（2020.08）</h3></div>
+            <div class="cardTitle"><h3>合资品牌表现（{{this.nowYear}}.{{this.nowMonth}}）</h3></div>
             <el-row>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/06.jpg">
+              <el-col :span="24">
+                <div id="chart5" class="chartBox"></div>
               </el-col>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/07.jpg">
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/08.jpg">
-              </el-col>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/09.jpg">
+              <el-col :span="24">
+                <div id="chart6" class="chartBox"></div>
               </el-col>
             </el-row>
           </el-carousel-item>
           <el-carousel-item>
-            <div class="cardTitle"><h3>合资车型表现（2020.08）</h3></div>
+            <div class="cardTitle"><h3>折扣数据（{{this.nowYear}}.{{this.nowMonth}}）</h3></div>
             <el-row>
-              <el-col :span="24" class="img-box">
-                <img src="../assets/12.jpg" style="height: 1000px;">
+              <el-col :span="24">
+                <div id="chart7" class="chartBox"></div>
+              </el-col>
+              <el-col :span="24">
+                <div id="chart8" class="chartBox"></div>
               </el-col>
             </el-row>
-
           </el-carousel-item>
-          <!-- <el-carousel-item>
-            <div class="cardTitle"><h3>合资双积分合规情况（2020.6）</h3></div>
-            <el-row>
-              <el-col :span="24">
-                <h4>行业积分供需关系（6+6）预测</h4>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="18" class="img-box">
-                <img src="../assets/13.jpg">
-              </el-col>
-              <el-col :span="6" class="img-box">
-                <img src="../assets/14.jpg">
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="24">
-                <h4>合资企业双积分年度计划</h4>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/15.jpg">
-              </el-col>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/15.jpg">
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="24">
-                <h4>合资企业新能源销售完成情况</h4>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/16.jpg">
-              </el-col>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/16.jpg">
-              </el-col>
-            </el-row>
-          </el-carousel-item> -->
         </el-carousel>
       </template>
 
@@ -192,7 +327,7 @@
             </el-row>
           </el-carousel-item>
           <el-carousel-item>
-            <div class="cardTitle"><h3>合资公司年度滚动预算（2020.08）</h3></div>
+            <div class="cardTitle"><h3>合资公司年度滚动预算（{{this.nowYear}}）</h3></div>
             <el-row>
               <el-col :span="12" class="img-box">
                 <div id="drawBudget" class="chartBox"></div>
@@ -377,11 +512,13 @@
 
 <script>
   import {selectAllHeziPartnerNews} from '@/api/common/partner.js';
+  import {getHeziMarketRanking} from '@/api/common/ranking.js';
+  import {getHeziBrandPerformance} from '@/api/common/brandPerformance.js';
+  import {getHeziBrandDiscount} from '@/api/common/brandDiscount.js';
   import {getHeziNewPro} from '@/api/common/newPro.js';
   import {getHeziNewProleadIndex} from '@/api/common/newProlead.js';
   import {getHeziProjectSchedule} from '@/api/common/proDev.js';
   import {getHeziProReviewIndex} from '@/api/common/proReview.js';
-  import {getHeziMarketRanking} from '@/api/common/ranking.js';
   import {getHeziBudget} from '@/api/common/budget.js';
   import {getInventoryStatus,getCashFlowStatus} from '@/api/common/reportAnalysis.js';
 
@@ -406,26 +543,14 @@
         basePath: window.document.location.href.substring(0,16),
         heziProjectScheduleList: [],
         rankingPicturePath:'',
+        heziMarketRankingList: [], //厂商排名表格
+        heziMarketRankingListH: [], //豪华车厂商排名表格
+        heziMarketRankingListC: [], //乘用车厂商排名表格
+        heziBrandPerformanceList: [], //品牌表现数据
+        heziBrandDiscountList: [], //折扣数据
         budgetList:[],
         totalProfitsPredictArr:[],
-        totalProfitsTargetArr:[],
-        hotNews:[{
-                  name:'热门新闻1',
-                  link:'#'
-                  },
-                  {
-                    name:'热门新闻1',
-                    link:'#'
-                  },
-                  {
-                    name:'热门新闻1',
-                    link:'#'
-                  },
-                  {
-                    name:'热门新闻1',
-                    link:'#'
-                  }
-                ]
+        totalProfitsTargetArr:[]
       }
     },
     created() {
@@ -439,16 +564,63 @@
       this.initNewProlead() //初始化新产品导入数据
       this.initHeziProjectSchedule() //初始化项目开发进度数据
       this.initHeziProReview() // 初始化项目回顾对比数据
-      this.initHeziMarketRanking() //初始化厂商排名图片
       this.initBudget() //初始化预算管理数据
       this.initInventoryStatus() //初始化存货状态
       this.initCashFlowStatus() //初始化现金流状态
+      this.initHeziMarketRanking() //加载市场排名表格数据
+      this.initHeziBrandPerformance() //加载市场销量数据
+      this.initHeziBrandDiscount() //加载折扣数据
     },
     methods:{
       initPartnerNews(){
         selectAllHeziPartnerNews().then(res => {
           this.partnerNewsArr = res.data
           this.group()
+        }).catch(error => {
+          console.log(error)
+          reject(error)
+        })
+      },
+      initHeziMarketRanking(){
+        let req = {}
+        req.year = this.nowYear
+        req.month = this.nowMonth
+        getHeziMarketRanking(req).then(res => {
+          this.heziMarketRankingList = res.data
+          if(this.heziMarketRankingList != null){
+            this.heziMarketRankingList.forEach(item =>{
+              if(item.tag == '乘用车'){
+                this.heziMarketRankingListC.push(item)
+              }else if(item.tag == '豪华车'){
+                this.heziMarketRankingListH.push(item)
+              }
+            })
+          }else{
+            this.heziMarketRankingList = []
+          }
+        }).catch(error => {
+          console.log(error)
+          reject(error)
+        })
+      },
+      initHeziBrandPerformance(){
+        let req = {}
+        req.year = this.nowYear
+        getHeziBrandPerformance(req).then(res => {
+          this.heziBrandPerformanceList = res.data
+          this.drawBrandPerformance()
+        }).catch(error => {
+          console.log(error)
+          reject(error)
+        })
+      },
+      //加载折扣数据
+      initHeziBrandDiscount(){
+        let req = {}
+        req.year = this.nowYear
+        getHeziBrandDiscount(req).then(res => {
+          this.heziBrandDiscountList = res.data
+          this.drawBrandDiscount()
         }).catch(error => {
           console.log(error)
           reject(error)
@@ -575,22 +747,6 @@
           this.$nextTick(() => {
             this.drawProReview()
           })
-        }).catch(error => {
-          console.log(error)
-          reject(error)
-        })
-      },
-      initHeziMarketRanking(){
-        this.picturePath = ''
-        let req = {}
-        req.year = this.nowYear
-        req.month = this.nowMonth
-        getHeziMarketRanking(req).then(res => {
-          this.marketRankingList = res.data
-          if(this.marketRankingList != null){
-            var curWwwPath = window.document.location.href.substring(0,16) //获取根路径http://localhost
-            this.rankingPicturePath = curWwwPath+this.marketRankingList[0].picturePath
-          }
         }).catch(error => {
           console.log(error)
           reject(error)
@@ -1018,15 +1174,21 @@
               fontSize: 13
             }
           },
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                  type: 'cross',
+                  crossStyle: {
+                      color: '#999'
+                  }
+              }
+          },
           grid: {
-            height: '50%',
-            width: '90%' //左右边距，设置为100，显示不全12月
+            height: '60%',
+            width: '70%'
           },
           legend: {
-            orient: 'horizontal',
-            right: '10%',
-            width: '500',
-            top: '25'
+            orient: 'horizontal'
           },
           xAxis: {
             data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
@@ -1059,6 +1221,275 @@
         };
         var myChart7 = echarts.init(document.getElementById('drawBudget'));
         myChart7.setOption(drawBudget)
+      },
+      drawBrandPerformance(){
+        let brandPerformanceLastC = []
+        let brandPerformanceNextC = []
+        let brandPerformanceLastH = []
+        let brandPerformanceNextH = []
+        this.heziBrandPerformanceList.forEach(item => {
+          if(item.tag == '乘用车'){
+            let obj1 = {}
+            obj1.month = item.month
+            obj1.lastYearSales = item.lastYearSales
+            brandPerformanceLastC.push(obj1)
+            let obj2 = {}
+            obj2.month = item.month
+            obj2.nextYearSales = item.nextYearSales
+            brandPerformanceNextC.push(obj2)
+          }else if(item.tag == '豪华车'){
+            let obj1 = {}
+            obj1.month = item.month
+            obj1.lastYearSales = item.lastYearSales
+            brandPerformanceLastH.push(obj1)
+            let obj2 = {}
+            obj2.month = item.month
+            obj2.nextYearSales = item.nextYearSales
+            brandPerformanceNextH.push(obj2)
+          }
+        })
+        let lastYearSalesArrC = this.sortByMonth(brandPerformanceLastC,'lastYearSales')
+        let nextYearSalesArrC = this.sortByMonth(brandPerformanceNextC,'nextYearSales')
+        let lastYearSalesArrH = this.sortByMonth(brandPerformanceLastH,'lastYearSales')
+        let nextYearSalesArrH = this.sortByMonth(brandPerformanceNextH,'nextYearSales')
+        var echartsOption5 = {
+          title: {
+            text: '乘用车市场销量',
+            textStyle: {
+              fontSize: 13
+            }
+          },
+          tooltip: {
+            trigger: 'axis'
+          },
+          grid: {
+            left:'60',
+            height: '50%',
+            width: '60%'
+          },
+          legend: {
+            orient: 'horizontal',
+          },
+          xAxis: {
+            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+            axisLabel : {
+                interval:0 // 坐标轴刻度标签的显示间隔(设置为0强制显示所有标签)
+            }
+          },
+          yAxis: {},
+          series: [{
+              name: String(parseInt(this.nowYear)-1),
+              type: 'line',
+              data: lastYearSalesArrC,
+              itemStyle: {
+                color: '#82d1ec'
+              },
+              label: {
+                show: true
+              }
+            },
+            {
+              name: this.nowYear,
+              type: 'line',
+              data: nextYearSalesArrC,
+              itemStyle: {
+                color: '#888'
+              },
+              label: {
+                show: true
+              }
+            },
+          ]
+        };
+        var myChart5 = echarts.init(document.getElementById('chart5'));
+        myChart5.setOption(echartsOption5)
+        var echartsOption6 = {
+          title: {
+            text: '豪华车市场销量',
+            textStyle: {
+              fontSize: 13
+            }
+          },
+          tooltip: {
+            trigger: 'axis'
+          },
+          grid: {
+            left:'60',
+            height: '50%',
+            width: '60%'
+          },
+          legend: {
+            orient: 'horizontal',
+          },
+          xAxis: {
+            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+            axisLabel : {
+                interval:0 // 坐标轴刻度标签的显示间隔(设置为0强制显示所有标签)
+            }
+          },
+          yAxis: {},
+          series: [{
+              name: String(parseInt(this.nowYear)-1),
+              type: 'line',
+              data: lastYearSalesArrH,
+              itemStyle: {
+                color: '#82d1ec'
+              },
+              label: {
+                show: true
+              }
+            },
+            {
+              name: this.nowYear,
+              type: 'line',
+              data: nextYearSalesArrH,
+              itemStyle: {
+                color: '#888'
+              },
+              label: {
+                show: true
+              }
+            },
+          ]
+        };
+        var myChart6 = echarts.init(document.getElementById('chart6'));
+        myChart6.setOption(echartsOption6)
+      },
+      drawBrandDiscount(){
+        var brandNameSet1 = new Set()
+        var brandNameSet2 = new Set()
+        var brandNameArrC = [] // 所有乘用车品牌
+        var brandNameArrH = [] // 所有豪华车品牌
+        var heziBrandDiscountListC = [] // 所有乘用车折扣
+        var heziBrandDiscountListH = [] // 所有豪华车折扣
+        this.heziBrandDiscountList.forEach(item => {
+          if(item.tag == '乘用车'){
+            brandNameSet1.add(item.brandName)
+            heziBrandDiscountListC.push(item)
+          }else if(item.tag == '豪华车'){
+            brandNameSet2.add(item.brandName)
+            heziBrandDiscountListH.push(item)
+          }
+        })
+        brandNameArrC = Array.from(brandNameSet1)
+        brandNameArrH = Array.from(brandNameSet2)
+        var tmp1 = []
+        for (let s of brandNameSet1.keys()) {
+          let arr = this.sortDiscountByMonth(heziBrandDiscountListC,'discountRate',s)
+          let temp = {}
+          temp = {
+            name: s,
+            type: 'line',
+            data: arr,
+            label: {
+              show: true
+            }
+          }
+          tmp1.push(temp)
+        }
+        var echartsOption7 = {
+          title: {
+            text: '乘用车折扣表现',
+            textStyle: {
+              fontSize: 13
+            }
+          },
+          grid: {
+            height: '60%',
+            width: '70%'
+          },
+          tooltip: {
+            trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+          legend: {
+            data:brandNameArrC
+          },
+          xAxis: {
+            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+            axisLabel : {
+                interval:0 // 坐标轴刻度标签的显示间隔(设置为0强制显示所有标签)
+            }
+          },
+          yAxis: {
+              type: 'value',
+              axisLabel: {
+                  formatter: '{value} %'
+              }
+          },
+          series: tmp1
+        }
+        var myChart7 = echarts.init(document.getElementById('chart7'));
+        myChart7.setOption(echartsOption7)
+        var tmp2 = []
+        for (let s of brandNameSet2.keys()) {
+          let arr = this.sortDiscountByMonth(heziBrandDiscountListH,'discountRate',s)
+          let temp = {}
+          temp = {
+            name: s,
+            type: 'line',
+            data: arr,
+            label: {
+              show: true
+            }
+          }
+          tmp2.push(temp)
+        }
+        var echartsOption8 = {
+          title: {
+            text: '豪华车折扣表现',
+            textStyle: {
+              fontSize: 13
+            }
+          },
+          grid: {
+            height: '60%',
+            width: '70%'
+          },
+          tooltip: {
+            trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+          legend: {
+            data:brandNameArrH
+          },
+          xAxis: {
+            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+            axisLabel : {
+                interval:0 // 坐标轴刻度标签的显示间隔(设置为0强制显示所有标签)
+            }
+          },
+          yAxis: {
+              type: 'value',
+              axisLabel: {
+                  formatter: '{value} %'
+              }
+          },
+          series: tmp2
+        }
+        var myChart8 = echarts.init(document.getElementById('chart8'));
+        myChart8.setOption(echartsOption8)
+      },
+      sortDiscountByMonth(data,propertyName,brandName){
+        var array = new Array(12).fill(0)
+        for(var i=0;i<12;i++){
+          for(var j=0;j<data.length;j++){
+            if(data[j] != null && data[j].brandName == brandName && data[j].month == i+1){
+              array[i] = data[j][propertyName].replace('%','') || 0
+            }
+          }
+        }
+        return array
       },
       draw1(inventoryStatusList){
         var roseCharts = document.getElementsByClassName('roseChart1')
@@ -1150,6 +1581,23 @@
         }
         this.partnerNewsGroup = dest
       },
+      // 数字格式化成百分比
+      percentFormatter(row, column, cellValue, index) {
+        if (cellValue==0 || cellValue==-0 || isNaN(cellValue) ) {
+            return 0 + "%"
+        }
+        var str = ( cellValue * 100 ).toFixed(2) + "%";
+        return str
+      },
+      sortByMonth(data,propertyName){
+        var array = new Array(12).fill(0)
+        for(var i=0;i<12;i++){
+          if(data[i] != null && data[i].month == i+1){
+            array[i] = data[i][propertyName] || 0
+          }
+        }
+        return array
+      }
     }
   }
 </script>
@@ -1191,7 +1639,6 @@
       .chartBox{height: 300px;}
       .linkItem2{line-height: 25px;margin: 10px;}
       h4{padding: 0;margin: 0;}
-      .hotNewsbox{border: #c6effd 1px solid;padding: 5px;height: 225px; background-color: #dcf5fe;}
       .img-box{text-align: center;}
       img{width: 100%;height: 260px;}
       .el-carousel__button{background-color: #2C3E50;}

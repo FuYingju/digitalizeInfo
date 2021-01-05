@@ -19,7 +19,7 @@
             <el-menu-item index="ranking">厂商排名</el-menu-item>
             <el-menu-item index="brandPerformance">品牌表现</el-menu-item>
             <el-menu-item index="modelPerformance">车型表现</el-menu-item>
-            <el-menu-item index="integral">双积分合规</el-menu-item>
+            <!-- <el-menu-item index="integral">双积分合规</el-menu-item> -->
           </el-submenu>
           <el-submenu index="6">
             <template slot="title">财务管理</template>

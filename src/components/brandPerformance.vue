@@ -157,17 +157,6 @@
               </el-table>
             </el-col>
           </el-row>
-          <el-row>
-            <el-input
-              type="textarea"
-              placeholder="请输入留言内容"
-              v-model="content"
-              maxlength="100"
-              show-word-limit
-            >
-            </el-input>
-            <el-button type="text" @click="submitMessage">提交留言</el-button>
-          </el-row>
         </el-col>
         <el-col :span="4">
           <div class="box">
@@ -181,6 +170,9 @@
               </div>
             </div>
           </div>
+          <div>
+            <AddComments :moduleName ="moduleName" @reload="getMessage"/>
+          </div>
         </el-col>
       </el-row>
     </el-card>
@@ -189,14 +181,15 @@
 
 <script>
   var echarts = require('echarts');
-  // import Buttongroup from '@/components/buttonGroup.vue';
+  import AddComments from '@/components/addComments.vue';
   import {getHeziBrandPerformance} from '@/api/common/brandPerformance.js';
   import {getHeziBrandDiscount} from '@/api/common/brandDiscount.js';
-  import {addComments,getHeziComments} from '@/api/common/comments.js';
+  import {getHeziComments} from '@/api/common/comments.js';
 
   export default {
     data() {
       return {
+        moduleName:'品牌表现',
         nfOptions: [],
         options2: [{
           value: '乘用车',
@@ -232,9 +225,6 @@
       //加载折扣数据
       this.initHeziBrandDiscount()
     },
-    // components: {
-    //   'Buttongroup': Buttongroup
-    // },
     methods: {
       //加载市场销量数据
       initHeziBrandPerformance(){
@@ -386,12 +376,12 @@
       // 市场销量折线图
       draw1() {
         var echartsOption1 = {
-          title: {
-            text: this.businessSelect + '车市场销量',
-            textStyle: {
-              fontSize: 13
-            }
-          },
+          // title: {
+          //   text: this.businessSelect + '车市场销量',
+          //   textStyle: {
+          //     fontSize: 13
+          //   }
+          // },
           tooltip: {
             trigger: 'axis'   // axis   item   none三个值
           },
@@ -492,6 +482,12 @@
           tmp.push(temp)
         })
         var echartsOption2 = {
+          // title: {
+          //   text: '折扣表现',
+          //   textStyle: {
+          //     fontSize: 13
+          //   }
+          // },
           grid: {
             height: '60%',
             width: '70%'
@@ -527,28 +523,18 @@
       },
       // 获取页面留言
       getMessage(){
-        this.messageRequestParams.belongModule = '品牌表现'
+        this.messageRequestParams.belongModule = this.moduleName
         this.messageRequestParams = getHeziComments(this.messageRequestParams).then(res => {
           this.contentList = res.data
         }).catch(error => {
           console.log(error)
           reject(error)
         })
-      },
-      // 留言
-      submitMessage(){
-        this.messageRequestParams.content = this.content
-        this.messageRequestParams.belongModule = '品牌表现'
-        addComments(this.messageRequestParams).then(res => {
-          alert('留言成功')
-          this.content = ''
-          this.getMessage()
-        }).catch(error => {
-          console.log(error)
-          reject(error)
-        })
       }
-    }
+    },
+    components:{
+        'AddComments': AddComments
+      },
   }
 </script>
 
