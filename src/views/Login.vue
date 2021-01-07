@@ -2,8 +2,13 @@
   <div class="loginBox">
     <div>
         <el-carousel height="400px">
-              <el-carousel-item v-for="item in maplist" :key="item.url">
-                <img :src="item.url">
+              <el-carousel-item v-for="item in partnerNewsGroup" :key="item.id">
+                <div class="title">{{item.brandName}}</div>
+                <div v-for="(item2,index) in item.data" :key="item2.id" class="linkItem">
+                  <!-- <router-link :to="{path:'/partnerNews', query:{id:item2.id}}">
+                    <el-link>{{index+1}} 、 {{item2.title}}</el-link>
+                  </router-link> -->
+                </div>
               </el-carousel-item>
         </el-carousel>
     </div>
@@ -27,17 +32,13 @@
 </template>
 
 <script>
+  import {selectAllHeziPartnerNews} from '@/api/common/partner.js';
+  
   export default {
       data() {
         return {
-          maplist:[
-            {
-              "url": require("../assets/login/01.png")
-            },
-            {
-              "url": require("../assets/login/02.png")
-            },
-           ],
+          partnerNewsArr: [], //合作伙伴动态
+          partnerNewsGroup: [], //重新组合后的合作伙伴动态
            form: {
              username: '',
              password: ''
@@ -54,7 +55,45 @@
           }
         };
       },
+      created() {
+        this.initPartnerNews()  // 合作伙伴
+      },
       methods: {
+        initPartnerNews(){
+          selectAllHeziPartnerNews().then(res => {
+            this.partnerNewsArr = res.data
+            if(this.partnerNewsArr != null){
+              this.group()
+            }
+          }).catch(error => {
+            console.log(error)
+            reject(error)
+          })
+        },
+        group(){
+          var map = {}
+          var dest = []
+          for(var i = 0; i < this.partnerNewsArr.length; i++){
+              var ai = this.partnerNewsArr[i]
+              if(!map[ai.brandName]){
+                  dest.push({
+                      id:ai.id,
+                      brandName: ai.brandName,
+                      data: [ai]
+                  });
+                  map[ai.brandName] = ai
+              }else{
+                  for(var j = 0; j < dest.length; j++){
+                      var dj = dest[j];
+                      if(dj.brandName == ai.brandName){
+                          dj.data.push(ai)
+                          break
+                      }
+                  }
+              }
+          }
+          this.partnerNewsGroup = dest
+        },
         handleSelect(key, keyPath) {
           console.log(key, keyPath);
         },

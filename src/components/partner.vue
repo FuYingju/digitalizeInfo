@@ -22,7 +22,7 @@
           <div class="container" style="margin-bottom: 35px;">
             <div v-for="(item, index) in partnerNewsTitle" :key="item.id" class="linkItem">
               <router-link :to="{path:'/partnerNews', query:{id:item.id}}">
-                <el-link>{{index+1}} 、 {{item.title}}</el-link>
+                <el-link>{{item.title}}</el-link>
               </router-link>
             </div>
           </div>

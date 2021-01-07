@@ -656,37 +656,39 @@
        var title2 = ''
        var name1 = ''
        var name2 = ''
-       this.heziCompanyManageList.forEach(item =>{
-         if(this.companySelect == '0'){
-           if(item.title.indexOf('累计用户数') != -1 && item.company.indexOf('大众') != -1){
-             list1 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
-             title1 = '激活率及累计用户数量'
-             name1 = item.title
+       if(this.heziCompanyManageList != null){
+         this.heziCompanyManageList.forEach(item =>{
+           if(this.companySelect == '0'){
+             if(item.title.indexOf('累计用户数') != -1 && item.company.indexOf('大众') != -1){
+               list1 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+               title1 = '激活率及累计用户数量'
+               name1 = item.title
+             }
+             if(item.title.indexOf('激活率') != -1 && item.company.indexOf('大众') != -1){
+               list2 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+               name2 = item.title
+             }
+             if(item.title.indexOf('用户转化率') != -1 && item.company.indexOf('大众') != -1){
+               list3 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+               title2 = '用户转化率'
+             }
+           }else if(this.companySelect == '1'){
+             if(item.title.indexOf('注册用户') != -1 && item.area.indexOf('长春') != -1){
+               list3 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+               title2 = '注册用户'
+             }
+             if(item.title.indexOf('运营车辆数') != -1 && item.area.indexOf('长春') != -1){
+               list1 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+               name1 = item.title
+             }
+             if(item.title.indexOf('车辆使用率') != -1 && item.area.indexOf('长春') != -1){
+               list2 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+               title1 = '运营车辆数及使用率'
+               name2 = item.title
+             }
            }
-           if(item.title.indexOf('激活率') != -1 && item.company.indexOf('大众') != -1){
-             list2 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
-             name2 = item.title
-           }
-           if(item.title.indexOf('用户转化率') != -1 && item.company.indexOf('大众') != -1){
-             list3 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
-             title2 = '用户转化率'
-           }
-         }else if(this.companySelect == '1'){
-           if(item.title.indexOf('注册用户') != -1 && item.area.indexOf('长春') != -1){
-             list3 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
-             title2 = '注册用户'
-           }
-           if(item.title.indexOf('运营车辆数') != -1 && item.area.indexOf('长春') != -1){
-             list1 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
-             name1 = item.title
-           }
-           if(item.title.indexOf('车辆使用率') != -1 && item.area.indexOf('长春') != -1){
-             list2 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
-             title1 = '运营车辆数及使用率'
-             name2 = item.title
-           }
-         }
-       })
+         })
+       }
        var echartsOption1 = {
          title: {
            text: title1,
@@ -804,38 +806,39 @@
        var title2 = ''
        var name1 = ''
        var name2 = ''
-       this.heziCompanyManageList.forEach(item =>{
-         if(this.companySelect == '0'){
-           if(item.title.indexOf('累计用户数') != -1 && item.company.indexOf('捷达') != -1){
-             list1 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
-             title1 = '激活率及累计用户数量'
-             name1 = item.title
+       if(this.heziCompanyManageList != null){
+         this.heziCompanyManageList.forEach(item =>{
+           if(this.companySelect == '0'){
+             if(item.title.indexOf('累计用户数') != -1 && item.company.indexOf('捷达') != -1){
+               list1 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+               title1 = '激活率及累计用户数量'
+               name1 = item.title
+             }
+             if(item.title.indexOf('激活率') != -1 && item.company.indexOf('捷达') != -1){
+               list2 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+               name2 = item.title
+             }
+             if(item.title.indexOf('用户转化率') != -1 && item.company.indexOf('捷达') != -1){
+               list3 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+               title2 = '用户转化率'
+             }
+           }else if(this.companySelect == '1'){
+             if(item.title.indexOf('注册用户') != -1 && item.area.indexOf('成都') != -1){
+               list3 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+               title2 = '注册用户'
+             }
+             if(item.title.indexOf('运营车辆数') != -1 && item.area.indexOf('成都') != -1){
+               list1 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+               name1 = item.title
+             }
+             if(item.title.indexOf('车辆使用率') != -1 && item.area.indexOf('成都') != -1){
+               list2 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+               name2 = item.title
+               title1 = '运营车辆数及使用率'
+             }
            }
-           if(item.title.indexOf('激活率') != -1 && item.company.indexOf('捷达') != -1){
-             list2 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
-             name2 = item.title
-           }
-           if(item.title.indexOf('用户转化率') != -1 && item.company.indexOf('捷达') != -1){
-             list3 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
-             title2 = '用户转化率'
-
-           }
-         }else if(this.companySelect == '1'){
-           if(item.title.indexOf('注册用户') != -1 && item.area.indexOf('成都') != -1){
-             list3 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
-             title2 = '注册用户'
-           }
-           if(item.title.indexOf('运营车辆数') != -1 && item.area.indexOf('成都') != -1){
-             list1 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
-             name1 = item.title
-           }
-           if(item.title.indexOf('车辆使用率') != -1 && item.area.indexOf('成都') != -1){
-             list2 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
-             name2 = item.title
-             title1 = '运营车辆数及使用率'
-           }
-         }
-       })
+         })
+       }
        var echartsOption1 = {
          title: {
            text: title1,
@@ -949,20 +952,22 @@
        var zlz = []
        var jrz = []
        var cdl = []
-       this.heziCompanyManageList.forEach(item =>{
-         if(item.title.indexOf('自建桩') != -1 && item.moduleName == '0'){
-           zjz = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total,item.goal]
-         }
-         if(item.title.indexOf('租赁桩') != -1 && item.moduleName == '0'){
-           zlz = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total,item.goal]
-         }
-         if(item.title.indexOf('接入桩') != -1 && item.moduleName == '0'){
-           jrz = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total,item.goal]
-         }
-         if(item.title.indexOf('充电量') != -1 && item.moduleName == '0'){
-           cdl = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
-         }
-       })
+       if(this.heziCompanyManageList != null){
+         this.heziCompanyManageList.forEach(item =>{
+           if(item.title.indexOf('自建桩') != -1 && item.moduleName == '0'){
+             zjz = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total,item.goal]
+           }
+           if(item.title.indexOf('租赁桩') != -1 && item.moduleName == '0'){
+             zlz = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total,item.goal]
+           }
+           if(item.title.indexOf('接入桩') != -1 && item.moduleName == '0'){
+             jrz = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total,item.goal]
+           }
+           if(item.title.indexOf('充电量') != -1 && item.moduleName == '0'){
+             cdl = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+           }
+         })
+       }
        var echartsOption1 = {
           title: {
             text: '充电桩筹建',
@@ -1066,14 +1071,16 @@
      draw4(){
        var cl = []
        var xl = []
-       this.heziCompanyManageList.forEach(item =>{
-         if(item.title.indexOf('销量') != -1 && item.moduleName == '0'){
-           xl = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total,item.goal]
-         }
-         if(item.title.indexOf('产量') != -1 && item.moduleName == '0'){
-           cl = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total,item.goal]
-         }
-       })
+       if(this.heziCompanyManageList != null){
+         this.heziCompanyManageList.forEach(item =>{
+           if(item.title.indexOf('销量') != -1 && item.moduleName == '0'){
+             xl = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total,item.goal]
+           }
+           if(item.title.indexOf('产量') != -1 && item.moduleName == '0'){
+             cl = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total,item.goal]
+           }
+         })
+       }
        var echartsOption1 = {
           title: {
             text: '大众一汽发动机公司年度产销量',
@@ -1128,14 +1135,16 @@
      draw5(){
        var ys = []
        var sj = []
-       this.heziCompanyManageList.forEach(item =>{
-         if(item.title.indexOf('预算') != -1 && item.moduleName == '1'){
-           ys = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total]
-         }
-         if(item.title.indexOf('实际') != -1 && item.moduleName == '1'){
-           sj = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total]
-         }
-       })
+       if(this.heziCompanyManageList != null){
+         this.heziCompanyManageList.forEach(item =>{
+           if(item.title.indexOf('预算') != -1 && item.moduleName == '1'){
+             ys = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total]
+           }
+           if(item.title.indexOf('实际') != -1 && item.moduleName == '1'){
+             sj = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total]
+           }
+         })
+       }
        var echartsOption5 = {
           title: {
             text: this.yearSelect+'年利润完成情况',
