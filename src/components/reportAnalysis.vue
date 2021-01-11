@@ -214,6 +214,9 @@
                  type: 'bar',
                  label: {
                    show: true
+                 },
+                 itemStyle: {
+                   color: '#82d1ec'
                  }
              }]
          })
@@ -247,6 +250,9 @@
                  type: 'bar',
                  label: {
                    show: true
+                 },
+                 itemStyle: {
+                   color: '#82d1ec'
                  }
              }]
          })

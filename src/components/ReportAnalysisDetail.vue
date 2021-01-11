@@ -9,6 +9,7 @@
                 <el-table v-if="this.reportType == '0' || this.reportType == '1'"
                   :data="heziReportAnalysisList"
                   border
+                  center
                   row-key="id"
                   :header-cell-style="{'text-align':'center'}"
                   :row-style="{height:'20px'}"
@@ -37,6 +38,7 @@
                 <el-table v-if="this.reportType == '2' || this.reportType == '3'"
                   :data="heziReportAnalysisList"
                   border
+                  center
                   row-key="id"
                   :header-cell-style="{'text-align':'center'}"
                   :row-style="{height:'20px'}"

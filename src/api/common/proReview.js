@@ -1,4 +1,5 @@
 import { request } from '@/utils/request'
+
 /**
  * 查询品牌下拉
  */

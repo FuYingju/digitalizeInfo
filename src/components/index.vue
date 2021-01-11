@@ -329,8 +329,8 @@
           <el-carousel-item>
             <div class="cardTitle"><h3>合资公司年度滚动预算（{{this.nowYear}}）</h3></div>
             <el-row>
-              <el-col :span="12" class="img-box">
-                <div id="drawBudget" class="chartBox"></div>
+              <el-col :span="12" v-for="(item,index) in this.budgetList" :key="index">
+                <div class="chartBox roseChartBudget"></div>
               </el-col>
             </el-row>
           </el-carousel-item>
@@ -549,7 +549,7 @@
   import {getHeziNewProleadIndex} from '@/api/common/newProlead.js';
   import {getHeziProjectSchedule} from '@/api/common/proDev.js';
   import {getHeziProReviewIndex} from '@/api/common/proReview.js';
-  import {getHeziBudget} from '@/api/common/budget.js';
+  import {getHeziBudgetListYear} from '@/api/common/budget.js';
   import {getInventoryStatus,getCashFlowStatus} from '@/api/common/reportAnalysis.js';
   import {getHeziCompanyManage} from '@/api/common/companyManage.js';
 
@@ -579,9 +579,7 @@
         heziMarketRankingListC: [], //乘用车厂商排名表格
         heziBrandPerformanceList: [], //品牌表现数据
         heziBrandDiscountList: [], //折扣数据
-        budgetList:[],
-        totalProfitsPredictArr:[],
-        totalProfitsTargetArr:[],
+        budgetList:[], //预算管理数据
         heziCompanyManageList: [] //参股公司管理
       }
     },
@@ -789,48 +787,36 @@
       initBudget(){
         let req = {}
         req.year = this.nowYear
-        getHeziBudget(req).then(res => {
-          this.budgetList = res.data
-          if(this.budgetList != null){
-            let arr1 = [];
-            let arr2 = [];
-            this.budgetList.forEach(function (item,index,arr){
-              if(item.title.indexOf('利润总额预测')!= -1){
-                arr1[0] = item.month1
-                arr1[1] = item.month2
-                arr1[2] = item.month3
-                arr1[3] = item.month4
-                arr1[4] = item.month5
-                arr1[5] = item.month6
-                arr1[6] = item.month7
-                arr1[7] = item.month8
-                arr1[8] = item.month9
-                arr1[9] = item.month10
-                arr1[10] = item.month11
-                arr1[11] = item.month12
-              }
-              if(item.title.indexOf('利润总额目标')!= -1){
-                arr2.push(item.month1)
-                arr2.push(item.month2)
-                arr2.push(item.month3)
-                arr2.push(item.month4)
-                arr2.push(item.month5)
-                arr2.push(item.month6)
-                arr2.push(item.month7)
-                arr2.push(item.month8)
-                arr2.push(item.month9)
-                arr2.push(item.month10)
-                arr2.push(item.month11)
-                arr2.push(item.month12)
-              }
-            })
-            this.totalProfitsPredictArr = arr1
-            this.totalProfitsTargetArr = arr2
+        getHeziBudgetListYear(req).then(res => {
+          if(res.data != null){
+            var map = {}
+            var dest = []
+            for(var i = 0; i < res.data.length; i++){
+                var ai = res.data[i]
+                if(!map[ai.brandName]){
+                    dest.push({
+                        id: ai.id,
+                        brandName: ai.brandName,
+                        data: [ai]
+                    });
+                    map[ai.brandName] = ai
+                }else{
+                    for(var j = 0; j < dest.length; j++){
+                        var dj = dest[j];
+                        if(dj.brandName== ai.brandName){
+                            dj.data.push(ai)
+                            break
+                        }
+                    }
+                }
+            }
+            this.budgetList = dest
           }else{
-            this.totalProfitsPredictArr = []
-            this.totalProfitsTargetArr = []
+            this.budgetList = []
           }
-          this.drawBudget()
+          this.$nextTick(() => {
+            this.drawBudget()
+          })
         }).catch(error => {
           console.log(error)
           reject(error)
@@ -1648,11 +1634,54 @@
           })
         }
       },
-      // 市场销量折线图
+      // 预算管理折线图
       drawBudget() {
-        var drawBudget = {
+        var totalProfitsPredictArr = [] //利润总额预测
+        var totalProfitsTargetArr = [] //利润总额目标
+        var brandName = '' //公司
+        var roseCharts = document.getElementsByClassName('roseChartBudget')
+        for(var i = 0;i < roseCharts.length;i++ ){
+          if(this.budgetList != null){
+            let arr1 = []
+            let arr2 = []
+            this.budgetList[i].data.forEach(function (item,index,arr){
+              if(item.title.indexOf('利润总额预测')!= -1){
+                arr1[0] = item.month1
+                arr1[1] = item.month2
+                arr1[2] = item.month3
+                arr1[3] = item.month4
+                arr1[4] = item.month5
+                arr1[5] = item.month6
+                arr1[6] = item.month7
+                arr1[7] = item.month8
+                arr1[8] = item.month9
+                arr1[9] = item.month10
+                arr1[10] = item.month11
+                arr1[11] = item.month12
+              }
+              if(item.title.indexOf('利润总额目标')!= -1){
+                arr2.push(item.month1)
+                arr2.push(item.month2)
+                arr2.push(item.month3)
+                arr2.push(item.month4)
+                arr2.push(item.month5)
+                arr2.push(item.month6)
+                arr2.push(item.month7)
+                arr2.push(item.month8)
+                arr2.push(item.month9)
+                arr2.push(item.month10)
+                arr2.push(item.month11)
+                arr2.push(item.month12)
+              }
+              brandName = item.brandName
+            })
+            totalProfitsPredictArr = arr1
+            totalProfitsTargetArr = arr2
+          }
+          var myChart = echarts.init(roseCharts[i])
+          myChart.setOption({
           title: {
-            text: '年度预算',
+            text: brandName+'年度预算',
             textStyle: {
               fontSize: 13
             }
@@ -1682,7 +1711,7 @@
           yAxis: {},
           series: [{
               type: 'line',
-              data: this.totalProfitsPredictArr,
+              data: totalProfitsPredictArr,
               itemStyle: {
                 color: '#82d1ec'
               },
@@ -1692,7 +1721,7 @@
             },
             {
               type: 'line',
-              data: this.totalProfitsTargetArr,
+              data: totalProfitsTargetArr,
               itemStyle: {
                 color: '#888'
               },
@@ -1701,9 +1730,8 @@
               }
             },
           ]
-        };
-        var myChart7 = echarts.init(document.getElementById('drawBudget'));
-        myChart7.setOption(drawBudget)
+        })
+        }
       },
       drawBrandPerformance(){
         let brandPerformanceLastC = []

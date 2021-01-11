@@ -16,28 +16,17 @@
                 </el-option>
               </el-select>
             </div>
-            <!-- <div class="selectBox">
-              <span>月度</span>
-              <el-select v-model="value2" placeholder="请选择" size="mini" class="select">
+            <div class="selectBox">
+              <span>公司</span>
+              <el-select v-model="businessSelect" placeholder="请选择" size="mini" class="select" @change='businessChange'>
                 <el-option
-                  v-for="item in 12"
-                  :key="item.index"
-                  :label="item"
-                  :value="item">
+                  v-for="item in businessNameArr"
+                  :key="item.brandId"
+                  :label="item.brandName"
+                  :value="item.brandId">
                 </el-option>
               </el-select>
-            </div> -->
-            <!-- <div class="selectBox">
-              <span>品牌</span>
-              <el-select v-model="value3" placeholder="请选择" size="mini" class="select">
-                <el-option
-                  v-for="item in options2"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </div> -->
+            </div>
           </div>
         </el-col>
         <el-col :span="16">
@@ -45,6 +34,106 @@
             <el-row style="margin-top: 35px;margin-bottom: 35px;">
               <el-col :span="24">
                 <div id="chart1" class="chartBox"></div>
+              </el-col>
+            </el-row>
+          </div>
+          <div class="container">
+            <el-row style="margin-bottom: 35px;">
+              <el-col :span="24">
+                <el-table
+                  :data="budgetDataList"
+                  border
+                  center
+                  row-key="id"
+                  :header-cell-style="{'text-align':'center'}"
+                  :row-style="{height:'20px'}"
+                  :cell-style="{padding:'0px'}"
+                  style="font-size: 8px;width: 100%;">
+                    <el-table-column
+                      prop="title"
+                      label=""
+                      align="right"
+                      width="80">
+                    </el-table-column>
+                    <el-table-column
+                      prop="month1"
+                      label="1月"
+                      align="right"
+                      min-width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="month2"
+                      label="2月"
+                      align="right"
+                      min-width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="month3"
+                      label="3月"
+                      align="right"
+                      min-width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="month4"
+                      label="4月"
+                      align="right"
+                      min-width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="month5"
+                      label="5月"
+                      align="right"
+                      min-width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="month6"
+                      label="6月"
+                      align="right"
+                      width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="month7"
+                      label="7月"
+                      align="right"
+                      min-width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="month8"
+                      label="8月"
+                      align="right"
+                      min-width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="month9"
+                      label="9月"
+                      align="right"
+                      min-width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="month10"
+                      label="10月"
+                      align="right"
+                      min-width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="month11"
+                      label="11月"
+                      align="right"
+                      min-width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="month12"
+                      label="12月"
+                      align="right"
+                      min-width="50">
+                    </el-table-column>
+                    <el-table-column
+                      prop="total"
+                      label="合计"
+                      align="right"
+                      min-width="50">
+                    </el-table-column>
+                </el-table>
               </el-col>
             </el-row>
           </div>
@@ -75,7 +164,7 @@
   var echarts = require('echarts');
   import AddComments from '@/components/addComments.vue';
   import {getHeziComments} from '@/api/common/comments.js';
-  import {getHeziBudget} from '@/api/common/budget.js';
+  import {getBrand,getHeziBudget,getHeziBudgetListYear} from '@/api/common/budget.js';
 
   export default {
     data(){
@@ -88,19 +177,40 @@
         content: '', // 留言内容
         contentList: [] ,//留言内容列表
         budgetList:[] ,//结果集
+        budgetDataList:[] ,//结果集
         totalProfitsPredictArr:[],
-        totalProfitsTargetArr:[]
+        totalProfitsTargetArr:[],
+        businessSelect: '', //选中品牌的id
+        businessNameArr: [] //品牌列表
       }
    },
    created(){
+     // 获取本年及前后一年的数组
      this.getNf()
+     //初始化品牌下拉
+     this.initBussinessSel()
+     // 获取页面留言
      this.getMessage()
-     this.initBudget()
    },
    methods:{
+     //初始化品牌下拉
+     initBussinessSel(){
+       getBrand().then(res => {
+         this.businessNameArr = res.data
+         if(this.businessNameArr != null){
+           this.businessSelect = this.businessNameArr[0].brandId // 预选中第一项
+           this.brandName = this.businessNameArr[0].brandName
+           this.initBudget()
+         }
+       }).catch(error => {
+         console.log(error)
+         reject(error)
+       })
+     },
      initBudget(){
        this.requestParams.year = this.yearSelect
-       getHeziBudget(this.requestParams).then(res => {
+       this.requestParams.brandId = this.businessSelect
+       getHeziBudgetListYear(this.requestParams).then(res => {
          this.budgetList = res.data
          if(this.budgetList != null){
            let arr1 = [];
@@ -142,6 +252,12 @@
            this.totalProfitsTargetArr = []
          }
          this.draw()
+       }).catch(error => {
+         console.log(error)
+         reject(error)
+       })
+       getHeziBudget(this.requestParams).then(res => {
+         this.budgetDataList = res.data
        }).catch(error => {
          console.log(error)
          reject(error)
@@ -223,6 +339,11 @@
       },
      // 选择年份
      yearChange(e){
+       this.initBudget()
+     },
+     // 选择企业
+     businessChange(e){
+       this.businessSelect = e
        this.initBudget()
      },
      // 获取页面留言
