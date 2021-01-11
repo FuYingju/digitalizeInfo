@@ -337,27 +337,44 @@
 
         </el-carousel>
       </template>
-
     </el-card>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>参股公司管理</span>
       </div>
       <template>
-        <el-carousel :interval="5000" indicator-position='outside' height="670px">
+        <el-carousel :interval="5000" indicator-position='outside' height="1300px">
           <el-carousel-item>
-            <div class="cardTitle"><h3>开迈斯科技有限公司（2020.08）</h3></div>
+            <div class="cardTitle"><h3>CSC参股公司管理（{{this.nowYear}}）</h3></div>
             <el-row>
               <el-col :span="24">
                 <h4>核心运营指标</h4>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/20.png">
+              <el-col :span="24">
+                <h6>大众</h6>
               </el-col>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/21.png">
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <div id="chartYy1" class="chartBox"></div>
+              </el-col>
+              <el-col :span="12">
+                <div id="chartYy2" class="chartBox"></div>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="24">
+                <h6>捷达</h6>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <div id="chartYy3" class="chartBox"></div>
+              </el-col>
+              <el-col :span="12">
+                <div id="chartYy4" class="chartBox"></div>
               </el-col>
             </el-row>
             <el-row>
@@ -366,25 +383,42 @@
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="24" class="img-box">
-                <img src="../assets/22.png">
+              <el-col :span="24">
+                <div id="chartCw0" class="chartBox"></div>
               </el-col>
             </el-row>
-
           </el-carousel-item>
           <el-carousel-item>
-            <div class="cardTitle"><h3>摩斯智行有限公司（2020.06）</h3></div>
+            <div class="cardTitle"><h3>摩捷出行参股公司管理（{{this.nowYear}}）</h3></div>
             <el-row>
               <el-col :span="24">
                 <h4>核心运营指标</h4>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/23.png">
+              <el-col :span="24">
+                <h6>长春</h6>
               </el-col>
-              <el-col :span="12" class="img-box">
-                <img src="../assets/24.png">
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <div id="chartYy5" class="chartBox"></div>
+              </el-col>
+              <el-col :span="12">
+                <div id="chartYy6" class="chartBox"></div>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="24">
+                <h6>成都</h6>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <div id="chartYy7" class="chartBox"></div>
+              </el-col>
+              <el-col :span="12">
+                <div id="chartYy8" class="chartBox"></div>
               </el-col>
             </el-row>
             <el-row>
@@ -393,27 +427,24 @@
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="24" class="img-box">
-                <img src="../assets/25.png">
+              <el-col :span="24">
+                <div id="chartCw1" class="chartBox"></div>
               </el-col>
             </el-row>
           </el-carousel-item>
           <el-carousel-item>
-            <div class="cardTitle"><h3>摩斯智联科技有限公司（2020.06）</h3></div>
+            <div class="cardTitle"><h3>开迈斯（{{this.nowYear}}）</h3></div>
             <el-row>
               <el-col :span="24">
                 <h4>核心运营指标</h4>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="8" class="img-box">
-                <img src="../assets/26.png">
+              <el-col :span="12">
+                <div id="chartYy9" class="chartBox"></div>
               </el-col>
-              <el-col :span="8" class="img-box">
-                <img src="../assets/27.png">
-              </el-col>
-              <el-col :span="8" class="img-box">
-                <img src="../assets/28.png">
+              <el-col :span="12">
+                <div id="chartYy10" class="chartBox"></div>
               </el-col>
             </el-row>
             <el-row>
@@ -422,23 +453,22 @@
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="24" class="img-box">
-                <img src="../assets/25.png">
+              <el-col :span="24">
+                <div id="chartCw2" class="chartBox"></div>
               </el-col>
             </el-row>
           </el-carousel-item>
           <el-carousel-item>
-            <div class="cardTitle"><h3>大连一汽发动机公司（2020.06）</h3></div>
+            <div class="cardTitle"><h3>大连一汽发动机（{{this.nowYear}}）</h3></div>
             <el-row>
               <el-col :span="24">
-                <h4>核心产销完成情况</h4>
+                <h4>核心运营指标</h4>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="24" class="img-box">
-                <img src="../assets/29.png">
+              <el-col :span="24">
+                <div id="chartYy11" class="chartBox"></div>
               </el-col>
-
             </el-row>
             <el-row>
               <el-col :span="24">
@@ -446,60 +476,60 @@
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="24" class="img-box">
-                <img src="../assets/25.png">
+              <el-col :span="24">
+                <div id="chartCw3" class="chartBox"></div>
               </el-col>
             </el-row>
           </el-carousel-item>
           <el-carousel-item>
-            <div class="cardTitle"><h3>成都丰田纺（2020.06）</h3></div>
+            <div class="cardTitle"><h3>成都丰田纺（{{this.nowYear}}）</h3></div>
             <el-row>
               <el-col :span="24">
                 <h4>财务情况</h4>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="24" class="img-box">
-                <img src="../assets/30.png" style="height: 400px;">
+              <el-col :span="24">
+                <div id="chartCw4" class="chartBox"></div>
               </el-col>
             </el-row>
           </el-carousel-item>
           <el-carousel-item>
-            <div class="cardTitle"><h3>天津艾达（2020.06）</h3></div>
+            <div class="cardTitle"><h3>天津艾达（{{this.nowYear}}）</h3></div>
             <el-row>
               <el-col :span="24">
                 <h4>财务情况</h4>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="24" class="img-box">
-                <img src="../assets/30.png" style="height: 400px;">
+              <el-col :span="24">
+                <div id="chartCw5" class="chartBox"></div>
               </el-col>
             </el-row>
           </el-carousel-item>
           <el-carousel-item>
-            <div class="cardTitle"><h3>同方环球物流（2020.06）</h3></div>
+            <div class="cardTitle"><h3>同方环球物流（{{this.nowYear}}）</h3></div>
             <el-row>
               <el-col :span="24">
                 <h4>财务情况</h4>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="24" class="img-box">
-                <img src="../assets/30.png" style="height: 400px;">
+              <el-col :span="24">
+                <div id="chartCw6" class="chartBox"></div>
               </el-col>
             </el-row>
           </el-carousel-item>
           <el-carousel-item>
-            <div class="cardTitle"><h3>同方环球物流（2020.06）</h3></div>
+            <div class="cardTitle"><h3>丰田一汽模具（{{this.nowYear}}）</h3></div>
             <el-row>
               <el-col :span="24">
                 <h4>财务情况</h4>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="24" class="img-box">
-                <img src="../assets/30.png" style="height: 400px;">
+              <el-col :span="24">
+                <div id="chartCw7" class="chartBox"></div>
               </el-col>
             </el-row>
           </el-carousel-item>
@@ -521,6 +551,7 @@
   import {getHeziProReviewIndex} from '@/api/common/proReview.js';
   import {getHeziBudget} from '@/api/common/budget.js';
   import {getInventoryStatus,getCashFlowStatus} from '@/api/common/reportAnalysis.js';
+  import {getHeziCompanyManage} from '@/api/common/companyManage.js';
 
   var echarts = require('echarts');
 
@@ -529,8 +560,8 @@
       return{
         partnerNewsArr: [], //合作伙伴动态
         partnerNewsGroup: [], //重新组合后的合作伙伴动态
-        nowYear: 2020, //当前年new Date().getFullYear()
-        nowMonth: 12, //当前月new Date().getMonth()+1
+        nowYear: new Date().getFullYear(), //当前年
+        nowMonth: new Date().getMonth()+1, //当前月
         halfYear: 'H1',
         fuelShareList0:[], //一汽燃油车市场份额饼图数据
         electShareList0:[], //一汽电动车市场份额饼图数据
@@ -550,7 +581,8 @@
         heziBrandDiscountList: [], //折扣数据
         budgetList:[],
         totalProfitsPredictArr:[],
-        totalProfitsTargetArr:[]
+        totalProfitsTargetArr:[],
+        heziCompanyManageList: [] //参股公司管理
       }
     },
     created() {
@@ -559,23 +591,26 @@
       }else{
         this.halfYear = 'H2'
       }
-      this.initPartnerNews() // 初始化合作伙伴数据
-      this.initNewPro() // 初始化新产品规划数据
-      this.initNewProlead() //初始化新产品导入数据
-      this.initHeziProjectSchedule() //初始化项目开发进度数据
-      this.initHeziProReview() // 初始化项目回顾对比数据
-      this.initBudget() //初始化预算管理数据
-      this.initInventoryStatus() //初始化存货状态
-      this.initCashFlowStatus() //初始化现金流状态
-      this.initHeziMarketRanking() //加载市场排名表格数据
-      this.initHeziBrandPerformance() //加载市场销量数据
-      this.initHeziBrandDiscount() //加载折扣数据
+      this.initPartnerNews()          // 合作伙伴
+      this.initNewPro()               // 新产品规划
+      this.initNewProlead()           //新产品导入
+      this.initHeziProjectSchedule()  //项目开发进度
+      this.initHeziProReview()        // 项目回顾对比
+      this.initBudget()               //预算管理
+      this.initInventoryStatus()      //存货状态
+      this.initCashFlowStatus()       //现金流状态
+      this.initHeziMarketRanking()    //市场排名表格数据
+      this.initHeziBrandPerformance() //市场销量数据
+      this.initHeziBrandDiscount()    //折扣数据
+      this.initCompanyManage()        //参股公司管理数据
     },
     methods:{
       initPartnerNews(){
         selectAllHeziPartnerNews().then(res => {
           this.partnerNewsArr = res.data
-          this.group()
+          if(this.partnerNewsArr != null){
+            this.group()
+          }
         }).catch(error => {
           console.log(error)
           reject(error)
@@ -614,7 +649,6 @@
           reject(error)
         })
       },
-      //加载折扣数据
       initHeziBrandDiscount(){
         let req = {}
         req.year = this.nowYear
@@ -841,6 +875,455 @@
           console.log(error)
           reject(error)
         })
+      },
+      initCompanyManage(){
+        let req = {}
+        req.year = this.nowYear
+        getHeziCompanyManage(req).then(res => {
+          if(res.data != null){
+            this.heziCompanyManageList = res.data
+          }else{
+            this.heziCompanyManageList = []
+          }
+          this.initYyChart() //运营
+          this.initCwChart() //财务
+        }).catch(error => {
+          console.log(error)
+          reject(error)
+        })
+      },
+      initYyChart(){
+        var list1 = [],list2 = [],list3 = [],list4 = [],list5 = [],list6 = [],list7 = [],list8 = [],list9 = [],list10 = [],list11 = [],list12 = []
+        var title1 = [],title2 = [],title3 = [],title4 = [],title5 = [],title6 = [],title7 = [],title8 = []
+        var name1 = '',name2 = '',name3 = '',name4 = '',name5 = '',name6 = '',name7 = '',name8 = ''
+        var zjz = [],zlz = [],jrz = [],cdl = []
+        var xl = [],cl=[]
+        if(this.heziCompanyManageList != null){
+          this.heziCompanyManageList.forEach(item => {
+            //运营
+            if(item.moduleName == '0'){
+              //CSC参股公司管理
+              if(item.jointCompany == '0'){
+                if(item.title.indexOf('累计用户数') != -1 && item.company.indexOf('大众') != -1){
+                  list1 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+                  title1 = '激活率及累计用户数量'
+                  name1 = item.title
+                }
+                if(item.title.indexOf('激活率') != -1 && item.company.indexOf('大众') != -1){
+                  list2 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+                  name2 = item.title
+                }
+                if(item.title.indexOf('用户转化率') != -1 && item.company.indexOf('大众') != -1){
+                  list3 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+                  title2 = '用户转化率'
+                }
+                if(item.title.indexOf('累计用户数') != -1 && item.company.indexOf('捷达') != -1){
+                  list4 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+                  title3 = '激活率及累计用户数量'
+                  name3 = item.title
+                }
+                if(item.title.indexOf('激活率') != -1 && item.company.indexOf('捷达') != -1){
+                  list5 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+                  name4 = item.title
+                }
+                if(item.title.indexOf('用户转化率') != -1 && item.company.indexOf('捷达') != -1){
+                  list6 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+                  title4 = '用户转化率'
+                }
+              //摩捷出行参股公司管理
+              }else if(item.jointCompany == '1'){
+                if(item.title.indexOf('注册用户') != -1 && item.area.indexOf('长春') != -1){
+                  list9 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+                  title6 = '注册用户'
+                }
+                if(item.title.indexOf('运营车辆数') != -1 && item.area.indexOf('长春') != -1){
+                  list7 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+                  name5 = item.title
+                }
+                if(item.title.indexOf('车辆使用率') != -1 && item.area.indexOf('长春') != -1){
+                  list8 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+                  title5 = '运营车辆数及使用率'
+                  name6 = item.title
+                }
+                if(item.title.indexOf('注册用户') != -1 && item.area.indexOf('成都') != -1){
+                  list12 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+                  title8 = '注册用户'
+                }
+                if(item.title.indexOf('运营车辆数') != -1 && item.area.indexOf('成都') != -1){
+                  list10 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+                  name7 = item.title
+                }
+                if(item.title.indexOf('车辆使用率') != -1 && item.area.indexOf('成都') != -1){
+                  list11 = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+                  name8 = item.title
+                  title7 = '运营车辆数及使用率'
+                }
+              //开迈斯
+              }else if(item.jointCompany == '2'){
+                if(item.title.indexOf('自建桩') != -1 && item.moduleName == '0'){
+                  zjz = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total,item.goal]
+                }
+                if(item.title.indexOf('租赁桩') != -1 && item.moduleName == '0'){
+                  zlz = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total,item.goal]
+                }
+                if(item.title.indexOf('接入桩') != -1 && item.moduleName == '0'){
+                  jrz = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total,item.goal]
+                }
+                if(item.title.indexOf('充电量') != -1 && item.moduleName == '0'){
+                  cdl = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12]
+                }
+              //大连一汽发动机
+              }else if(item.jointCompany == '3'){
+                if(item.title.indexOf('销量') != -1 && item.moduleName == '0'){
+                  xl = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total,item.goal]
+                }
+                if(item.title.indexOf('产量') != -1 && item.moduleName == '0'){
+                  cl = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total,item.goal]
+                }
+              }
+            }
+          })
+        }
+        this.drawYyEcharts(list1,list2,list3,name1,name2,title1,title2,1)
+        this.drawYyEcharts(list4,list5,list6,name3,name4,title3,title4,3)
+        this.drawYyEcharts(list7,list8,list9,name5,name6,title5,title6,5)
+        this.drawYyEcharts(list10,list11,list12,name7,name8,title7,title8,7)
+        this.drawKmsYyEcharts(zjz,zlz,jrz,cdl)
+        this.drawDlYyEcharts(cl,xl)
+      },
+      drawDlYyEcharts(cl,xl){
+       var echartsOption1 = {
+          title: {
+            text: '大众一汽发动机公司年度产销量',
+            textStyle: {
+              fontSize: 13
+            }
+          },
+          tooltip: {
+            trigger: 'axis'
+          },
+          legend: {
+              data: ['销量', '产量']
+          },
+          xAxis: {
+            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+            axisLabel : {
+                interval:0 // 坐标轴刻度标签的显示间隔(设置为0强制显示所有标签)
+            }
+          },
+          yAxis: {
+              type: 'value'
+          },
+          series: [
+                  {
+                      name: '销量',
+                      type: 'bar',
+                      data: xl,
+                      itemStyle: {
+                        color: '#82d1ec'
+                      },
+                      label: {
+                        show: true
+                      }
+                  },
+                  {
+                      name: '产量',
+                      type: 'bar',
+                      data: cl,
+                      itemStyle: {
+                        color: '#ffaa00'
+                      },
+                      label: {
+                        show: true
+                      }
+                  }
+              ]
+        }
+       var myChart1 = echarts.init(document.getElementById('chartYy11'))
+       myChart1.setOption(echartsOption1)
+     },
+      drawKmsYyEcharts(zjz,zlz,jrz,cdl){
+        var echartsOption1 = {
+           title: {
+             text: '充电桩筹建',
+             textStyle: {
+               fontSize: 13
+             }
+           },
+           tooltip: {
+             trigger: 'axis'
+           },
+           legend: {
+               data: ['自建桩', '租赁桩', '接入桩']
+           },
+           xAxis: {
+             data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月', '1~12月累计', '年度目标'],
+             axisLabel : {
+                 interval:0 // 坐标轴刻度标签的显示间隔(设置为0强制显示所有标签)
+             }
+           },
+           yAxis: {
+               type: 'value'
+           },
+           series: [
+                   {
+                       name: '自建桩',
+                       type: 'bar',
+                       data: zjz,
+                       itemStyle: {
+                         color: '#82d1ec'
+                       },
+                       label: {
+                         show: true
+                       }
+                   },
+                   {
+                       name: '租赁桩',
+                       type: 'bar',
+                       data: zlz,
+                       itemStyle: {
+                         color: '#ffaa00'
+                       },
+                       label: {
+                         show: true
+                       }
+                   },
+                   {
+                       name: '接入桩',
+                       type: 'bar',
+                       data: jrz,
+                       itemStyle: {
+                         color: '#878786'
+                       },
+                       label: {
+                         show: true
+                       }
+                   }
+               ]
+         }
+        var myChart1 = echarts.init(document.getElementById('chartYy9'))
+        myChart1.setOption(echartsOption1)
+
+        var echartsOption3 = {
+           title: {
+             text: '充电量',
+             textStyle: {
+               fontSize: 13
+             }
+           },
+           tooltip: {
+             trigger: 'axis'
+           },
+           legend: {
+               data: ['充电量']
+           },
+           xAxis: {
+             data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+             axisLabel : {
+                 interval:0 // 坐标轴刻度标签的显示间隔(设置为0强制显示所有标签)
+             }
+           },
+           yAxis: {
+               type: 'value'
+           },
+           series: [
+                   {
+                       name: '充电量',
+                       type: 'bar',
+                       data: cdl,
+                       itemStyle: {
+                         color: '#82d1ec'
+                       },
+                       label: {
+                         show: true
+                       }
+                   }
+               ]
+         }
+        var myChart3 = echarts.init(document.getElementById('chartYy10'))
+        myChart3.setOption(echartsOption3)
+      },
+      drawYyEcharts(list1,list2,list3,name1,name2,title1,title2,index){
+        var echartsOption1 = {
+         title: {
+           text: title1,
+           textStyle: {
+             fontSize: 13
+           }
+         },
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                  type: 'cross',
+                  crossStyle: {
+                      color: '#999'
+                  }
+              }
+          },
+          legend: {
+              data: [name1, name2]
+          },
+          grid: {
+            height: '60%',
+            width: '80%'
+          },
+          xAxis: {
+            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+            axisLabel : {
+                interval:0 // 坐标轴刻度标签的显示间隔(设置为0强制显示所有标签)
+            }
+          },
+          yAxis: [
+              {
+                  type: 'value',
+                  minInterval: 0,
+                  axisLabel: {
+                      formatter: '{value}'
+                  }
+              },
+              {
+                  type: 'value',
+                  minInterval: 0,
+                  axisLabel: {
+                      formatter: '{value} %'
+                  }
+              }
+          ],
+          series: [
+              {
+                  name: name1,
+                  type: 'bar',
+                  data: list1,
+                  itemStyle: {
+                    color: '#ffaa00'
+                  },
+              },
+              {
+                  name: name2,
+                  type: 'line',
+                  yAxisIndex: 1,
+                  data: list2,
+                  itemStyle: {
+                    color: '#82d1ec'
+                  },
+              }
+          ]
+        }
+        var chartId = 'chartYy'+index
+        var myChart = echarts.init(document.getElementById(chartId))
+        myChart.setOption(echartsOption1)
+
+        var echartsOption2 = {
+          title: {
+            text: title2,
+            textStyle: {
+              fontSize: 13
+            }
+          },
+          tooltip: {
+            trigger: 'axis'
+          },
+          grid: {
+            left: '70px',
+            height: '60%',
+            width: '80%'
+          },
+          legend: {
+            orient: 'horizontal',
+          },
+          xAxis: {
+            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+            axisLabel : {
+                interval:0 // 坐标轴刻度标签的显示间隔(设置为0强制显示所有标签)
+            }
+          },
+          yAxis: {},
+          series: [{
+              type: 'line',
+              data: list3,
+              itemStyle: {
+                color: '#82d1ec'
+              },
+              label: {
+                show: true
+              }
+            }
+          ]
+        }
+        var chartId = 'chartYy'+(index+1)
+        var myChart2 = echarts.init(document.getElementById(chartId))
+        myChart2.setOption(echartsOption2)
+      },
+      initCwChart(){
+        var ys = []
+        var sj = []
+        if(this.heziCompanyManageList != null){
+          for(var i=0;i<8;i++){
+            this.heziCompanyManageList.forEach(item => {
+              if(item.moduleName == '1'){
+                if(item.title.indexOf('预算') != -1 && item.jointCompany == i){
+                  ys = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total]
+                }
+                if(item.title.indexOf('实际') != -1 && item.jointCompany == i){
+                  sj = [item.month1,item.month2,item.month3,item.month4,item.month5,item.month6,item.month7,item.month8,item.month9,item.month10,item.month11,item.month12,item.total]
+                }
+              }
+            })
+            this.drawCwEcharts(ys,sj,i)
+          }
+        }
+      },
+      drawCwEcharts(ys,sj,index){
+        var echartsOption5 = {
+           title: {
+             text: this.nowYear+'年利润完成情况',
+             textStyle: {
+               fontSize: 13
+             }
+           },
+           tooltip: {
+             trigger: 'axis'
+           },
+           legend: {
+               data: ['预算', '实际']
+           },
+           xAxis: {
+             data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月', '1~12月累计'],
+             axisLabel : {
+                 interval:0 // 坐标轴刻度标签的显示间隔(设置为0强制显示所有标签)
+             }
+           },
+           yAxis: {
+               type: 'value'
+           },
+           series: [
+                   {
+                       name: '预算',
+                       type: 'bar',
+                       data: ys,
+                       itemStyle: {
+                         color: '#82d1ec'
+                       },
+                       label: {
+                         show: true
+                       }
+                   },
+                   {
+                       name: '实际',
+                       type: 'bar',
+                       data: sj,
+                       itemStyle: {
+                         color: '#ffaa00'
+                       },
+                       label: {
+                         show: true
+                       }
+                   }
+               ]
+         }
+        var chartId = 'chartCw'+index
+        var myChart5 = echarts.init(document.getElementById(chartId))
+        myChart5.setOption(echartsOption5)
       },
       //一汽燃油车饼图
       drawFuelShareList0(){
@@ -1362,15 +1845,17 @@
         var brandNameArrH = [] // 所有豪华车品牌
         var heziBrandDiscountListC = [] // 所有乘用车折扣
         var heziBrandDiscountListH = [] // 所有豪华车折扣
-        this.heziBrandDiscountList.forEach(item => {
-          if(item.tag == '乘用车'){
-            brandNameSet1.add(item.brandName)
-            heziBrandDiscountListC.push(item)
-          }else if(item.tag == '豪华车'){
-            brandNameSet2.add(item.brandName)
-            heziBrandDiscountListH.push(item)
-          }
-        })
+        if(this.heziBrandDiscountList != null){
+          this.heziBrandDiscountList.forEach(item => {
+            if(item.tag == '乘用车'){
+              brandNameSet1.add(item.brandName)
+              heziBrandDiscountListC.push(item)
+            }else if(item.tag == '豪华车'){
+              brandNameSet2.add(item.brandName)
+              heziBrandDiscountListH.push(item)
+            }
+          })
+        }
         brandNameArrC = Array.from(brandNameSet1)
         brandNameArrH = Array.from(brandNameSet2)
         var tmp1 = []

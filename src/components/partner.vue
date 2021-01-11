@@ -65,7 +65,9 @@
         requestParams: {},
         messageRequestParams: {}, // 留言请求参数
         content: '', // 留言内容
-        contentList: [] //留言内容列表
+        contentList: [] ,//留言内容列表
+        nowYear: new Date().getFullYear(), //当前年
+        nowMonth: new Date().getMonth()+1 //当前月
       }
 
    },

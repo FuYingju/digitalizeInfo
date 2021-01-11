@@ -31,14 +31,18 @@
         </el-col>
         <el-col :span="16">
           <div class="container">
-            <el-row style="margin-top: 35px;margin-bottom: 35px;">
-              <el-col :span="24">
+            <el-row>
+              <el-col :span="12" style="margin-top: 35px;margin-bottom: 35px;">
                 <div id="chart1" class="chartBox"></div>
               </el-col>
-            </el-row>
-            <el-row style="margin-bottom: 35px;" v-show="this.businessSelect != '2'">
-              <el-col :span="24">
+              <el-col :span="12" style="margin-top: 35px;margin-bottom: 35px;" v-show="this.businessSelect != '2'">
                 <div id="chart2" class="chartBox"></div>
+              </el-col>
+              <el-col :span="12" style="margin-top: 35px;margin-bottom: 35px;" v-show="this.businessSelect == '2'">
+                <div id="chart3" class="chartBox"></div>
+              </el-col>
+              <el-col :span="12" style="margin-top: 35px;margin-bottom: 35px;" v-show="this.businessSelect == '2'">
+                <div id="chart4" class="chartBox"></div>
               </el-col>
             </el-row>
             <el-row style="margin-bottom: 35px;" v-show="this.businessSelect != '2'">
@@ -47,7 +51,10 @@
                   :data="newProleadList"
                   border
                   row-key="id"
-                  style="width: 100%">
+                  :header-cell-style="{'text-align':'center'}"
+                  :row-style="{height:'20px'}"
+                  :cell-style="{padding:'0px'}"
+                  style="font-size: 10px;width: 100%;">
                     <el-table-column type="expand">
                       <template slot-scope="props">
                         <el-form label-position="left" inline class="demo-table-expand">
@@ -94,64 +101,67 @@
                       </template>
                     </el-table-column>
                     <el-table-column
+                      prop="vehicleMode"
+                      label="细分市场"
+                      align="right"
+                      min-width="75">
+                    </el-table-column>
+                    <el-table-column
                       prop="sopTime"
                       label="SOP时间"
-                      width="110">
+                      align="right"
+                      min-width="60">
                     </el-table-column>
                     <el-table-column
                       prop="level"
                       label="级别"
-                      width="80">
+                      align="right"
+                      min-width="40">
                     </el-table-column>
                     <el-table-column
                       prop="length"
-                      label="长"
-                      width="80">
-                    </el-table-column>
-                    <el-table-column
-                      prop="width"
-                      label="宽"
-                      width="80">
-                    </el-table-column>
-                    <el-table-column
-                      prop="height"
-                      label="高"
-                      width="80">
-                    </el-table-column>
-                    <el-table-column
-                      prop="wheel"
-                      label="轴距"
-                      width="80">
+                      label="长-宽-高-轴距（mm)"
+                      align="right"
+                      :formatter="lwhwFormatter"
+                      min-width="130">
                     </el-table-column>
                     <el-table-column
                       prop="fzg"
                       label="销量规划"
-                      width="80">
+                      align="right"
+                      min-width="60">
                     </el-table-column>
                     <el-table-column
                       prop="mainPrice"
                       label="主力车型售价"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="licenseFeeOnce"
                       label="一次性许可费"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="licenceFeeCar"
                       label="单车许可费"
-                      width="80">
+                      align="right"
+                      min-width="70">
                     </el-table-column>
                     <el-table-column
                       prop="licensePercent"
                       label="总许可费占比"
-                      width="80">
+                      align="right"
+                      :formatter="percentFormatter"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="kpe"
                       label="KPE"
-                      width="80">
+                      align="right"
+                      :formatter="percentFormatter"
+                      min-width="60">
                     </el-table-column>
                 </el-table>
               </el-col>
@@ -162,121 +172,138 @@
                   :data="newProleadList"
                   border
                   row-key="id"
-                  style="width: 100%">
+                  :header-cell-style="{'text-align':'center'}"
+                  :row-style="{height:'20px'}"
+                  :cell-style="{padding:'0px'}"
+                  style="font-size: 10px;width: 100%;">
+                  <el-table-column
+                    prop="vehicleMode"
+                    label="细分市场"
+                    align="right"
+                    min-width="90">
+                  </el-table-column>
                     <el-table-column
                       prop="sopTime"
                       label="SOP时间"
-                      width="110">
+                      align="right"
+                      min-width="70">
                     </el-table-column>
                     <el-table-column
                       prop="level"
                       label="级别"
-                      width="80">
+                      align="right"
+                      min-width="50">
                     </el-table-column>
                     <el-table-column
                       prop="length"
-                      label="长"
-                      width="80">
-                    </el-table-column>
-                    <el-table-column
-                      prop="width"
-                      label="宽"
-                      width="80">
-                    </el-table-column>
-                    <el-table-column
-                      prop="height"
-                      label="高"
-                      width="80">
-                    </el-table-column>
-                    <el-table-column
-                      prop="wheel"
-                      label="轴距"
-                      width="80">
+                      label="长-宽-高-轴距（mm)"
+                      align="right"
+                      :formatter="lwhwFormatter"
+                      min-width="140">
                     </el-table-column>
                     <el-table-column
                       prop="fzg"
                       label="销量规划"
-                      width="80">
+                      align="right"
+                      min-width="70">
                     </el-table-column>
                     <el-table-column
                       prop="mainPrice"
                       label="主力车型售价"
-                      width="80">
+                      align="right"
+                      min-width="95">
                     </el-table-column>
                     <el-table-column
                       prop="dealerCommision"
                       label="经销商佣金"
-                      width="80">
+                      align="right"
+                      min-width="85">
                     </el-table-column>
                     <el-table-column
                       prop="salesSupport"
                       label="销售支持"
-                      width="80">
+                      align="right"
+                      min-width="70">
                     </el-table-column>
                     <el-table-column
                       prop="ckd100"
                       label="100%CKD价格"
-                      width="80">
+                      align="right"
+                      min-width="105">
                     </el-table-column>
                     <el-table-column
                       prop="lcr"
                       label="LCR"
-                      width="80">
+                      align="right"
+                      :formatter="percentFormatter"
+                      min-width="55">
                     </el-table-column>
                     <el-table-column
                       prop="lbi"
                       label="LBI"
-                      width="80">
+                      align="right"
+                      min-width="55">
                     </el-table-column>
                     <el-table-column
                       prop="importedMaterialsCost"
                       label="进口材料成本"
-                      width="80">
+                      align="right"
+                      min-width="95">
                     </el-table-column>
                     <el-table-column
                       prop="domesticMaterialsCost"
                       label="国产化材料成本"
-                      width="80">
+                      align="right"
+                      min-width="110">
                     </el-table-column>
                     <el-table-column
                       prop="licenceFeeCar"
                       label="单车许可费"
-                      width="80">
+                      align="right"
+                      min-width="85">
                     </el-table-column>
                     <el-table-column
                       prop="compensate"
                       label="补偿"
-                      width="80">
+                      align="right"
+                      min-width="50">
                     </el-table-column>
                     <el-table-column
                       prop="directCost"
                       label="直接成本"
-                      width="80">
+                      align="right"
+                      min-width="70">
                     </el-table-column>
                     <el-table-column
                       prop="depreciationShare"
                       label="折旧分摊"
-                      width="80">
+                      align="right"
+                      min-width="70">
                     </el-table-column>
                     <el-table-column
                       prop="licenseFeeOnce"
                       label="一次性许可费"
-                      width="80">
+                      align="right"
+                      min-width="95">
                     </el-table-column>
                     <el-table-column
                       prop="adRate"
                       label="广告费"
-                      width="80">
+                      align="right"
+                      min-width="60">
                     </el-table-column>
                     <el-table-column
                       prop="fawFee"
                       label="一汽-大众管理费"
-                      width="80">
+                      align="right"
+                      min-width="110">
                     </el-table-column>
                     <el-table-column
                       prop="kpe"
                       label="KPE"
-                      width="80">
+                      align="right"
+                      :formatter="percentFormatter"
+                      min-width="60">
                     </el-table-column>
                 </el-table>
               </el-col>
@@ -324,12 +351,7 @@
         contentList: [], //留言内容列表
         businessSelect: '', //选中品牌的id
         businessNameArr: [] ,//品牌列表
-        newProleadList:[],
-        fzgArr:[], //销量规划(Fzg)
-        kpeArr:[], //KPE(%)
-        vehicleModeArr:[] ,//车型
-        licenseFeeOnceArr:[] ,//一次性许可费（Mio€)
-        licensePercentArr:[] //总许可费占比
+        newProleadList:[] //新产品导入数据
       }
    },
    created(){
@@ -344,35 +366,11 @@
        this.requestParams.brandId = this.businessSelect
        getHeziNewProlead(this.requestParams).then(res => {
          this.newProleadList = res.data
-         if(this.newProleadList != null){
-           // KPE
-           this.kpeArr = this.newProleadList.map(function (item) {
-             return item.kpe
-           })
-           // 销量规划
-           this.fzgArr = this.newProleadList.map(function (item) {
-             return item.fzg
-           })
-           // 里程碑
-           this.vehicleModeArr = this.newProleadList.map(function (item) {
-             return item.vehicleMode
-           })
-           // 一次性许可费
-           this.licenseFeeOnceArr = this.newProleadList.map(function (item) {
-             return item.licenseFeeOnce
-           })
-           // 总许可费占比
-           this.licensePercentArr = this.newProleadList.map(function (item) {
-             return item.licensePercent
-           })
+         if(this.businessSelect == '2'){
+           this.drawAudi()
          }else{
-           this.kpeArr = []
-           this.fzgArr = []
-           this.vehicleModeArr = []
-           this.licenseFeeOnceArr = []
-           this.licensePercentArr = []
+           this.draw()
          }
-         this.draw()
        }).catch(error => {
          console.log(error)
          reject(error)
@@ -429,6 +427,33 @@
      },
      // 折线图
      draw() {
+       var kpeArr = []
+       var fzgArr = []
+       var vehicleModeArr = []
+       var licenseFeeOnceArr = []
+       var licensePercentArr = []
+       if(this.newProleadList != null){
+         // KPE
+         kpeArr = this.newProleadList.map(function (item) {
+           return item.kpe
+         })
+         // 销量规划
+         fzgArr = this.newProleadList.map(function (item) {
+           return item.fzg
+         })
+         // 里程碑
+         vehicleModeArr = this.newProleadList.map(function (item) {
+           return item.vehicleMode
+         })
+         // 一次性许可费
+         licenseFeeOnceArr = this.newProleadList.map(function (item) {
+           return item.licenseFeeOnce
+         })
+         // 总许可费占比
+         licensePercentArr = this.newProleadList.map(function (item) {
+           return item.licensePercent
+         })
+       }
        var echartsOption1 = {
           tooltip: {
               trigger: 'axis',
@@ -442,12 +467,20 @@
           legend: {
               data: ['销量规划', 'KPE']
           },
+          grid: {
+            height: '60%',
+            width: '75%',
+            left:'70px'
+          },
           xAxis: [
               {
                   type: 'category',
-                  data: this.vehicleModeArr,
+                  data: vehicleModeArr,
                   axisPointer: {
                       type: 'shadow'
+                  },
+                  axisLabel : {
+                      interval:0 // 坐标轴刻度标签的显示间隔(设置为0强制显示所有标签)
                   }
               }
           ],
@@ -463,7 +496,7 @@
                   type: 'value',
                   minInterval: 0,
                   axisLabel: {
-                      formatter: '{value} %'
+                      formatter: '{value}%'
                   }
               }
           ],
@@ -471,7 +504,7 @@
               {
                   name: '销量规划',
                   type: 'bar',
-                  data: this.fzgArr,
+                  data: fzgArr,
                   itemStyle: {
                     color: '#82d1ec'
                   },
@@ -480,7 +513,7 @@
                   name: 'KPE',
                   type: 'line',
                   yAxisIndex: 1,
-                  data: this.kpeArr,
+                  data: kpeArr,
                   itemStyle: {
                     color: '#ffaa00'
                   },
@@ -489,6 +522,7 @@
       }
        var myChart = echarts.init(document.getElementById('chart1'))
        myChart.setOption(echartsOption1)
+
        var echartsOption2 = {
           tooltip: {
               trigger: 'axis',
@@ -502,10 +536,126 @@
           legend: {
               data: ['一次性许可费', '总许可费占比']
           },
+          grid: {
+            height: '60%',
+            width: '80%'
+          },
           xAxis: [
               {
                   type: 'category',
-                  data: this.vehicleModeArr,
+                  data: vehicleModeArr,
+                  axisPointer: {
+                      type: 'shadow'
+                  },
+                  axisLabel : {
+                      interval:0 // 坐标轴刻度标签的显示间隔(设置为0强制显示所有标签)
+                  }
+              }
+          ],
+          yAxis: [
+              {
+                  type: 'value',
+                  minInterval: 0,
+                  axisLabel: {
+                      formatter: '{value}'
+                  }
+              },
+              {
+                  type: 'value',
+                  minInterval: 0,
+                  axisLabel: {
+                      formatter: '{value}%'
+                  }
+              }
+          ],
+          series: [
+              {
+                  name: '一次性许可费',
+                  type: 'bar',
+                  data: licenseFeeOnceArr,
+                  itemStyle: {
+                    color: '#82d1ec'
+                  },
+              },
+              {
+                  name: '总许可费占比',
+                  type: 'line',
+                  yAxisIndex: 1,
+                  data: licensePercentArr,
+                  itemStyle: {
+                    color: '#ffaa00'
+                  },
+              }
+          ]
+      }
+       var myChart2 = echarts.init(document.getElementById('chart2'))
+       myChart2.setOption(echartsOption2)
+     },
+     drawAudi(){
+      var kpeArr = []
+       var fzgArr = []
+       var vehicleModeArr = []
+       var ckdArr = []
+       var lcrArr = []
+       var licenceFeeCarArr = []
+       var compensateArr = []
+       if(this.newProleadList != null){
+         // 里程碑
+         vehicleModeArr = this.newProleadList.map(function (item) {
+           return item.vehicleMode
+         })
+         // KPE
+         kpeArr = this.newProleadList.map(function (item) {
+           return item.kpe
+         })
+         // 销量规划
+         fzgArr = this.newProleadList.map(function (item) {
+           return item.fzg
+         })
+         // 100%CDK价格
+         ckdArr = this.newProleadList.map(function (item) {
+           return item.ckd100
+         })
+         // LCR
+         lcrArr = this.newProleadList.map(function (item) {
+           return item.lcr
+         })
+         // 单车许可费
+         licenceFeeCarArr = this.newProleadList.map(function (item) {
+           return item.licenceFeeCar
+         })
+         // 补偿
+         compensateArr = this.newProleadList.map(function (item) {
+           return item.compensate
+         })
+       }
+       var echartsOption1 = {
+         title: {
+           text: '销量及KPE',
+           textStyle: {
+             fontSize: 13
+           }
+         },
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                  type: 'cross',
+                  crossStyle: {
+                      color: '#999'
+                  }
+              }
+          },
+          legend: {
+              data: ['销量规划', 'KPE']
+          },
+          grid: {
+            height: '60%',
+            width: '75%'
+          },
+          xAxis: [
+              {
+                  type: 'category',
+                  data: vehicleModeArr,
                   axisPointer: {
                       type: 'shadow'
                   }
@@ -523,32 +673,182 @@
                   type: 'value',
                   minInterval: 0,
                   axisLabel: {
-                      formatter: '{value} %'
+                      formatter: '{value}%'
                   }
               }
           ],
           series: [
               {
-                  name: '一次性许可费',
+                  name: '销量规划',
                   type: 'bar',
-                  data: this.licenseFeeOnceArr,
+                  data: fzgArr,
                   itemStyle: {
                     color: '#82d1ec'
                   },
               },
               {
-                  name: '总许可费占比',
+                  name: 'KPE',
                   type: 'line',
                   yAxisIndex: 1,
-                  data: this.licensePercentArr,
+                  data: kpeArr,
                   itemStyle: {
                     color: '#ffaa00'
                   },
               }
           ]
       }
-       var myChart2 = echarts.init(document.getElementById('chart2'))
-       myChart2.setOption(echartsOption2)
+       var myChart = echarts.init(document.getElementById('chart1'))
+       myChart.setOption(echartsOption1)
+       var echartsOption3 = {
+         title: {
+           text: 'CKD及LCR',
+           textStyle: {
+             fontSize: 13
+           }
+         },
+           tooltip: {
+               trigger: 'axis',
+               axisPointer: {
+                   type: 'cross',
+                   crossStyle: {
+                       color: '#999'
+                   }
+               }
+           },
+           legend: {
+               data: ['100%CDK价格', 'LCR']
+           },
+           grid: {
+             height: '60%',
+             width: '80%'
+           },
+           xAxis: [
+               {
+                   type: 'category',
+                   data: vehicleModeArr,
+                   axisPointer: {
+                       type: 'shadow'
+                   }
+               }
+           ],
+           yAxis: [
+               {
+                   type: 'value',
+                   minInterval: 0,
+                   axisLabel: {
+                       formatter: '{value}'
+                   }
+               },
+               {
+                   type: 'value',
+                   minInterval: 0,
+                   axisLabel: {
+                       formatter: '{value} %'
+                   }
+               }
+           ],
+           series: [
+               {
+                   name: '100%CDK价格',
+                   type: 'bar',
+                   data: ckdArr,
+                   itemStyle: {
+                     color: '#82d1ec'
+                   },
+               },
+               {
+                   name: 'LCR',
+                   type: 'line',
+                   yAxisIndex: 1,
+                   data: lcrArr,
+                   itemStyle: {
+                     color: '#ffaa00'
+                   },
+               }
+           ]
+       }
+        var myChart3 = echarts.init(document.getElementById('chart3'))
+        myChart3.setOption(echartsOption3)
+        var echartsOption4 = {
+          title: {
+            text: '补偿及许可',
+            textStyle: {
+              fontSize: 13
+            }
+          },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+            legend: {
+                data: ['单车许可费', '补偿']
+            },
+            grid: {
+              height: '60%',
+              width: '80%'
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: vehicleModeArr,
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    minInterval: 0,
+                    axisLabel: {
+                        formatter: '{value}'
+                    }
+                },
+                {
+                    type: 'value',
+                    minInterval: 0,
+                    axisLabel: {
+                        formatter: '{value} %'
+                    }
+                }
+            ],
+            series: [
+                {
+                    name: '单车许可费',
+                    type: 'bar',
+                    data: licenceFeeCarArr,
+                    itemStyle: {
+                      color: '#82d1ec'
+                    },
+                },
+                {
+                    name: '补偿',
+                    type: 'line',
+                    yAxisIndex: 1,
+                    data: compensateArr,
+                    itemStyle: {
+                      color: '#ffaa00'
+                    },
+                }
+            ]
+        }
+         var myChart4 = echarts.init(document.getElementById('chart4'))
+         myChart4.setOption(echartsOption4)
+     },
+     // 数字格式化成百分比
+     percentFormatter(row, column, cellValue, index) {
+       if (cellValue==0 || cellValue==-0 || isNaN(cellValue) ) {
+           return 0
+       }
+       return cellValue + '%'
+     },
+     lwhwFormatter(row, column, cellValue, index){
+       return row.length+'-'+row.width+'-'+row.height+'-'+row.wheel
      }
    },
    components:{

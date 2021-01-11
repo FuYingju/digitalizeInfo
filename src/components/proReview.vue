@@ -52,29 +52,36 @@
           </div>
         </el-col>
         <el-col :span="16">
-          <div class="container">
+          <div class="container" >
             <el-row>
-              <el-col :span="24">
+              <el-col :span="24" style="margin-bottom: 30px;">
                 <div id="chart1" class="chartBox" v-show="this.tagSelect == '0'"></div>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="24">
-                <div id="chart2" class="chartBox" v-show="this.tagSelect != '0'"></div>
+              <el-col :span="12">
+                <div id="chart2" class="chartBox" v-show="this.tagSelect == '1' || this.tagSelect == '2'"></div>
+              </el-col>
+              <el-col :span="12">
+                <div id="chart3" class="chartBox" v-show="this.tagSelect == '1'"></div>
+              </el-col>
+              <el-col :span="12">
+                <div id="chart4" class="chartBox" v-show="this.tagSelect == '2'"></div>
+              </el-col>
+              <el-col :span="16" style="margin-bottom: 30px;margin-top: 30px;">
+                <div id="chart5" class="chartBox" v-show="this.tagSelect == '2'"></div>
               </el-col>
             </el-row>
-            <el-row>
-              <el-col :span="24">
-                <div id="chart3" class="chartBox" v-show="this.tagSelect != '0'"></div>
-              </el-col>
-            </el-row>
-            <el-row style="margin-bottom: 35px;" v-show="this.businessSelect != '2' && this.tagSelect == '0'">
+            <el-row style="margin-bottom: 30px;" v-show="this.businessSelect != '2' && this.tagSelect == '0'">
               <el-col :span="24">
                 <el-table
                   :data="heziProReviewList"
                   border
                   row-key="id"
-                  style="width: 100%">
+                  :header-cell-style="{'text-align':'center'}"
+                  :row-style="{height:'20px'}"
+                  :cell-style="{padding:'0px'}"
+                  style="font-size: 10px;width: 100%;">
                     <el-table-column type="expand">
                       <template slot-scope="props">
                         <el-form label-position="left" inline class="demo-table-expand">
@@ -88,7 +95,7 @@
                             <span>{{ props.row.priceIncome || '-' }}</span>
                           </el-form-item>
                           <el-form-item label="销售支持">
-                            <span>{{ props.row.salesSupport || '-' }}</span>
+                            <span>{{ props.row.salesSupport+'%' || '-' }}</span>
                           </el-form-item>
                           <el-form-item label="经销商佣金">
                             <span>{{ props.row.dealerCommision || '-' }}</span>
@@ -104,28 +111,33 @@
                     </el-table-column>
                     <el-table-column
                       prop="proName"
-                      label="产品"
-                      width="110">
+                      label="细分市场"
+                      align="center"
+                      min-width="100">
                     </el-table-column>
                     <el-table-column
                       prop="feasibleSales"
                       label="可研销量"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="actualSales"
                       label="实际销量"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="feasibleRate"
                       label="可研利润率"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="actualRate"
                       label="实际利润率"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                 </el-table>
               </el-col>
@@ -136,46 +148,59 @@
                   :data="heziProReviewList"
                   border
                   row-key="id"
-                  style="width: 100%">
+                  :header-cell-style="{'text-align':'center'}"
+                  :row-style="{height:'20px'}"
+                  :cell-style="{padding:'0px'}"
+                  style="font-size: 10px;width: 100%;">
                     <el-table-column
                       prop="mileStone"
                       label="里程碑"
-                      width="110">
+                      align="center"
+                      min-width="110">
                     </el-table-column>
                     <el-table-column
                       prop="sopTime"
                       label="SOP时间"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="fzg"
                       label="销量规划"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="mainPrice"
                       label="主力车型售价"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="licenseFeeOnce"
                       label="一次性许可费"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="licenceFeeCar"
                       label="单车许可费"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="licensePercent"
                       label="总许可费占比"
-                      width="80">
+                      align="right"
+                      :formatter="percentFormatter"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="kpePercent"
                       label="KPE(%)"
-                      width="80">
+                      align="right"
+                      :formatter="percentFormatter"
+                      min-width="80">
                     </el-table-column>
                 </el-table>
               </el-col>
@@ -186,56 +211,71 @@
                   :data="heziProReviewList"
                   border
                   row-key="id"
-                  style="width: 100%">
+                  :header-cell-style="{'text-align':'center'}"
+                  :row-style="{height:'20px'}"
+                  :cell-style="{padding:'0px'}"
+                  style="font-size: 10px;width: 100%;">
                     <el-table-column
                       prop="sopTime"
                       label="SOP时间"
-                      width="110">
+                      align="right"
+                      min-width="110">
                     </el-table-column>
                     <el-table-column
                       prop="fzg"
                       label="销量规划"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="mainPrice"
                       label="主力车型售价"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="salesSupport"
                       label="销售支持"
-                      width="80">
+                      :formatter="percentFormatter"
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="ckd"
                       label="CKD部分材料成本"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="lc"
                       label="LC部分材料成本"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="investProd"
                       label="产品投资"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="costState"
                       label="费用情况"
-                      width="80">
+                      align="right"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="kpePercent"
                       label="KPE(%)"
-                      width="80">
+                      align="right"
+                      :formatter="percentFormatter"
+                      min-width="80">
                     </el-table-column>
                     <el-table-column
                       prop="mileStone"
                       label="里程碑"
-                      width="80">
+                      align="center"
+                      min-width="80">
                     </el-table-column>
                 </el-table>
               </el-col>
@@ -294,7 +334,7 @@
         actualSalesArr:[] , //实际销量
         actualRateArr:[]  ,//实际利润率
         proNameArr:[]  ,//产品
-        heziProReviewList:[] //项目回顾数据集
+        heziProReviewList:[] //项目回顾数据
       }
    },
    created() {
@@ -316,65 +356,15 @@
        this.requestParams.tag = this.tagSelect
        getHeziProReview(this.requestParams).then(res => {
          this.heziProReviewList = res.data
-         if(this.heziProReviewList != null){
-           // KPE
-           this.kpeArr = this.heziProReviewList.map(function (item) {
-             return item.kpePercent
-           })
-           // 销量规划
-           this.fzgArr = this.heziProReviewList.map(function (item) {
-             return item.fzg
-           })
-           // 里程碑
-           this.mileStoneArr = this.heziProReviewList.map(function (item) {
-             return item.mileStone
-           })
-           // 一次性许可费
-           this.licenseFeeOnceArr = this.heziProReviewList.map(function (item) {
-             return item.licenseFeeOnce
-           })
-           // 总许可费占比
-           this.licensePercentArr = this.heziProReviewList.map(function (item) {
-             return item.licensePercent
-           })
-           // 可研销量
-           this.feasibleSalesArr = this.heziProReviewList.map(function (item) {
-             return item.feasibleSales
-           })
-           // 可研利润率
-           this.feasibleRateArr = this.heziProReviewList.map(function (item) {
-             return item.feasibleRate
-           })
-           // 实际销量
-           this.actualSalesArr = this.heziProReviewList.map(function (item) {
-             return item.actualSales
-           })
-           // 实际利润率
-           this.actualRateArr = this.heziProReviewList.map(function (item) {
-             return item.actualRate
-           })
-           // 产品
-           this.proNameArr = this.heziProReviewList.map(function (item) {
-             return item.proName
-           })
-         }else{
-           this.kpeArr = []
-           this.fzgArr = []
-           this.mileStoneArr = []
-           this.licenseFeeOnceArr = []
-           this.licensePercentArr = []
-           this.feasibleSalesArr = []
-           this.feasibleRateArr = []
-           this.actualSalesArr = []
-           this.actualRateArr = []
-           this.proNameArr = []
-         }
          //加载Echarts
          if(this.tagSelect == '0'){
            this.draw1()
-         }else{
+         }else if(this.tagSelect == '1'){
            this.draw2()
            this.draw3()
+         }else if(this.tagSelect == '2'){
+           this.draw2()
+           this.draw4()
          }
        }).catch(error => {
          console.log(error)
@@ -470,6 +460,33 @@
      },
      // 折线图
      draw1() {
+       var feasibleSalesArr = []
+       var feasibleRateArr = []
+       var actualSalesArr = []
+       var actualRateArr = []
+       var proNameArr = []
+       if(this.heziProReviewList != null){
+         // 可研销量
+         feasibleSalesArr = this.heziProReviewList.map(function (item) {
+           return item.feasibleSales
+         })
+         // 可研利润率
+         feasibleRateArr = this.heziProReviewList.map(function (item) {
+           return item.feasibleRate
+         })
+         // 实际销量
+         actualSalesArr = this.heziProReviewList.map(function (item) {
+           return item.actualSales
+         })
+         // 实际利润率
+         actualRateArr = this.heziProReviewList.map(function (item) {
+           return item.actualRate
+         })
+         // 产品
+         proNameArr = this.heziProReviewList.map(function (item) {
+           return item.proName
+         })
+       }
        var echartsOption1 = {
           tooltip: {
               trigger: 'axis',
@@ -480,13 +497,17 @@
                   }
               }
           },
+          grid: {
+            height: '60%',
+            width: '80%'
+          },
            legend: {
                data: ['可研销量','实际销量','可研利润率','实际利润率']
            },
            xAxis: [
                {
                    type: 'category',
-                   data: this.proNameArr,
+                   data: proNameArr,
                    axisPointer: {
                        type: 'shadow'
                    }
@@ -495,18 +516,16 @@
            yAxis: [
              {
                  type: 'value',
-                 interval: 200000,
+                 minInterval: 0,
                  axisLabel: {
                      formatter: '{value}'
                  }
              },
              {
                  type: 'value',
-                 min: 0,
-                 max: 100,
-                 minInterval: 5,
+                 minInterval: 0,
                  axisLabel: {
-                     formatter: '{value} %'
+                     formatter: '{value}%'
                  }
              }
            ],
@@ -514,7 +533,8 @@
                {
                    name: '可研销量',
                    type: 'bar',
-                   data: this.feasibleSalesArr,
+                   data: feasibleSalesArr,
+                   yAxisIndex: 0,
                    itemStyle: {
                      color: '#ff5500'
                    },
@@ -522,7 +542,8 @@
                {
                    name: '实际销量',
                    type: 'bar',
-                   data: this.actualSalesArr,
+                   data: actualSalesArr,
+                   yAxisIndex: 0,
                    itemStyle: {
                      color: '#82d1ec'
                    },
@@ -530,7 +551,8 @@
                {
                    name: '可研利润率',
                    type: 'line',
-                   data: this.feasibleRateArr,
+                   data: feasibleRateArr,
+                   yAxisIndex: 1,
                    itemStyle: {
                      color: '#ffaa7f'
                    },
@@ -538,7 +560,8 @@
                {
                    name: '实际利润率',
                    type: 'line',
-                   data: this.actualRateArr,
+                   data: actualRateArr,
+                   yAxisIndex: 1,
                    itemStyle: {
                      color: '#aaaa7f'
                    },
@@ -549,7 +572,23 @@
          myChart1.setOption(echartsOption1)
      },
      draw2() {
-       echarts.dispose(document.getElementById('chart1'))
+       var kpeArr = []
+       var fzgArr = []
+       var mileStoneArr = []
+       if(this.heziProReviewList != null){
+         // KPE
+         kpeArr = this.heziProReviewList.map(function (item) {
+           return item.kpePercent
+         })
+         // 销量规划
+         fzgArr = this.heziProReviewList.map(function (item) {
+           return item.fzg
+         })
+         // 里程碑
+         mileStoneArr = this.heziProReviewList.map(function (item) {
+           return item.mileStone
+         })
+       }
        var echartsOption2 = {
           tooltip: {
               trigger: 'axis',
@@ -563,10 +602,15 @@
           legend: {
               data: ['销量规划', 'KPE']
           },
+          grid: {
+            height: '60%',
+            width: '80%',
+            left: '55px'
+          },
           xAxis: [
               {
                   type: 'category',
-                  data: this.mileStoneArr,
+                  data: mileStoneArr,
                   axisPointer: {
                       type: 'shadow'
                   }
@@ -584,7 +628,7 @@
                   type: 'value',
                   minInterval: 0,
                   axisLabel: {
-                      formatter: '{value} %'
+                      formatter: '{value}%'
                   }
               }
           ],
@@ -592,7 +636,7 @@
               {
                   name: '销量规划',
                   type: 'bar',
-                  data: this.fzgArr,
+                  data: fzgArr,
                   itemStyle: {
                     color: '#82d1ec'
                   },
@@ -604,7 +648,7 @@
                   name: 'KPE',
                   type: 'line',
                   yAxisIndex: 1,
-                  data: this.kpeArr,
+                  data: kpeArr,
                   itemStyle: {
                     color: '#ffaa00'
                   },
@@ -618,7 +662,24 @@
       myChart2.setOption(echartsOption2)
      },
      draw3() {
-       var echartsOption3 = {
+       var mileStoneArr = []
+       var licenseFeeOnceArr = []
+       var licensePercentArr = []
+       if(this.heziProReviewList != null){
+         // 里程碑
+         mileStoneArr = this.heziProReviewList.map(function (item) {
+           return item.mileStone
+         })
+         // 一次性许可费
+         licenseFeeOnceArr = this.heziProReviewList.map(function (item) {
+           return item.licenseFeeOnce
+         })
+         // 总许可费占比
+         licensePercentArr = this.heziProReviewList.map(function (item) {
+           return item.licensePercent
+         })
+       }
+       var echartsOption2 = {
           tooltip: {
               trigger: 'axis',
               axisPointer: {
@@ -629,12 +690,17 @@
               }
           },
           legend: {
-              data: ['一次性许可费', '总许可费占比']
+              data: ['一次性许可费', '总许可费占比'],
+              left:'180px'
+          },
+          grid: {
+            height: '60%',
+            width: '80%'
           },
           xAxis: [
               {
                   type: 'category',
-                  data: this.mileStoneArr,
+                  data: mileStoneArr,
                   axisPointer: {
                       type: 'shadow'
                   }
@@ -652,7 +718,7 @@
                   type: 'value',
                   minInterval: 0,
                   axisLabel: {
-                      formatter: '{value} %'
+                      formatter: '{value}%'
                   }
               }
           ],
@@ -660,7 +726,167 @@
               {
                   name: '一次性许可费',
                   type: 'bar',
-                  data: this.licenseFeeOnceArr,
+                  data: licenseFeeOnceArr,
+                  itemStyle: {
+                    color: '#82d1ec'
+                  },
+              },
+              {
+                  name: '总许可费占比',
+                  type: 'line',
+                  yAxisIndex: 1,
+                  data: licensePercentArr,
+                  itemStyle: {
+                    color: '#ffaa00'
+                  },
+              }
+          ]
+      }
+      var myChart2 = echarts.init(document.getElementById('chart3'))
+      myChart2.setOption(echartsOption2)
+     },
+     draw4() {
+       var mileStoneArr = []
+       var mainPriceArr = []
+       var salesSupportArr = []
+       var ckdArr = []
+       var lcArr = []
+       if(this.heziProReviewList != null){
+         // 里程碑
+         mileStoneArr = this.heziProReviewList.map(function (item) {
+           return item.mileStone
+         })
+         // 主力车型售价
+         mainPriceArr = this.heziProReviewList.map(function (item) {
+           return item.mainPrice
+         })
+         // 销售支持
+         salesSupportArr = this.heziProReviewList.map(function (item) {
+           return item.salesSupport
+         })
+         // CKD部分材料成本
+         ckdArr = this.heziProReviewList.map(function (item) {
+           return item.ckd
+         })
+         // LC部分材料成本
+         lcArr = this.heziProReviewList.map(function (item) {
+           return item.lc
+         })
+       }
+       var echartsOption3 = {
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                  type: 'cross',
+                  crossStyle: {
+                      color: '#999'
+                  }
+              }
+          },
+          legend: {
+              data: ['主力车型售价', '销售支持']
+          },
+          grid: {
+            height: '60%',
+            width: '80%',
+            left: '60px'
+          },
+          xAxis: [
+              {
+                  type: 'category',
+                  data: mileStoneArr,
+                  axisPointer: {
+                      type: 'shadow'
+                  }
+              }
+          ],
+          yAxis: [
+              {
+                  type: 'value',
+                  minInterval: 0,
+                  axisLabel: {
+                      formatter: '{value}'
+                  }
+              },
+              {
+                  type: 'value',
+                  minInterval: 0,
+                  axisLabel: {
+                      formatter: '{value}%'
+                  }
+              }
+          ],
+          series: [
+              {
+                  name: '主力车型售价',
+                  type: 'bar',
+                  data: mainPriceArr,
+                  itemStyle: {
+                    color: '#82d1ec'
+                  },
+              },
+              {
+                  name: '销售支持',
+                  type: 'line',
+                  yAxisIndex: 1,
+                  data: salesSupportArr,
+                  itemStyle: {
+                    color: '#ffaa00'
+                  },
+              }
+          ]
+      }
+      var myChart3 = echarts.init(document.getElementById('chart4'))
+      myChart3.setOption(echartsOption3)
+      var echartsOption4 = {
+          tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                  type: 'cross',
+                  crossStyle: {
+                      color: '#999'
+                  }
+              }
+          },
+          legend: {
+              data: ['CKD部分材料成本', 'LC部分材料成本'],
+              left: '155px'
+          },
+          grid: {
+            height: '60%',
+            width: '60%',
+            left: '60px'
+          },
+          xAxis: [
+              {
+                  type: 'category',
+                  data: mileStoneArr,
+                  axisPointer: {
+                      type: 'shadow'
+                  }
+              }
+          ],
+          yAxis: [
+              {
+                  type: 'value',
+                  minInterval: 0,
+                  axisLabel: {
+                      formatter: '{value}'
+                  }
+              },
+              {
+                  type: 'value',
+                  minInterval: 0,
+                  axisLabel: {
+                      formatter: '{value}%'
+                  }
+              }
+          ],
+          series: [
+              {
+                  name: 'CKD部分材料成本',
+                  type: 'bar',
+                  data: ckdArr,
                   itemStyle: {
                     color: '#82d1ec'
                   },
@@ -669,10 +895,10 @@
                   }
               },
               {
-                  name: '总许可费占比',
+                  name: 'LC部分材料成本',
                   type: 'line',
                   yAxisIndex: 1,
-                  data: this.licensePercentArr,
+                  data: lcArr,
                   itemStyle: {
                     color: '#ffaa00'
                   },
@@ -682,9 +908,16 @@
               }
           ]
         }
-      var myChart3 = echarts.init(document.getElementById('chart3'))
-      myChart3.setOption(echartsOption3)
-     }
+      var myChart4 = echarts.init(document.getElementById('chart5'))
+      myChart4.setOption(echartsOption4)
+     },
+     // 数字格式化成百分比
+     percentFormatter(row, column, cellValue, index) {
+       if (cellValue==0 || cellValue==-0 || isNaN(cellValue) ) {
+           return 0
+       }
+       return cellValue + '%'
+     },
    },
    components:{
        'AddComments': AddComments

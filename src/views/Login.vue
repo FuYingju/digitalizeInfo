@@ -1,16 +1,21 @@
 <template>
   <div class="loginBox">
     <div>
-        <el-carousel height="400px">
+        <el-card class="box-card" style="height: 400px;background-color: #2C3E50;color: azure;">
+          <div slot="header" class="clearfix">
+            <span>合作伙伴动态</span>
+          </div>
+          <template>
+            <el-carousel :interval="5000" indicator-position='outside'>
               <el-carousel-item v-for="item in partnerNewsGroup" :key="item.id">
                 <div class="title">{{item.brandName}}</div>
                 <div v-for="(item2,index) in item.data" :key="item2.id" class="linkItem">
-                  <!-- <router-link :to="{path:'/partnerNews', query:{id:item2.id}}">
-                    <el-link>{{index+1}} 、 {{item2.title}}</el-link>
-                  </router-link> -->
+                  <div>{{item2.title}}</div>
                 </div>
               </el-carousel-item>
-        </el-carousel>
+            </el-carousel>
+          </template>
+        </el-card>
     </div>
     <div>
       <h1>合作事业部数字化信息系统</h1>
@@ -32,8 +37,8 @@
 </template>
 
 <script>
-  import {selectAllHeziPartnerNews} from '@/api/common/partner.js';
-  
+  import {selectAllHeziPartnerNewsLogin} from '@/api/common/partner.js';
+
   export default {
       data() {
         return {
@@ -60,7 +65,7 @@
       },
       methods: {
         initPartnerNews(){
-          selectAllHeziPartnerNews().then(res => {
+          selectAllHeziPartnerNewsLogin().then(res => {
             this.partnerNewsArr = res.data
             if(this.partnerNewsArr != null){
               this.group()
@@ -97,7 +102,6 @@
         handleSelect(key, keyPath) {
           console.log(key, keyPath);
         },
-
         submitForm (){
           console.log(this.form)
           this.$refs['loginForm'].validate((valid) => {
@@ -129,5 +133,6 @@
   .buttonBox >div{overflow: hidden; color: #fff;display: flex;margin: 10px 0;}
   .buttonBox >div span{font-size: 16px;width: 100px;line-height: 2rem;line-height: 32px;margin-right: 0.3125rem;margin-right: 5px;}
   .loginBut{width: 100%;margin-left: 5px;}
+  .linkItem{line-height: 35px;margin: 10px;}
   /* .el-input{background-color: #FFFFFF; color: #000;} */
 </style>

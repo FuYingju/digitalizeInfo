@@ -42,12 +42,12 @@
         </el-col>
         <el-col :span="16">
           <div class="container">
-            <!-- <el-row>
+            <el-row>
               <el-col :span="24">
                 <h5>合资品牌新产品项目开发进度</h5>
               </el-col>
-            </el-row> -->
-            <el-row class="img-box">
+            </el-row>
+            <el-row>
               <el-col :span="24" v-for="item in this.heziProjectScheduleList" :key="item.id">
                 <img :src="basePath+item.picturePath" @click="vShow">
               </el-col>
@@ -58,31 +58,34 @@
                   :data="heziProjectScheduleList"
                   row-key="id"
                   border
-                  style="width: 100%">
+                  :header-cell-style="{'text-align':'center'}"
+                  :row-style="{height:'20px'}"
+                  :cell-style="{padding:'0px'}"
+                  style="font-size: 10px;width: 100%;">
                   <el-table-column
                     prop="projectName"
                     label="项目"
-                    width="100">
+                    min-width="100">
                   </el-table-column>
                   <el-table-column
                     prop="point"
                     label="重点项"
-                    width="100">
+                    min-width="100">
                   </el-table-column>
                   <el-table-column
                     prop="step"
                     label="措施"
-                    width="100">
+                    min-width="100">
                   </el-table-column>
                   <el-table-column
                     prop="principal"
                     label="负责人"
-                    width="100">
+                    min-width="100">
                   </el-table-column>
                   <el-table-column
                     prop="plan"
                     label="进度"
-                    width="100">
+                    min-width="100">
                   </el-table-column>
                   <el-table-column
                     prop="state"

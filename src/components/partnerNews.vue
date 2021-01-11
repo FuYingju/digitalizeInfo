@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card">
       <el-row>
-        <el-col :span="14" push="4">
+        <el-col :span="14" :push="4">
           <div class="box" v-html="this.news"></div>
         </el-col>
       </el-row>
@@ -35,7 +35,7 @@
 </script>
 
 <style scoped>
-  .box{width: 100%;margin: 0 auto;border: 1px solid #eee;height: 500px;position: relative;}
+  .box{width: 100%;margin: 0 auto;border: 1px solid #eee;height: 500px;position: relative;padding: 10px;}
   .box .title{border-bottom: 1px solid #EEEEEE;background-color: #FFFFFF;width: 100%;text-align: center;padding: 10px 0;}
   h4{padding: 0;margin: 0;}
   .selectBox{margin: 10px; display: flex;}
