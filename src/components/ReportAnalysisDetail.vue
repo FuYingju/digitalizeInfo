@@ -12,9 +12,9 @@
                   center
                   row-key="id"
                   :header-cell-style="{'text-align':'center'}"
-                  :row-style="{height:'20px'}"
+                  :row-style="{height:'40px'}"
                   :cell-style="{padding:'0px'}"
-                  style="font-size: 10px;width: 100%;">
+                  style="font-size: 10px;width: 100%;margin-left:165%">
                     <el-table-column
                       prop="item"
                       label="项目"
@@ -23,7 +23,7 @@
                     </el-table-column>
                     <el-table-column
                       prop="nowMonth"
-                      :label="this.year"
+                      :label="String(this.year)"
                       align="right"
                       min-width="80">
                     </el-table-column>
@@ -41,9 +41,9 @@
                   center
                   row-key="id"
                   :header-cell-style="{'text-align':'center'}"
-                  :row-style="{height:'20px'}"
+                  :row-style="{height:'40px'}"
                   :cell-style="{padding:'0px'}"
-                  style="font-size: 10px;width: 100%;">
+                  style="font-size: 10px;width: 100%;margin-left:40%">
                     <el-table-column
                       prop="item"
                       label="项目"
@@ -51,40 +51,46 @@
                       min-width="140">
                     </el-table-column>
                     <el-table-column
-                      prop="nowMonth"
-                      label="当月"
-                      align="right"
-                      min-width="80">
+                      :label="String(this.year)">
+                      <el-table-column
+                        prop="nowMonth"
+                        label="当月"
+                        align="right"
+                        min-width="80">
+                      </el-table-column>
+                      <el-table-column
+                        prop="accum"
+                        label="累计"
+                        align="right"
+                        min-width="80">
+                      </el-table-column>
+                      <el-table-column v-if="this.reportType == '2'"
+                        prop="nowAccumPercent"
+                        label="累计占收入比"
+                        align="right"
+                        min-width="80">
+                      </el-table-column>
                     </el-table-column>
                     <el-table-column
-                      prop="accum"
-                      label="累计"
-                      align="right"
-                      min-width="80">
-                    </el-table-column>
-                    <el-table-column v-if="this.reportType == '2'"
-                      prop="nowAccumPercent"
-                      label="累计占收入比"
-                      align="right"
-                      min-width="80">
-                    </el-table-column>
-                    <el-table-column
-                      prop="sameTime"
-                      label="同期"
-                      align="right"
-                      min-width="80">
-                    </el-table-column>
-                    <el-table-column
-                      prop="sameTimeAccum"
-                      label="同期累计"
-                      align="right"
-                      min-width="80">
-                    </el-table-column>
-                    <el-table-column v-if="this.reportType == '2'"
-                      prop="sameAccumPercent"
-                      label="累计占收入比"
-                      align="right"
-                      min-width="80">
+                      :label="String(this.year-1)">
+                      <el-table-column
+                        prop="sameTime"
+                        label="同期"
+                        align="right"
+                        min-width="80">
+                      </el-table-column>
+                      <el-table-column
+                        prop="sameTimeAccum"
+                        label="同期累计"
+                        align="right"
+                        min-width="80">
+                      </el-table-column>
+                      <el-table-column v-if="this.reportType == '2'"
+                        prop="sameAccumPercent"
+                        label="累计占收入比"
+                        align="right"
+                        min-width="80">
+                      </el-table-column>
                     </el-table-column>
                     <el-table-column
                       prop="monthPercent"

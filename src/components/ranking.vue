@@ -45,7 +45,7 @@
                   border
                   row-key="id"
                   :header-cell-style="{'text-align':'center'}"
-                  :row-style="{height:'20px'}"
+                  :row-style="{height:'40px'}"
                   :cell-style="{padding:'0px'}"
                   style="font-size: 10px;width: 100%;">
                   <el-table-column
@@ -179,7 +179,6 @@
         yearSelect: new Date().getFullYear(),
         monthSelect: new Date().getMonth()+1,
         requestParams: {},
-        picturePath: '',
         messageRequestParams: {}, // 留言请求参数
         content: '', // 留言内容
         contentList: [] ,//留言内容列表

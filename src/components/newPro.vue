@@ -62,17 +62,22 @@
                   :data="newProFuelList"
                   border
                   row-key="id"
-                  style="width: 70%">
+                  :header-cell-style="{'text-align':'center'}"
+                  :row-style="{height:'40px'}"
+                  :cell-style="{padding:'0px'}"
+                  style="font-size: 10px;width: 100%;">
                     <el-table-column
                       prop="marketSegment"
                       label="细分市场"
+                      align="right"
                       :formatter="ifendcase"
-                      width="140">
+                      min-width="140">
                     </el-table-column>
                     <el-table-column
                       prop="share"
                       label="市场份额"
-                      width="100">
+                      align="right"
+                      min-width="100">
                       <template slot-scope="scope">
                         <div v-if="scope.row.marketSegment != 'cover' && scope.row.share != null" class="share" :style="{width: scope.row.share+'%'}"><span style="position: absolute;">{{ scope.row.share }}%</span></div>
                         <div v-else>{{ scope.row.share || 0 }}%</div>
@@ -81,7 +86,7 @@
                     <el-table-column
                       prop="yoychange"
                       label="同比"
-                      width="100">
+                      min-width="100">
                       <template slot-scope="scope">
                         <div v-if="scope.row.yoychange > 0" class="yoychange1" :style="{width: (scope.row.yoychange)*10+'%'}"><span style="position: absolute;">{{ scope.row.yoychange }}%</span></div>
                         <div v-else-if="scope.row.yoychange < 0" class="yoychange2" :style="{width:(scope.row.yoychange)*-1*10+'%'}"><span style="position: absolute;">{{ scope.row.yoychange }}%</span></div>
@@ -91,6 +96,7 @@
                     <el-table-column
                       prop="brandName"
                       label="车辆品牌"
+                      align="right"
                       min-width="150">
                     </el-table-column>
                 </el-table>
@@ -103,17 +109,22 @@
                   :data="newProElectList"
                   border
                   row-key="id"
-                  style="width: 70%">
+                  :header-cell-style="{'text-align':'center'}"
+                  :row-style="{height:'40px'}"
+                  :cell-style="{padding:'0px'}"
+                  style="font-size: 10px;width: 100%;">
                     <el-table-column
                       prop="marketSegment"
                       label="细分市场"
                       :formatter="ifendcase"
-                      width="140">
+                      align="right"
+                      min-width="140">
                     </el-table-column>
                     <el-table-column
                       prop="share"
                       label="市场份额"
-                      width="100">
+                      align="right"
+                      min-width="100">
                       <template slot-scope="scope">
                         <div v-if="scope.row.marketSegment != 'cover' && scope.row.share != null" class="share" :style="{width: scope.row.share+'%'}"><span style="position: absolute;">{{ scope.row.share }}%</span></div>
                         <div v-else>{{ scope.row.share || 0 }}%</div>
@@ -122,7 +133,8 @@
                     <el-table-column
                       prop="yoychange"
                       label="同比"
-                      width="100">
+                      align="right"
+                      min-width="100">
                       <template slot-scope="scope">
                         <div v-if="scope.row.yoychange > 0" class="yoychange1" :style="{width: (scope.row.yoychange)*10+'%'}"><span style="position: absolute;">{{ scope.row.yoychange }}%</span></div>
                         <div v-else-if="scope.row.yoychange < 0" class="yoychange2" :style="{width:(scope.row.yoychange)*-1*10+'%'}"><span style="position: absolute;">{{ scope.row.yoychange }}%</span></div>
@@ -132,6 +144,7 @@
                     <el-table-column
                       prop="brandName"
                       label="车辆品牌"
+                      align="right"
                       min-width="150">
                     </el-table-column>
                 </el-table>

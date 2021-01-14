@@ -1,21 +1,11 @@
 <template>
   <div class="loginBox">
     <div>
-        <el-card class="box-card" style="height: 400px;background-color: #2C3E50;color: azure;">
-          <div slot="header" class="clearfix">
-            <span>合作伙伴动态</span>
-          </div>
-          <template>
-            <el-carousel :interval="5000" indicator-position='outside'>
-              <el-carousel-item v-for="item in partnerNewsGroup" :key="item.id">
-                <div class="title">{{item.brandName}}</div>
-                <div v-for="(item2,index) in item.data" :key="item2.id" class="linkItem">
-                  <div>{{item2.title}}</div>
-                </div>
+        <el-carousel height="400px">
+              <el-carousel-item v-for="item in maplist" :key="item.url">
+                <img :src="item.url">
               </el-carousel-item>
-            </el-carousel>
-          </template>
-        </el-card>
+        </el-carousel>
     </div>
     <div>
       <h1>合作事业部数字化信息系统</h1>
@@ -37,11 +27,17 @@
 </template>
 
 <script>
-  import {selectAllHeziPartnerNewsLogin} from '@/api/common/partner.js';
+  import {selectHeziIndexNews} from '@/api/common/indexNews.js';
 
   export default {
       data() {
         return {
+          maplist:[
+            {
+              "url": require("../assets/login/u0.png")
+            }
+           ],
+          basePath: window.document.location.href.substring(0,16),
           partnerNewsArr: [], //合作伙伴动态
           partnerNewsGroup: [], //重新组合后的合作伙伴动态
            form: {
@@ -61,43 +57,23 @@
         };
       },
       created() {
-        this.initPartnerNews()  // 合作伙伴
+        this.initIndexNews()  // 主页新闻
       },
       methods: {
-        initPartnerNews(){
-          selectAllHeziPartnerNewsLogin().then(res => {
-            this.partnerNewsArr = res.data
-            if(this.partnerNewsArr != null){
-              this.group()
+        initIndexNews(){
+          selectHeziIndexNews().then(res => {
+            if(res.data != null){
+              this.maplist = []
+              res.data.forEach(item => {
+                let obj = {}
+                obj.url = this.basePath+item.picturePath
+                this.maplist.push(obj)
+              })
             }
           }).catch(error => {
             console.log(error)
             reject(error)
           })
-        },
-        group(){
-          var map = {}
-          var dest = []
-          for(var i = 0; i < this.partnerNewsArr.length; i++){
-              var ai = this.partnerNewsArr[i]
-              if(!map[ai.brandName]){
-                  dest.push({
-                      id:ai.id,
-                      brandName: ai.brandName,
-                      data: [ai]
-                  });
-                  map[ai.brandName] = ai
-              }else{
-                  for(var j = 0; j < dest.length; j++){
-                      var dj = dest[j];
-                      if(dj.brandName == ai.brandName){
-                          dj.data.push(ai)
-                          break
-                      }
-                  }
-              }
-          }
-          this.partnerNewsGroup = dest
         },
         handleSelect(key, keyPath) {
           console.log(key, keyPath);

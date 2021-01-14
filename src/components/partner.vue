@@ -24,6 +24,7 @@
               <router-link :to="{path:'/partnerNews', query:{id:item.id}}">
                 <el-link>{{item.title}}</el-link>
               </router-link>
+              <el-divider content-position="right">{{item.createTime.substring(0,10)}}</el-divider>
             </div>
           </div>
         </el-col>

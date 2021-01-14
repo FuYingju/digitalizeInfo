@@ -46,92 +46,92 @@
                   center
                   row-key="id"
                   :header-cell-style="{'text-align':'center'}"
-                  :row-style="{height:'20px'}"
+                  :row-style="{height:'40px'}"
                   :cell-style="{padding:'0px'}"
                   style="font-size: 8px;width: 100%;">
                     <el-table-column
                       prop="title"
                       label=""
-                      align="right"
-                      width="80">
+                      align="center"
+                      width="110">
                     </el-table-column>
                     <el-table-column
                       prop="month1"
                       label="1月"
                       align="right"
-                      min-width="50">
+                      width="90">
                     </el-table-column>
                     <el-table-column
                       prop="month2"
                       label="2月"
                       align="right"
-                      min-width="50">
+                      width="90">
                     </el-table-column>
                     <el-table-column
                       prop="month3"
                       label="3月"
                       align="right"
-                      min-width="50">
+                      width="90">
                     </el-table-column>
                     <el-table-column
                       prop="month4"
                       label="4月"
                       align="right"
-                      min-width="50">
+                      width="90">
                     </el-table-column>
                     <el-table-column
                       prop="month5"
                       label="5月"
                       align="right"
-                      min-width="50">
+                      width="90">
                     </el-table-column>
                     <el-table-column
                       prop="month6"
                       label="6月"
                       align="right"
-                      width="50">
+                      width="90">
                     </el-table-column>
                     <el-table-column
                       prop="month7"
                       label="7月"
                       align="right"
-                      min-width="50">
+                      width="90">
                     </el-table-column>
                     <el-table-column
                       prop="month8"
                       label="8月"
                       align="right"
-                      min-width="50">
+                      width="90">
                     </el-table-column>
                     <el-table-column
                       prop="month9"
                       label="9月"
                       align="right"
-                      min-width="50">
+                      width="90">
                     </el-table-column>
                     <el-table-column
                       prop="month10"
                       label="10月"
                       align="right"
-                      min-width="50">
+                      width="90">
                     </el-table-column>
                     <el-table-column
                       prop="month11"
                       label="11月"
                       align="right"
-                      min-width="50">
+                      width="90">
                     </el-table-column>
                     <el-table-column
                       prop="month12"
                       label="12月"
                       align="right"
-                      min-width="50">
+                      width="90">
                     </el-table-column>
                     <el-table-column
                       prop="total"
                       label="合计"
                       align="right"
-                      min-width="50">
+                      width="90">
                     </el-table-column>
                 </el-table>
               </el-col>

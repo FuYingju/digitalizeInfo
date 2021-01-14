@@ -12,17 +12,6 @@ export function listBrandName() {
 }
 
 /**
- * 主页查询全部合作伙伴动态
- */
-export function selectAllHeziPartnerNewsLogin() {
-  return request({
-    url: 'api/loginPartnerNews/list',
-    // data: data,
-    method: 'post'
-  })
-}
-
-/**
  * 查询全部合作伙伴动态
  */
 export function selectAllHeziPartnerNews() {

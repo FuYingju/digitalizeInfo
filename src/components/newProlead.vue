@@ -52,7 +52,7 @@
                   border
                   row-key="id"
                   :header-cell-style="{'text-align':'center'}"
-                  :row-style="{height:'20px'}"
+                  :row-style="{height:'40px'}"
                   :cell-style="{padding:'0px'}"
                   style="font-size: 10px;width: 100%;">
                     <el-table-column type="expand">
@@ -173,7 +173,7 @@
                   border
                   row-key="id"
                   :header-cell-style="{'text-align':'center'}"
-                  :row-style="{height:'20px'}"
+                  :row-style="{height:'40px'}"
                   :cell-style="{padding:'0px'}"
                   style="font-size: 10px;width: 100%;">
                   <el-table-column

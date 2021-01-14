@@ -10,7 +10,7 @@
             <div class="title">{{item.brandName}}</div>
             <div v-for="(item2,index) in item.data" :key="item2.id" class="linkItem">
               <router-link :to="{path:'/partnerNews', query:{id:item2.id}}">
-                <el-link>{{index+1}} 、 {{item2.title}}</el-link>
+                <el-link>{{item2.title}}</el-link>
               </router-link>
             </div>
           </el-carousel-item>
@@ -99,7 +99,7 @@
                   border
                   row-key="id"
                   :header-cell-style="{'text-align':'center'}"
-                  :row-style="{height:'20px'}"
+                  :row-style="{height:'40px'}"
                   :cell-style="{padding:'0px'}"
                   style="font-size: 10px;width: 100%;margin-bottom: 35px;">
                   <el-table-column
@@ -191,7 +191,7 @@
                   border
                   row-key="id"
                   :header-cell-style="{'text-align':'center'}"
-                  :row-style="{height:'20px'}"
+                  :row-style="{height:'40px'}"
                   :cell-style="{padding:'0px'}"
                   style="font-size: 10px;width: 100%;margin-bottom: 35px;">
                   <el-table-column

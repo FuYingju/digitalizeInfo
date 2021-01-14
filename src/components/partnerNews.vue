@@ -3,7 +3,7 @@
     <el-card class="box-card">
       <el-row>
         <el-col :span="14" :push="4">
-          <div class="box" v-html="this.news"></div>
+          <div class="container" v-html="this.news"></div>
         </el-col>
       </el-row>
     </el-card>
