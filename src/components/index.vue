@@ -91,7 +91,7 @@
       <template>
         <el-carousel :interval="5000" indicator-position='outside' height="1100px">
           <el-carousel-item>
-            <div class="cardTitle"><h3>新车销售厂商排名（2020.08）</h3></div>
+            <div class="cardTitle"><h3>新车销售厂商排名（{{this.nowYear}}.{{this.nowMonth}}））</h3></div>
             <el-row>
               <el-col :span="24">
                 <el-table

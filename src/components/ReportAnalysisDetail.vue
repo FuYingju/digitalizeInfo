@@ -28,6 +28,12 @@
                       min-width="80">
                     </el-table-column>
                     <el-table-column
+                      prop="lastYear"
+                      :label="String(this.year-1)"
+                      align="right"
+                      min-width="80">
+                    </el-table-column>
+                    <el-table-column
                       prop="accumPercent"
                       label="同比变化"
                       :formatter="percentFormatter"
@@ -132,9 +138,25 @@
      this.requestParams.month = this.$route.query.month
      this.requestParams.company = this.$route.query.company
      getHeziReportAnalysisDetail(this.requestParams).then(res => {
-       this.heziReportAnalysisList = res.data
-       this.reportType = this.heziReportAnalysisList[0].reportType
-       this.year = this.heziReportAnalysisList[0].year
+       if(this.requestParams.reportType == '0' || this.requestParams.reportType == '1'){
+         var newArr = res.data.filter(item => item.year == this.requestParams.year)
+         var newArr2 = res.data.filter(item => item.year == (this.requestParams.year-1))
+         newArr2.forEach(item => {item.lastYear = item.nowMonth})
+
+         // newArr.forEach(it =>
+         //   newArr2.forEach(value => it.item == value.item && newArr.lastYear = value.nowMonth)
+         // )
+         newArr.map(el => {
+           if(newArr2.find(it => it.item == el.item) != null){
+             el.lastYear = newArr2.find(it => it.item == el.item).nowMonth
+           }
+         })
+         this.heziReportAnalysisList = newArr
+       }else{
+        this.heziReportAnalysisList = res.data
+       }
+       this.reportType = this.requestParams.reportType
+       this.year = this.requestParams.year
      }).catch(error => {
        console.log(error)
        reject(error)

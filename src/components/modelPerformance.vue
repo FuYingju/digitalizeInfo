@@ -270,6 +270,7 @@
         this.requestParams.brandId = this.businessSelect
         getHeziSalesPlan(this.requestParams).then(res => {
           this.heziSalesPlanRespList = res.data
+          console.log(JSON.stringify(this.heziSalesPlanRespList))
           if(this.heziSalesPlanRespList !=  null){
             this.heziSalesPlanRespListSTD = this.heziSalesPlanRespList.filter(item => item.tag.toUpperCase() === 'STD');
             this.heziSalesPlanRespListAaK = this.heziSalesPlanRespList.filter(item => item.tag.toUpperCase() === 'AAK');
@@ -341,10 +342,10 @@
       // 数字格式化成百分比
       percentFormatter(row, column, cellValue, index) {
         if (cellValue==0 || cellValue==-0 || isNaN(cellValue) ) {
-            return 0
-        }
-        var str = ( cellValue * 100 ).toFixed(2) + "%";
-        return str
+            cellValue = '-'
+        }else{
+          var cellValue = ( cellValue * 100 ).toFixed(2) + "%";        }
+        return cellValue
       }
     },
     components:{
