@@ -37,7 +37,7 @@
               "url": require("../assets/login/u0.png")
             }
            ],
-          basePath: window.document.location.href.substring(0,16),
+          basePath: "http://"+document.location.hostname,
           partnerNewsArr: [], //合作伙伴动态
           partnerNewsGroup: [], //重新组合后的合作伙伴动态
            form: {

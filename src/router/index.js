@@ -17,6 +17,9 @@ export default new Router({
       name: 'Main',
       component: Main,
       redirect: '/index',
+      meta: {
+        title: '合作事业部数字化信息系统'
+      },
       children:[
         { path: '/index', component: Index },
         { path: '/partner', component: Partner },
@@ -38,7 +41,10 @@ export default new Router({
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta: {
+        title: '合作事业部数字化信息系统'
+      }
     }
   ]
 })

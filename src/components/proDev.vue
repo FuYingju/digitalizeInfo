@@ -136,7 +136,7 @@
         businessSelect: '', //选中品牌的id
         businessNameArr: [], //品牌列表
         brandName: '', //当前选择的品牌名称
-        basePath: window.document.location.href.substring(0,16),
+        basePath: "http://"+document.location.hostname,
         messageRequestParams: {}, // 留言请求参数
         content: '', // 留言内容
         contentList: [] ,//留言内容列表
